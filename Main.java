@@ -6,9 +6,10 @@ class Main {
     public static void main(String[] args) {
         gameManager = new GameManager();
 
-        // Start every start
+        // Start every Manager
         gameManager.Start();
 
+        // Gameloop
         while (running) {
             gameManager.Update();
         }

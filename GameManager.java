@@ -3,7 +3,7 @@ public class GameManager {
     private Manager[] managers;
 
     public GameManager() {
-        managers = new Manager[] { new UIManager(),
+        managers = new Manager[] { new UIManager(), new TicTacToeManager(), new ReversiManager(),
 
         };
     }

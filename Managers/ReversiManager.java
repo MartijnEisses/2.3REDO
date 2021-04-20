@@ -1,16 +1,44 @@
+package Managers;
 
 import java.util.*;
-
+import Managers.Board;
+import Managers.RandomAI;
 public class ReversiManager implements Manager {
 
     private int currentPlayer; // ZWART is 1 & WIT is 2
+    private int newBoard;
 
-
+    /*
+     * Reversi Board Cheat Sheet
+     *
+     * 0,0|1,0|2,0|3,0|4,0|5,0|6,0|7,0
+     * -------------------------------
+     * 0,1|1,1|2,1|3,1|4,1|5,1|6,1|7,1
+     * -------------------------------
+     * 0,2|1,2|2,2|3,2|4,2|5,2|6,2|7,2
+     * -------------------------------
+     * 0,3|1,3|2,3|3,3|4,3|5,3|6,3|7,3
+     * -------------------------------
+     * 0,4|1,4|2,4|3,4|4,4|5,4|6,4|7,4
+     * -------------------------------
+     * 0,5|1,5|2,5|3,5|4,5|5,5|6,5|7,5
+     * -------------------------------
+     * 0,6|1,6|2,6|3,6|4,6|5,6|6,6|7,6
+     * -------------------------------
+     * 0,7|1,7|2,7|3,7|4,7|5,7|6,7|7,7
+     *
+     */
 
     @Override
     public void Start() {
         // TODO Auto-generated method stub
-
+        System.out.println("Start method in ReversiManager is starting");
+        Board newBoard = new Board(8,8);
+        newBoard.setStone(3,3,2);
+        newBoard.setStone(4,4,2);
+        newBoard.setStone(3,4,1);
+        newBoard.setStone(4,3,1);
+        newBoard.drawBoard();
     }
 
     @Override
@@ -20,7 +48,6 @@ public class ReversiManager implements Manager {
     }
     /*
         Convert int to board position.
-
 
     public int[] convertToBoardPosition(int p) {
         int[] position = new int[2];
@@ -36,7 +63,7 @@ public class ReversiManager implements Manager {
         }
         return position;
     }
-    */
+*/
 
     public ArrayList<String> legalMoves(int[][] curBoard, int cp) {
         int totChanges = 0;

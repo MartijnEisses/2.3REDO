@@ -1,3 +1,5 @@
+package Managers;
+
 public class UIManager implements Manager {
 
     @Override
@@ -11,5 +13,10 @@ public class UIManager implements Manager {
         // TODO Auto-generated method stub
 
     }
+
+
+
+
+
 
 }

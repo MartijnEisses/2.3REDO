@@ -12,38 +12,35 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class Connection implements Runnable {
+public class Connection{
     private Socket socket;
-    private PrintWriter writer;
-    private BufferedReader bufferedReader;
-    private BlockingQueue<String> commandQueue;
+    private LinkedBlockingQueue<String> commandQueue;
     private Thread thread;
     private List<String> playerList;
     private List<String> challenges;
-    private List<String> firstServerResponse = Arrays.asList("Strategic Game Server Fixed [Version 1.1.0]",
-            "(C) Copyright 2015 Hanzehogeschool Groningen");
-    private boolean runner = true;
+    private Serversocket serversocket;
+
+
     //PrintWriter is voor output
     //BufferedReader is voor input
 
-    public Connection() throws IOException {
+    public Connection() {
         commandQueue = new LinkedBlockingQueue<>();
     }
 
-    public void connectToServer(String ip, int port) {
+    public boolean connectToServer(String ip, int port) throws IOException {
         System.out.println("Logging into server: " + ip + " on port: " + port);
         try {
             socket = new Socket(ip, port);
-            writer = new PrintWriter(socket.getOutputStream(), true);
-            bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
 
-       //ExecutorService executorService = Executors.newFixedThreadPool(2);
-       // executorService.execute(writer);
-       // executorService.execute(new Conversation());
-
+        serversocket = new Serversocket(socket, commandQueue);
+        thread = new Thread(serversocket);
+        thread.start();
+        return true;
     }
 
     public void login(String name) {
@@ -107,45 +104,11 @@ public class Connection implements Runnable {
     public void popQueue() {
         String test = commandQueue.peek();
         commandQueue.remove(test);
+        printQueue();
     }
 
     public BlockingQueue<String> getCommandQueue() {
         return commandQueue;
     }
 
-    @Override
-    public void run() {
-        String command;
-        String inputLine;
-
-        while (runner) {
-            try {
-
-                while ((command = commandQueue.poll()) != null) {
-                    //System.out.println("Conversation  is reached");
-                    writer.println(command);
-                    writer.flush();
-                    if (command.equals("logout")) {
-                        runner = false;
-                    }
-                    // e.printStackTrace();
-                }
-            } catch (NullPointerException e) {
-                //e.printStackTrace();
-            }
-
-            try{
-                while(bufferedReader.ready() && (inputLine = bufferedReader.readLine()) != null){
-                    if(firstServerResponse.contains(inputLine)){
-                        continue;
-                    }
-                    System.out.println("Server response: " + inputLine);
-                    //Hier moet de interpreter nog worden aangeroepen
-                }
-            }catch (IOException e){
-                e.printStackTrace();
-            }
-        }
-
-    }
 }

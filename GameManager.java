@@ -1,6 +1,9 @@
+import Server.Connection;
+
 public class GameManager {
 
     private Manager[] managers;
+    private static Connection connection;
 
     public GameManager() {
         managers = new Manager[] { new UIManager(), new TicTacToeManager(), new ReversiManager(),

@@ -39,7 +39,7 @@ public class Connection implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-                
+
        //ExecutorService executorService = Executors.newFixedThreadPool(2);
        // executorService.execute(writer);
        // executorService.execute(new Conversation());
@@ -112,11 +112,6 @@ public class Connection implements Runnable {
     public BlockingQueue<String> getCommandQueue() {
         return commandQueue;
     }
-
-    public String getFirstStringCommandQueue() {
-        return commandQueue.poll();
-    }
-
 
     @Override
     public void run() {

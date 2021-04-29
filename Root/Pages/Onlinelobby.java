@@ -1,5 +1,6 @@
 package Root.Pages;
 
+import Root.Main;
 import Root.Managers.Board;
 import Root.Managers.UIManager;
 import Root.Server.Connection;
@@ -19,8 +20,8 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Onlinelobby implements Initializable {
-    private Connection connection;
+public class Onlinelobby extends Onlinelogin implements Initializable {
+    //private Connection connection;
     private Interpreter interpreter;
     private static Timer playerTimer;
     private List<String> playerList;
@@ -32,7 +33,7 @@ public class Onlinelobby implements Initializable {
     private Button challengeButton;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        connection = new Connection();
+        //connection = getConnection();
         interpreter = new Interpreter();
         playerTimer = new Timer();
     /*
@@ -48,43 +49,27 @@ public class Onlinelobby implements Initializable {
 
     @FXML
     protected void subscribeMenuButton(ActionEvent event){
-        //System.out.println("Subscribe to Reversi is pressed!");
-       // Connection.subscribe("Reversi");
+        System.out.println("Subscribe to Reversi is pressed!");
+        Main.connection.subscribe("Reversi");
     }
 
     @FXML
     protected void acceptChallengeButton(ActionEvent event) throws IOException {
         Window ErrorMessage = challengeButton.getScene().getWindow();
         //System.out.println("accept is pressed!");
-
         if(interpreter.getGameChallenge() == null){
            AlertHelp.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "No challenge has been Send!");
             return;
         }
-        connection.acceptGameChallenge(interpreter.getGameID());
+        Main.connection.acceptGameChallenge(interpreter.getGameID());
 
         System.out.println("test");
-
-
-      //  Main.newConnection.acceptGameChallenge(Interpreter.getGameID());
-        // Connection.acceptGameChallenge(Interpreter.getGameID());
-        // if(Interpreter.getGameChallenge()!=null) {
-        //  handleChallengeButton(event);
-        //
-       // setScene("view/OnlineReversi.fxml");
-       // Main.controller = new Reversi();
-        //Main.setReversi();
-        //Main.setReversi("view/OnlineReversi.fxml");
-
-
     }
 
     @FXML
     protected void handleTictactoeGameButton(){
 
     }
-
-
 
     @FXML
     protected void handleReversiGameButton(){
@@ -95,8 +80,6 @@ public class Onlinelobby implements Initializable {
     public void youLost(){
         Window ErrorMessage = challengeButton.getScene().getWindow();
         AlertHelp.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Whoops, looks Like you lost!");
-
-
 
         return;
 

@@ -33,15 +33,16 @@ public class Serversocket implements Runnable{
     public void run() {
         String command;
         String inputLine;
-        System.out.println("Test for run in Connection");
+        //System.out.println("Test for run in Connection");
         while (runner) {
             try {
                 while ((command = commandQueue.poll()) != null) {
-                    System.out.println("TEST VOOR COMMANDQUEUE SENDER WRITER DING");
+                    //System.out.println("TEST VOOR COMMANDQUEUE SENDER WRITER DING");
                     System.out.println("Sending a command");
                     writer.println(command);
                     writer.flush();
                     if (command.equals("logout")) {
+                        //System.out.println("Logging off");
                         runner = false;
                     }
                     // e.printStackTrace();
@@ -55,7 +56,7 @@ public class Serversocket implements Runnable{
                     if(firstServerResponse.contains(inputLine)){
                         continue;
                     }
-                    System.out.println("test voor serversocket bufferedReader");
+                    //System.out.println("test voor serversocket bufferedReader");
                     System.out.println("Server response: " + inputLine);
                     //Hier moet de interpreter nog worden aangeroepen
                     interpreter.inputInterpreter(inputLine);
@@ -65,5 +66,4 @@ public class Serversocket implements Runnable{
             }
         }
     }
-
 }

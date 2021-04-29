@@ -1,6 +1,7 @@
 package Root;
 
 import Root.Managers.GameManager;
+import Root.Server.Connection;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,12 +18,14 @@ public class Main extends Application{
     public static boolean running = true;
     public static Stage primaryStage;
     public static FXMLLoader loader;
+    public static Connection connection;
 
     @FXML
     public static Parent root;
 
     public static void main(String[] args) throws IOException {
         gameManager = new GameManager();
+        connection = new Connection();
         gameManager.Start();
         launch(args);
         // Gameloop

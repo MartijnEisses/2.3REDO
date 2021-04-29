@@ -22,7 +22,6 @@ public class GameManager {
         for (int i = 0; i < managers.length; i++) {
             managers[i].Start();
         }
-
     }
 
     // Runs constantly

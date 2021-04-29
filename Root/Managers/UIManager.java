@@ -39,8 +39,6 @@ public class UIManager implements Manager {
         Parent root = fxmlLoader.load(fileInputStream);
         Main.primaryStage.getScene().setRoot(root);
         Main.primaryStage.show();
-
     }
-
 
 }

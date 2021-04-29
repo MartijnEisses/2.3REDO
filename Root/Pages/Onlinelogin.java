@@ -64,10 +64,8 @@ public class Onlinelogin implements Initializable {
 
         //System.out.println("Connected to: " + ipField.getText() + " on port : " + portField.getText());
 
-
-        //System.out.println("test");
-        connection.connectToServer(ipField.getText(), Integer.parseInt(portField.getText()));
-        connection.login(ignField.getText());
+        Main.connection.connectToServer(ipField.getText(), Integer.parseInt(portField.getText()));
+        Main.connection.login(ignField.getText());
         UIManager.createScene("Onlinelobby.fxml");
 
     }
@@ -75,6 +73,8 @@ public class Onlinelogin implements Initializable {
     public TextField getIgnField() {
         return ignField;
     }
+    //public Connection getConnection(){return connection;}
+
 }
 
 class AlertHelper {

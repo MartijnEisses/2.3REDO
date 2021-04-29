@@ -22,7 +22,7 @@
     </Label>
     <TextField fx:id="opponent" prefHeight="40" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-    <Button styleClass="subscribeReversi" fx:id="challengeButton" text="Challenge!"
+    <Button styleClass="challengeButton" fx:id="challengeButton" text="Challenge!"
             prefWidth="100" prefHeight="40" defaultButton="true"
             GridPane.columnIndex="0" GridPane.rowIndex="5"
             GridPane.columnSpan="2" GridPane.rowSpan="1"
@@ -33,7 +33,7 @@
         </GridPane.margin>
     </Button>
 
-    <Button styleClass="subscribeReversi" fx:id="acceptChallenge" text="Accept Challenge"
+    <Button styleClass="acceptChallenge" fx:id="acceptChallenge" text="Accept Challenge"
             prefWidth="100" prefHeight="40" defaultButton="true"
             GridPane.columnIndex="3" GridPane.rowIndex="5"
             GridPane.columnSpan="2" GridPane.rowSpan="1"
@@ -42,8 +42,18 @@
         <GridPane.margin>
             <Insets top="20" right="0" bottom="20" left="0"></Insets>
         </GridPane.margin>
-
-
     </Button>
+
+    <Button styleClass="subscribeMenu" fx:id="subscribeMenu" text="Subscribe Reversi"
+            prefWidth="200" prefHeight="40" defaultButton="true"
+            GridPane.columnIndex="5" GridPane.rowIndex="5"
+            GridPane.columnSpan="2" GridPane.rowSpan="1"
+            GridPane.halignment="RIGHT"
+            onAction="#subscribeMenuButton">
+        <GridPane.margin>
+            <Insets top="20" right="0" bottom="20" left="0"></Insets>
+        </GridPane.margin>
+    </Button>
+
 
 </GridPane>

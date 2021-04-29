@@ -15,7 +15,6 @@ public class Homepage {
 
     }
 
-
     @FXML
     protected void handleOnlineButtonAction(ActionEvent event) throws IOException {
         //setPlayerType(playerType.REMOTE);

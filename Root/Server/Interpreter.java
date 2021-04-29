@@ -1,5 +1,7 @@
 package Root.Server;
 
+import Root.Main;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,16 +17,15 @@ public class Interpreter {
     private int playerAI;
     private int playerOpponent;
     private int playerturn;
-    private Connection connection;
+
     /*
         Note: zie protocol.txt op blackboard om de input te zien van de server
      */
     public Interpreter() {
         playerList = new ArrayList<>();
         legalmovesAI = new ArrayList<>();
-        connection= new Connection();
-
     }
+
     public void inputInterpreter(String inputCommand) {
         inputCommand = inputCommand.replaceAll("[^A-Za-z0-9 ]", "");
         String[] commands = inputCommand.split(" ");
@@ -42,7 +43,6 @@ public class Interpreter {
                 switch (commands[1]) {
                     case "GAMELIST":
                         System.out.println("Gamelist of games");
-
                         break;
                     case "PLAYERLIST":
                         System.out.println("Playerlist of all players");
@@ -64,20 +64,17 @@ public class Interpreter {
                                 //System.out.println(PLAYERTOMOVE + GAMETYPE + OPPONENT);
                                 switch (commands[3]) {
                                     case "PLAYERTOMOVE":
-                                        System.out.println("START OF PLAYERTOMOVE");
+                                        //System.out.println("START OF PLAYERTOMOVE");
                                         PLAYERTOMOVE = commands[4];
                                         GAMETYPE = commands[6];
                                         OPPONENT = commands[8];
                                         //System.out.println("start van PLAYER TO MOVE TEST");
                                         if (PLAYERTOMOVE.equals(OPPONENT)) {
                                             System.out.println("Opponent is color black");
-                                            //online.setAiColor(2);
                                             setPlayerAI(2);
                                             setPlayerOpponent(1);
-                                            //primaryStage.
                                         } else {
                                             System.out.println("ai has color black");
-                                            //online.setAiColor(1);
                                             setPlayerAI(1);
                                             setPlayerOpponent(2);
                                         }
@@ -87,7 +84,6 @@ public class Interpreter {
                                 break;
                             case "MOVE":
                                 //reageer op de string move van de opponent.
-                                //String isLegalMove = commands[8];
                                 try{
                                     int zet = Integer.parseInt(commands[6]);
                                     int[] position;
@@ -108,15 +104,12 @@ public class Interpreter {
                                 //ai moet weten dat het zijn beurt is.
                                 System.out.println("Its youre turn ai make a good move...");
                                 System.out.println();
-                                //online.aiMove();
-                                System.out.println( "ai player is: " + getPlayerAI() + " opponenent: " + getPlayerOpponent() );
-                                if(getPlayerAI() ==1 ) {
-
-                                    System.out.println("sending ai for black");
-                                }else{
-
-                                    System.out.println("Sending ai for white");
-                                }
+                               //online.aiMove();
+                               // if(getPlayerAI() == 1 ) {
+                               //    System.out.println("sending ai for black");
+                               // }else{
+                               //    System.out.println("Sending ai for white");
+                               // }
                                 break;
 
                             case "CHALLENGE":
@@ -128,7 +121,7 @@ public class Interpreter {
                                         //System.out.println("Send instant challenge back start");
                                         gameID = Integer.parseInt(commands[6]);
                                         System.out.println("Challenged by " + commands[4] + " for game: " + commands[8] + " gameID :" + commands[6]);
-                                        //connection.acceptGameChallenge(gameID);
+                                        Main.connection.acceptGameChallenge(gameID);
                                         gameChallenge = commands[4];
                                         break;
                                     case "CANCELLED":
@@ -140,13 +133,11 @@ public class Interpreter {
                             case "WIN":
                                 //info over win
 
-                                //online.setScene("view/online.fxml");
                                 //alle stenen moeten worden gereset.
                                 //Display that user has won.Terug naar online screen en display user has won.
                                 break;
                             case "LOSS":
                                 //info over loss.
-                                // online.setScene("view/online.fxml");
                                 //alle stenen moeten worden gereset.
 
                                 //Display that user has lost. Terug naar online screen en display user has lost
@@ -159,9 +150,7 @@ public class Interpreter {
                 break;
         }
     }
-    public static void getReversi(){
 
-    }
 
     public static int getGameID() {
         return gameID;

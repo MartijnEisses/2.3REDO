@@ -57,14 +57,13 @@ public class Board {
             }
             System.out.print("\n");
         }
-
     }
+
     public boolean fullBoard() {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[1].length; j++) {
                 if(board[i][j] == 0){return false;}
             }
-
         }
         return true;
     }

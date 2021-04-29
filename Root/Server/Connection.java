@@ -34,7 +34,6 @@ public class Connection{
             e.printStackTrace();
             return false;
         }
-
         serversocket = new Serversocket(socket, commandQueue);
         thread = new Thread(serversocket);
         thread.start();

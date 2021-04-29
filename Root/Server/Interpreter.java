@@ -128,7 +128,7 @@ public class Interpreter {
                                         //System.out.println("Send instant challenge back start");
                                         gameID = Integer.parseInt(commands[6]);
                                         System.out.println("Challenged by " + commands[4] + " for game: " + commands[8] + " gameID :" + commands[6]);
-                                        connection.acceptGameChallenge(gameID);
+                                        //connection.acceptGameChallenge(gameID);
                                         gameChallenge = commands[4];
                                         break;
                                     case "CANCELLED":

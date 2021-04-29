@@ -22,30 +22,20 @@ public class Main extends Application{
     public static Parent root;
 
     public static void main(String[] args) throws IOException {
-        launch(args);
-
         gameManager = new GameManager();
-
         gameManager.Start();
+        launch(args);
         // Gameloop
         while (running) {
             gameManager.Update();
         }
 
-        //(args);
         // Start every Manager
 
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        gameManager = new GameManager();
-
-        gameManager.Start();
-        // Gameloop
-        while (running) {
-            gameManager.Update();
-        }
 
         stage.setMinHeight(720);
         stage.setMinWidth(1240);

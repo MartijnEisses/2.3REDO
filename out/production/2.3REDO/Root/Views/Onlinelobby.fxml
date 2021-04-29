@@ -6,9 +6,44 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Root.Pages.Onlinelobby"
-            prefHeight="400.0" prefWidth="600.0">
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+<GridPane fx:id="gridBoard" fx:controller="Root.Pages.Onlinelobby" xmlns:fx="http://javafx.com/fxml" styleClass="background" alignment="center" gridLinesVisible="false">
+    <Label text="Challenge Player for Reversi:" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2" GridPane.rowSpan="1" GridPane.halignment="CENTER" >
+        <font>
+            <Font name="Arial" size="24" ></Font>
+        </font>
+        <GridPane.margin>
+            <Insets top="20" right="0" bottom="20" left="0"></Insets>
+        </GridPane.margin>
+    </Label>
 
-</AnchorPane>
+    <Label text="IGN" GridPane.columnIndex="0" GridPane.rowIndex="1" >
+    </Label>
+    <TextField fx:id="opponent" prefHeight="40" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+    <Button styleClass="subscribeReversi" fx:id="challengeButton" text="Challenge!"
+            prefWidth="100" prefHeight="40" defaultButton="true"
+            GridPane.columnIndex="0" GridPane.rowIndex="5"
+            GridPane.columnSpan="2" GridPane.rowSpan="1"
+            GridPane.halignment="RIGHT"
+            onAction="#handleChallengeButton">
+        <GridPane.margin>
+            <Insets top="20" right="0" bottom="20" left="0"></Insets>
+        </GridPane.margin>
+    </Button>
+
+    <Button styleClass="subscribeReversi" fx:id="acceptChallenge" text="Accept Challenge"
+            prefWidth="100" prefHeight="40" defaultButton="true"
+            GridPane.columnIndex="3" GridPane.rowIndex="5"
+            GridPane.columnSpan="2" GridPane.rowSpan="1"
+            GridPane.halignment="RIGHT"
+            onAction="#acceptChallengeButton">
+        <GridPane.margin>
+            <Insets top="20" right="0" bottom="20" left="0"></Insets>
+        </GridPane.margin>
+
+
+    </Button>
+
+</GridPane>

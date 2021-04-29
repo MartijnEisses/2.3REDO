@@ -1,5 +1,8 @@
 package Root.Pages;
 
+import Root.Main;
+import Root.Managers.UIManager;
+import Root.Server.Connection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,6 +17,7 @@ import java.util.ResourceBundle;
 
 public class Onlinelogin implements Initializable {
 
+    private Connection connection;
 
     @FXML
     private TextField ignField;
@@ -29,8 +33,9 @@ public class Onlinelogin implements Initializable {
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ignField.setText("B2");
-        ipField.setText("145.33.225.170");
+        ipField.setText("127.0.0.1");
         portField.setText("7789");
+        connection = new Connection();
     }
 
     @FXML
@@ -41,10 +46,12 @@ public class Onlinelogin implements Initializable {
             AlertHelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid ign");
             return;
         }
+
         if(ipField.getText().isEmpty()){
             AlertHelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid IP");
             return;
         }
+
         if(!portField.getText().matches("^[0-9]*$")){
             AlertHelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid port");
             return;
@@ -54,14 +61,14 @@ public class Onlinelogin implements Initializable {
             AlertHelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid Port");
             return;
         }
-        // AlertHelper.showAlert(Alert.AlertType.CONFIRMATION, ErrorMessage, "Correct registration!", "Goodluck and may you WIN! " + ignField.getText());
+
         //System.out.println("Connected to: " + ipField.getText() + " on port : " + portField.getText());
 
 
         //System.out.println("test");
-        //Main.newConnection.connectToServer(ipField.getText(),Integer.parseInt(portField.getText()));
-        //Main.newConnection.login(ignField.getText());
-       // setScene("view/online.fxml");
+        connection.connectToServer(ipField.getText(), Integer.parseInt(portField.getText()));
+        connection.login(ignField.getText());
+        UIManager.createScene("Onlinelobby.fxml");
 
     }
 

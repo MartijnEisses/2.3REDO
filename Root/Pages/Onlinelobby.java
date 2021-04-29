@@ -61,13 +61,11 @@ public class Onlinelobby implements Initializable {
             return;
         }
         Main.connection.acceptGameChallenge(interpreter.getGameID());
-
     }
 
     public void youLost(){
         Window ErrorMessage = challengeButton.getScene().getWindow();
         AlertHelp.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Lost game", "Whoops, looks Like you lost!");
-
         return;
 
     }

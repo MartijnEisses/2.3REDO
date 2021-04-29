@@ -26,7 +26,6 @@ public class ReversiTemp extends Board {
 
 
     public ReversiTemp() {
-
         super(8, 8);
         setStone(3,3,2);
         setStone(4,4,2);
@@ -36,7 +35,7 @@ public class ReversiTemp extends Board {
         randomAI = new RandomAI();
     }
 
-    public void startReversi(){
+    public void startReversi(int player1, int player2){
         System.out.println("Reversi begint!!!");
         System.out.println("Het is jou beurt!!!!!");
         drawBoard();
@@ -57,9 +56,7 @@ public class ReversiTemp extends Board {
             //drawBoard();
             if(currentPlayer== 1){
                 currentPlayer = 2;
-
             }
-
             if(currentPlayer == 2) {
                 boardChange(randomAI.calculateRandomMove(legalMoves(getBoard(), currentPlayer), getBoard(), currentPlayer));
                 //bord.boardChange(ai.calculateRandomMove(legal.legalMoves(bord.getBord(), currentPlayer), bord.getBord(), currentPlayer));
@@ -72,7 +69,8 @@ public class ReversiTemp extends Board {
                 System.out.println("\nHet is de beurt van de AI!!");
             }
             drawBoard();
-
+            System.out.println("You currently have: " + countStones().get(0) + " stones");
+            System.out.println("The AI currently has: " + countStones().get(1)+ " stones");
         }
         if(fullWord[0].equals("moves")){
             legalMoves(getBoard(), currentPlayer);

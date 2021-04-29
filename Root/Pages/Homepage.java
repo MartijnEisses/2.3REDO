@@ -46,9 +46,10 @@ public class Homepage implements Initializable {
                 UIManager.createScene("TicTacToeBoard.fxml");
                 break;
             case Reversi:
-                reversiTemp = new ReversiTemp();
-                reversiTemp.startReversi();
                 UIManager.createScene("Reversi.fxml");
+                reversiTemp = new ReversiTemp();
+                reversiTemp.startReversi(1,2);
+                //UIManager.createScene("Reversi.fxml");
                 //HIER REVERSITEMP AANROEPEN
 
                 break;

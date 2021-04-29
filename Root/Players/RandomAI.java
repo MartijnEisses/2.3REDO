@@ -15,13 +15,13 @@ public class RandomAI {
             System.out.println("You Won, the AI lost");
             return board;
         }
-
+        System.out.println(legalMoves);
         int randomZet = random.nextInt(legalMoves.size());
         //System.out.println(legalMoves.get(randomZet));
         String coordinates = legalMoves.get(randomZet);
         String[] move = coordinates.split("-");
-        int x = Integer.parseInt(move[1]);
-        int y = Integer.parseInt(move[0]);
+        int x = Integer.parseInt(move[0]);
+        int y = Integer.parseInt(move[1]);
         int[][] newBoard = reversiTemp.doMove(board, cp, x, y);
         System.out.print("Random AI choose position x: " + x + " and y:  " + y);
 

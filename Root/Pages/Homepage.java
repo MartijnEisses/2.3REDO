@@ -59,6 +59,7 @@ public class Homepage implements Initializable {
         GameType game  = GameType.valueOf(selectGame.getSelectionModel().getSelectedItem());
         return game;
     }
+
     public playertype getPlayerType() {
         return playerType;
     }

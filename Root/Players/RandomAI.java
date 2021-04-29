@@ -7,10 +7,12 @@ public class RandomAI {
     private Random random = new Random();
 
     public int[][] calculateRandomMove(ArrayList<String> legalMoves, int[][] board, int cp) {
+
         if(legalMoves.size() == 0) {
             System.out.println("no move for player: " + cp);
             return board;
         }
+        
         int randomZet = random.nextInt(legalMoves.size());
         System.out.println(legalMoves.get(randomZet));
         String coordinates = legalMoves.get(randomZet);
@@ -22,8 +24,4 @@ public class RandomAI {
         return null;
        // return newBoard;
     }
-
-
-
-
 }

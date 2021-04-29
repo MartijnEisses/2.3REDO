@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+
+<GridPane fx:id="gp_1" fx:controller="Root.Pages.Homepage" xmlns:fx="http://javafx.com/fxml" styleClass="background" alignment="center" GridPane.columnSpan="3" hgap="10" vgap="10">
+
+
+    <Button fx:id="selectButton" styleClass="selectButton" text="Offline" onAction="#handleOfflineButtonAction" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+    <Button fx:id="onlineButton" styleClass="onlineButton" text="Online" onAction="#handleOnlineButtonAction"  GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+
+  
+</GridPane>

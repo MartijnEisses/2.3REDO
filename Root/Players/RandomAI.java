@@ -1,8 +1,7 @@
-package Root.Managers;
+package Root.Players;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 
 public class RandomAI {
     private Random random = new Random();

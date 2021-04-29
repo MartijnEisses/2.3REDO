@@ -2,7 +2,7 @@ package Root.Managers;
 
 import java.util.*;
 import Root.Managers.Board;
-import Root.Managers.RandomAI;
+import Root.Players.RandomAI;
 public class ReversiManager implements Manager {
 
     private int currentPlayer; // ZWART is 1 & WIT is 2
@@ -32,13 +32,13 @@ public class ReversiManager implements Manager {
     @Override
     public void Start() {
         // TODO Auto-generated method stub
-        System.out.println("Start method in ReversiManager is starting");
-       // Board newBoard = new Board(8,8);
-       // newBoard.setStone(3,3,2);
-       // newBoard.setStone(4,4,2);
-       // newBoard.setStone(3,4,1);
+        //System.out.println("Start method in ReversiManager is starting");
+        //Board newBoard = new Board(8,8);
+        //newBoard.setStone(3,3,2);
+        //newBoard.setStone(4,4,2);
+        //newBoard.setStone(3,4,1);
        // newBoard.setStone(4,3,1);
-       // newBoard.drawBoard();
+        //newBoard.drawBoard();
     }
 
     @Override
@@ -270,7 +270,6 @@ public class ReversiManager implements Manager {
                         bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
                         change = true;
                     }
-
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
             }

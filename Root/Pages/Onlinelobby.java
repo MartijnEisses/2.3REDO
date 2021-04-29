@@ -20,8 +20,7 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Onlinelobby extends Onlinelogin implements Initializable {
-    //private Connection connection;
+public class Onlinelobby implements Initializable {
     private Interpreter interpreter;
     private static Timer playerTimer;
     private List<String> playerList;
@@ -33,7 +32,6 @@ public class Onlinelobby extends Onlinelogin implements Initializable {
     private Button challengeButton;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //connection = getConnection();
         interpreter = new Interpreter();
         playerTimer = new Timer();
     /*
@@ -42,6 +40,7 @@ public class Onlinelobby extends Onlinelogin implements Initializable {
                connection.getPlayerlist();
             }   }, 5000, 5000);*/
     }
+
     @FXML
     protected void handleMainMenuButton(ActionEvent event){
        // setScene("view/main.fxml");
@@ -63,23 +62,11 @@ public class Onlinelobby extends Onlinelogin implements Initializable {
         }
         Main.connection.acceptGameChallenge(interpreter.getGameID());
 
-        System.out.println("test");
     }
-
-    @FXML
-    protected void handleTictactoeGameButton(){
-
-    }
-
-    @FXML
-    protected void handleReversiGameButton(){
-
-    }
-
 
     public void youLost(){
         Window ErrorMessage = challengeButton.getScene().getWindow();
-        AlertHelp.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Whoops, looks Like you lost!");
+        AlertHelp.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Lost game", "Whoops, looks Like you lost!");
 
         return;
 
@@ -103,64 +90,8 @@ public class Onlinelobby extends Onlinelogin implements Initializable {
 
         System.out.println("Gamestart whosTUrn ai");
 
-
-
-
     }
 
-    /*
-    Game begint en jij bent niet als eerste aan de beurt.
-    Dus de kleur is wit.
-
-    public void gameStart(){
-        String temp = Interpreter.getGameChallenge();
-        String whosTurn = temp;
-        if(whosTurn.equals(opponent) ) {
-            System.out.println("Gamestart whosTUrn opponent");
-            ReversiGame = new OnlineReversiBoardController(PlayerType.REMOTE, PlayerType.AI,1,2);
-            setScene("view/OnlineReversi.fxml");
-        } else if(whosTurn.equals(configSenderController.getIgnField())) {
-            System.out.println("Gamestart whosTUrn ai");
-            ReversiGame = new OnlineReversiBoardController(PlayerType.REMOTE, PlayerType.AI, 2,1);
-            setScene("view/OnlineReversi.fxml");
-        }
-
-    }
-*/
-    /*
-        Wanneer de server zegt dat het jou beurt is als de game begint.
-        De kleur van de ai is dan zwart
-     */
-    // public void yourGameTurn(){
-    //     ReversiGame = new OnlineReversiBoardController(PlayerType.AI, PlayerType.REMOTE, opponent.getText(), 1);
-    // }
-
-    public void logoutMenuButton(){
-        //Connection.logout();
-
-    }
-/*
-    public void availablePlayersView(ActionEvent event){
-        System.out.println("Start van availablePlayersView");
-
-        playerList = Interpreter.getPlayerList();
-        //Players players;
-        Set<Integer> indexes = new HashSet<>();
-
-        for(String player : playerList){
-            //players = new Players();
-            //int indexPlayer = playerList.indexOf(players);
-            if(!player.equals("AiGroep7")){
-                    System.out.println(player);
-                    playerList.add(player);
-
-                }
-
-            }
-
-        }
-
- */
 }
 
 class AlertHelp {

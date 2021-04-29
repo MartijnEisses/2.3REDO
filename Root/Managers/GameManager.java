@@ -18,7 +18,6 @@ public class GameManager {
 
     // Runs on setup-
     public void Start() throws IOException {
-
         for (int i = 0; i < managers.length; i++) {
             managers[i].Start();
         }
@@ -30,5 +29,12 @@ public class GameManager {
             managers[i].Update();
         }
     }
+
+
+
+
+
+
+
 
 }

@@ -37,6 +37,7 @@ public class Board {
         board[x][y] = value;
         //System.out.println("Move is legal on position " + x + "-"  +y + " for player " + value);
     }
+
     public void boardChange(int[][] newBord) {
         board = newBord;
     }
@@ -62,7 +63,9 @@ public class Board {
     public boolean fullBoard() {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[1].length; j++) {
-                if(board[i][j] == 0){return false;}
+                if(board[i][j] == 0){
+                    return false;
+                }
             }
         }
         return true;

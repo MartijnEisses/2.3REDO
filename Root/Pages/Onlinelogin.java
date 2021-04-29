@@ -17,8 +17,6 @@ import java.util.ResourceBundle;
 
 public class Onlinelogin implements Initializable {
 
-    private Connection connection;
-
     @FXML
     private TextField ignField;
 
@@ -35,7 +33,7 @@ public class Onlinelogin implements Initializable {
         ignField.setText("B2");
         ipField.setText("127.0.0.1");
         portField.setText("7789");
-        connection = new Connection();
+
     }
 
     @FXML

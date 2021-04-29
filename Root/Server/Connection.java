@@ -68,7 +68,7 @@ public class Connection{
         System.out.println("Start acceptGameChallenge, sending challenge accept!");
         commandQueue.add("challenge accept " + gameID);
         printQueue();
-
+        popQueue();
     }
 
     public void challengePlayer(String opponent, String gamemode) {

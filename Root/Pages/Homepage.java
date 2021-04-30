@@ -38,7 +38,7 @@ public class Homepage implements Initializable {
     }
 
     @FXML
-    protected void handleSubmitButtonAction(ActionEvent event) throws IOException {
+    protected void handleSubmitButtonAction(ActionEvent event) throws IOException, InterruptedException {
         selectedGame = getGameType();
         setPlayerType(playerType.LOCAL);
         switch(getGameType()) {

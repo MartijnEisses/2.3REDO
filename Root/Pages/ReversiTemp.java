@@ -30,7 +30,7 @@ public class ReversiTemp extends Board {
         randomAI = new RandomAI();
     }
 
-    public void startReversi(int player1, int player2){
+    public void startReversi(int player1, int player2) throws InterruptedException {
         System.out.println("Reversi begint!!!");
         System.out.println("Het is jou beurt!!!!!");
         drawBoard();
@@ -41,7 +41,7 @@ public class ReversiTemp extends Board {
         }
     }
 
-    public void doSome(String doSo) {
+    public void doSome(String doSo) throws InterruptedException {
         String[] fullWord = doSo.split(" ");
         if(fullWord[0].equals("set")){
             String[] fullSet = fullWord[1].split("-");

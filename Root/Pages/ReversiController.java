@@ -16,6 +16,7 @@ public class ReversiController extends Board {
     private int playerWhite;
     private int AIplayer;
     private RandomAI randomAI;
+    private int[][] curBoard;
 
     public ReversiController() {
         super(8, 8);
@@ -24,7 +25,7 @@ public class ReversiController extends Board {
         setStone(3,4,1);
         setStone(4,3,1);
         randomAI = new RandomAI();
-
+        //curBoard = getBoard();
     }
 
     public void gameController(int player1, int player2){
@@ -33,31 +34,22 @@ public class ReversiController extends Board {
 
     }
 
-
-
-
-    public ArrayList<String> legalMoves( int cp) {
-        int[][] curBoard = getBoard();
-        int totChanges = 0;
-        int tempChanges = 0;
-        int[][] bard = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
-        int[][] bard2 = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
+    public ArrayList<String> legalMoves(int cp) {
+        curBoard = getBoard();
         List<String> allMoves = new ArrayList<String>();
         boolean change = false;
-
         int checker1;
         int checker2;
-        int curp = 1;
-        int nCurp = 2;
-        if (cp == 2) {
-            curp = 2;
-            nCurp = 1;
+        int curp = 2;
+        int nCurp = 1;
+        if (cp == 1) {
+            curp = 1;
+            nCurp = 2;
         }
 
-        for (int x = 0; x < 8; x++) {
-            for (int y = 0; y < 8; y++) {
+        for (int x = 0; x < board.length; x++) {
+            for (int y = 0; y < board[x].length; y++) {
                 change = false;
-                // totChanges = 0;
                 if (curBoard[x][y] == 0) {
                     try {
                         if (curBoard[x + 1][y] == nCurp) {
@@ -65,9 +57,7 @@ public class ReversiController extends Board {
                             while (curBoard[checker1][y] == nCurp) {
                                 checker1++;
                                 // tempChanges++;
-
                             }
-
                             if (curBoard[checker1][y] == curp) {
                                 allMoves.add(x + "-" + y);
                                 change = true;
@@ -76,19 +66,13 @@ public class ReversiController extends Board {
                     } catch (ArrayIndexOutOfBoundsException e) {
                         // e.printStackTrace();
                     }
-
-                    //tempChanges = 0;
                     try {
                         if (curBoard[x - 1][y] == nCurp) {
                             checker1 = x - 1;
-
                             while (curBoard[checker1][y] == nCurp) {
-
                                 //tempChanges++;
                                 checker1--;
                             }
-
-
                             if (curBoard[checker1][y] == curp) {
                                 allMoves.add(x + "-" + y);
                                 change = true;
@@ -98,16 +82,12 @@ public class ReversiController extends Board {
                         //e.printStackTrace();
                     }
 
-
-                    tempChanges = 0;
                     try {
                         if (curBoard[x][y + 1] == nCurp) {
                             checker2 = y + 1;
-
                             while (curBoard[x][checker2] == nCurp) {
                                 //tempChanges++;
                                 checker2++;
-
                             }
                             if (curBoard[x][checker2] == curp) {
                                 allMoves.add(x + "-" + y);
@@ -117,63 +97,45 @@ public class ReversiController extends Board {
                     } catch (ArrayIndexOutOfBoundsException e) {
                         // e.printStackTrace();
                     }
-                    //tempChanges = 0;
                     try {
                         if (curBoard[x][y - 1] == nCurp) {
                             checker2 = y - 1;
-
                             while (curBoard[x][checker2] == nCurp) {
-                                //tempChanges++;
-
                                 checker2--;
                             }
-
-
                             if (curBoard[x][checker2] == curp) {
                                 allMoves.add(x + "-" + y);
                                 change = true;
-
                             }
                         }
                     } catch (ArrayIndexOutOfBoundsException e) {
                         // e.printStackTrace();
                     }
-                    //tempChanges = 0;
                     try {
                         if (curBoard[x + 1][y + 1] == nCurp) {
                             checker1 = x + 1;
                             checker2 = y + 1;
-
                             while (curBoard[checker1][checker2] == nCurp) {
-
                                 checker1++;
-
-                                //tempChanges++;
-
                                 checker2++;
-
-
                             }
-
 
                             if (curBoard[checker1][checker2] == curp) {
                                 allMoves.add(x + "-" + y);
                                 change = true;
-
                             }
 
                         }
                     } catch (ArrayIndexOutOfBoundsException e) {
                         // e.printStackTrace();
                     }
-                    //tempChanges = 0;
+
                     try {
                         if (curBoard[x - 1][y - 1] == nCurp) {
                             checker1 = x - 1;
                             checker2 = y - 1;
 
                             while (curBoard[checker1][checker2] == nCurp) {
-                                tempChanges++;
                                 checker1--;
                                 checker2--;
 
@@ -186,22 +148,13 @@ public class ReversiController extends Board {
                     } catch (ArrayIndexOutOfBoundsException e) {
                         //e.printStackTrace();
                     }
-
-                    //tempChanges = 0;
                     try {
                         if (curBoard[x + 1][y - 1] == nCurp) {
                             checker1 = x + 1;
                             checker2 = y - 1;
-
                             while (curBoard[checker1][checker2] == nCurp) {
-
                                 checker1++;
-
-                                //tempChanges ++;
-
                                 checker2--;
-
-
                             }
                             if (curBoard[checker1][checker2] == curp) {
                                 allMoves.add(x + "-" + y);
@@ -211,20 +164,15 @@ public class ReversiController extends Board {
                     } catch (ArrayIndexOutOfBoundsException e) {
                         // e.printStackTrace();
                     }
-                    //tempChanges = 0;
                     try {
                         if (curBoard[x - 1][y + 1] == nCurp) {
                             checker1 = x - 1;
                             checker2 = y + 1;
-
                             while (curBoard[checker1][checker2] == nCurp) {
                                 //tempChanges++;
-
                                 checker1--;
                                 checker2++;
                             }
-
-
                             if (curBoard[checker1][checker2] == curp) {
                                 allMoves.add(x + "-" + y);
                                 change = true;
@@ -239,12 +187,12 @@ public class ReversiController extends Board {
         return (ArrayList<String>) allMoves;
     }
     public void doMove(int cp, int[] move) {
-        int [][] curBoard = getBoard();
+        curBoard = getBoard();
         int x = move[0];
-        int y = move [1];
+        int y = move[1];
         //System.out.println("Dit is een test in doMove!!!");
-        int[][] bard = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
-        int[][] bard2 = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
+        int[][] bard = Arrays.stream(getBoard()).map(int[]::clone).toArray(int[][]::new);
+        int[][] bard2 = Arrays.stream(getBoard()).map(int[]::clone).toArray(int[][]::new);
         boolean change = false;
         int checker1;
         int checker2;
@@ -258,55 +206,54 @@ public class ReversiController extends Board {
             try {
                 if (curBoard[x + 1][y] == nCurp) {
                     checker1 = x + 1;
-
                     while (curBoard[checker1][y] == nCurp) {
                         bard[checker1][y] = curp;
                         checker1++;
                     }
-
                     if (curBoard[checker1][y] == curp) {
                         bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
                         change = true;
                     }
                     bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
                 }
+                bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
             } catch (ArrayIndexOutOfBoundsException e) {
+
             }
-            try {
+              try {
                 if (curBoard[x - 1][y] == nCurp) {
                     checker1 = x - 1;
                     while (curBoard[checker1][y] == nCurp) {
                         bard[checker1][y] = curp;
                         checker1--;
                     }
-
                     if (curBoard[checker1][y] == curp) {
                         bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
                         change = true;
                     }
-
+                    bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
                 }
+                  bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
             } catch (ArrayIndexOutOfBoundsException e) {
             }
-            bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
+
             try {
                 if (curBoard[x][y + 1] == nCurp) {
                     checker2 = y + 1;
-
                     while (curBoard[x][checker2] == nCurp) {
                         bard[x][checker2] = curp;
                         checker2++;
                     }
-
-                    // }
                     if (curBoard[x][checker2] == curp) {
                         bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
                         change = true;
                     }
+                    bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
                 }
                 bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
             } catch (ArrayIndexOutOfBoundsException e) {
             }
+
             try {
                 if (curBoard[x][y - 1] == nCurp) {
                     checker2 = y - 1;
@@ -316,12 +263,13 @@ public class ReversiController extends Board {
                     }
                     if (curBoard[x][checker2] == curp) {
                         bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
-                        change = true;
                     }
+                    bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
                 }
                 bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
             } catch (ArrayIndexOutOfBoundsException e) {
             }
+
             try {
                 if (curBoard[x + 1][y + 1] == nCurp) {
                     checker1 = x + 1;
@@ -335,10 +283,12 @@ public class ReversiController extends Board {
                         bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
                         change = true;
                     }
+                    bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
                 }
                 bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
             } catch (ArrayIndexOutOfBoundsException e) {
             }
+
             try {
                 if (curBoard[x - 1][y - 1] == nCurp) {
                     checker1 = x - 1;
@@ -352,6 +302,7 @@ public class ReversiController extends Board {
                         bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
                         change = true;
                     }
+                    bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
                 }
                 bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -369,12 +320,13 @@ public class ReversiController extends Board {
                         bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
                         change = true;
                     }
+                    bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
                 }
                 bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
             } catch (ArrayIndexOutOfBoundsException e) {
             }
-            try {
 
+            try {
                 if (curBoard[x - 1][y + 1] == nCurp) {
                     checker1 = x - 1;
                     checker2 = y + 1;
@@ -387,33 +339,27 @@ public class ReversiController extends Board {
                         bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
                         change = true;
                     }
+                    bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
             }
+            bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
             if (change == true) {
                 bard2[x][y] = curp;
                 if(currentPlayer == 1){currentPlayer++;}
                 else{currentPlayer--;}
-                boardChange(bard2);
                 System.out.println("     0 1 2 3 4 5 6 7");
-                for(int i =0; i< board.length; i++){
+                for(int i = 0; i< board.length; i++){
                     System.out.print("  " + (i) + " ");
                     for(int p = 0; p< board[i].length; p++){
                         System.out.print(" " + bard2[i][p]);
                     }
                     System.out.println();
                 }
+                curBoard = bard2;
+                boardChange(curBoard);
             }
         }
-         System.out.println("     0 1 2 3 4 5 6 7");
-            for(int i =0; i< board.length; i++){
-
-                System.out.print("  " + (i) + " ");
-                for(int p = 0; p< board[i].length; p++){
-                    System.out.print(" " +curBoard[i][p]);
-                }
-                System.out.println();
-          }
         boardChange(curBoard);
     }
 }

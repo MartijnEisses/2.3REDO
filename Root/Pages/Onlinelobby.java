@@ -84,7 +84,7 @@ public class Onlinelobby implements Initializable {
         }
 
         System.out.println("Sending challenge to: " + opponent.getText());
-       // Connection.challengePlayer(opponent.getText() , " Reversi");
+        Main.connection.challengePlayer(opponent.getText() , "Reversi");
 
         System.out.println("Gamestart whosTUrn ai");
 

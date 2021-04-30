@@ -59,7 +59,7 @@ public class Serversocket implements Runnable{
                     //System.out.println("Server response: " + inputLine);
                     interpreter.inputInterpreter(inputLine);
                 }
-            }catch (NullPointerException | IOException e){
+            }catch (NullPointerException | IOException | InterruptedException e){
                 e.printStackTrace();
             }
         }

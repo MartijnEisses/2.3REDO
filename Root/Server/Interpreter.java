@@ -34,7 +34,7 @@ public class Interpreter {
         randomAI = new RandomAI();
     }
 
-    public void inputInterpreter(String inputCommand) {
+    public void inputInterpreter(String inputCommand) throws InterruptedException {
         inputCommand = inputCommand.replaceAll("[^A-Za-z0-9 ]", "");
         String[] commands = inputCommand.split(" ");
         System.out.println("Volgende line is van inputInterpreter:");
@@ -54,11 +54,11 @@ public class Interpreter {
                     case "PLAYERLIST":
                         System.out.println("Playerlist of all players");
 
-                        for (int i = 2; i < commands.length; i++) {
-                            String temp = commands[i];
-                            playerList.add(temp);
+                        //for (int i = 2; i < commands.length; i++) {
+                          //  String temp = commands[i];
+                         //   playerList.add(temp);
                             //System.out.println(commands[i]);
-                        }
+                       // }
                         break;
                     case "HELP":
                         break;
@@ -96,31 +96,31 @@ public class Interpreter {
                                         System.out.println("Opponent made move on: " + zet);
                                         position = reversiController.convertToBoardPosition(zet);
                                         //Verwerk de move van de opponent.
-                                        System.out.println("position is:  " + position[0] + " " + position[1]);
+                                        System.out.println("position is:  " + position[1] + " " + position[0]);
                                         reversiController.doMove(getPlayerOpponent(), position);
-                                        reversiController.drawBoard();
                                     } else {
-                                        System.out.println("Received move from ai");
-                                        System.out.println("ai made move on: " + zet);
+                                        //System.out.println("Received move from ai");
+                                        //System.out.println("ai made move on: " + zet);
                                     }
                                 }catch (Exception e){
                                     System.out.println("Move is illegal");
+                                    e.printStackTrace();
 
                                 }
                                 break;
 
                             case "YOURTURN":
                                 //ai moet weten dat het zijn beurt is.
-                                System.out.println("Its youre turn ai make a good move...");
-
-                                int[] aiSET = randomAI.setRandomMove(reversiController.legalMoves(getPlayerAI()), reversiController.getBoard(), getPlayerAI());
-                                reversiController.doMove(getPlayerAI(),aiSET);
-                                System.out.println("X: " + aiSET[0] + " and y: " + aiSET[1]);
-                                reversiController.drawBoard();
+                                System.out.println("Its your turn ai make a good move...");
+                                int[] aiSET;
+                                aiSET = randomAI.setRandomMove(reversiController.legalMoves(getPlayerAI()), reversiController.getBoard(), getPlayerAI());
+                                //reversiController.doMove(getPlayerAI(),aiSET);
+                                System.out.println("AI has these legal moves: " + reversiController.legalMoves(getPlayerAI()));
+                                System.out.println("X: " + aiSET[1] + " and y: " + aiSET[0]);
                                 int sendINT = reversiController.LocationToInt(aiSET);
                                 System.out.println("Sending to opponent: " + sendINT + " for player: " + getPlayerAI());
+                                reversiController.doMove(getPlayerAI(),aiSET);
                                 Main.connection.setMove(sendINT);
-
                                 break;
                             case "CHALLENGE":
                                 switch (commands[3]) {

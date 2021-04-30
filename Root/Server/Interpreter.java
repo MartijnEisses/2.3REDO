@@ -1,7 +1,9 @@
 package Root.Server;
 
 import Root.Main;
+import Root.Pages.ReversiController;
 import Root.Pages.ReversiTemp;
+import Root.Players.RandomAI;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,8 +19,9 @@ public class Interpreter {
     private static String gameChallenge;
     private int playerAI;
     private int playerOpponent;
-    private int playerturn;
     private ReversiTemp reversiTemp;
+    private ReversiController reversiController;
+    private RandomAI randomAI;
 
     /*
         Note: zie protocol.txt op blackboard om de input te zien van de server
@@ -27,6 +30,8 @@ public class Interpreter {
         playerList = new ArrayList<>();
         legalmovesAI = new ArrayList<>();
         reversiTemp = new ReversiTemp();
+        reversiController = new ReversiController();
+        randomAI = new RandomAI();
     }
 
     public void inputInterpreter(String inputCommand) {
@@ -70,12 +75,12 @@ public class Interpreter {
                                             System.out.println("Opponent is color black");
                                             setPlayerAI(2);
                                             setPlayerOpponent(1);
-                                            reversiTemp.startReversi(1,2);
+                                            reversiController.gameController(getPlayerOpponent(), getPlayerAI());
                                         } else {
                                             System.out.println("ai has color black");
                                             setPlayerAI(1);
                                             setPlayerOpponent(2);
-                                            reversiTemp.startReversi(1,2);
+                                            reversiController.gameController(getPlayerAI(),getPlayerOpponent());
                                         }
                                         System.out.println("Player to move: " + PLAYERTOMOVE);
                                         break;
@@ -89,29 +94,40 @@ public class Interpreter {
                                     if (commands[4].equals(OPPONENT)) {
                                         System.out.println("Received move from opponent");
                                         System.out.println("Opponent made move on: " + zet);
-
+                                        position = reversiController.convertToBoardPosition(zet);
+                                        //Verwerk de move van de opponent.
+                                        System.out.println("position is:  " + position[0] + " " + position[1]);
+                                        reversiController.doMove(getPlayerOpponent(), position);
+                                        reversiController.drawBoard();
                                     } else {
                                         System.out.println("Received move from ai");
                                         System.out.println("ai made move on: " + zet);
                                     }
                                 }catch (Exception e){
                                     System.out.println("Move is illegal");
+
                                 }
                                 break;
 
                             case "YOURTURN":
                                 //ai moet weten dat het zijn beurt is.
                                 System.out.println("Its youre turn ai make a good move...");
-                                System.out.println();
+
+                                int[] aiSET = randomAI.setRandomMove(reversiController.legalMoves(getPlayerAI()), reversiController.getBoard(), getPlayerAI());
+                                reversiController.doMove(getPlayerAI(),aiSET);
+                                System.out.println("X: " + aiSET[0] + " and y: " + aiSET[1]);
+                                reversiController.drawBoard();
+                                int sendINT = reversiController.LocationToInt(aiSET);
+                                System.out.println("Sending to opponent: " + sendINT + " for player: " + getPlayerAI());
+                                Main.connection.setMove(sendINT);
+
                                 break;
                             case "CHALLENGE":
                                 switch (commands[3]) {
                                     case "CHALLENGER":
                                         //stuur challenge accept terug.
-                                        //System.out.println("Send instant challenge back start");
                                         gameID = Integer.parseInt(commands[6]);
                                         System.out.println("Challenged by " + commands[4] + " for game: " + commands[8] + " gameID :" + commands[6]);
-                                        //Main.connection.acceptGameChallenge(gameID);
                                         gameChallenge = commands[4];
                                         break;
                                     case "CANCELLED":
@@ -124,12 +140,13 @@ public class Interpreter {
                                 //info over win
                                 //alle stenen moeten worden gereset.
                                 //Display that user has won.Terug naar online screen en display user has won.
+                                System.out.println("You have won nice job!");
                                 break;
                             case "LOSS":
                                 //info over loss.
                                 //alle stenen moeten worden gereset.
-
                                 //Display that user has lost. Terug naar online screen en display user has lost
+                                System.out.println("You have lost you suck!");
                                 break;
                             default:
                                 throw new IllegalStateException("Unexpected value: " + commands[2]);
@@ -141,15 +158,15 @@ public class Interpreter {
     }
 
 
-    public static int getGameID() {
+    public int getGameID() {
         return gameID;
     }
 
-    public static List<String> getPlayerList() {
+    public List<String> getPlayerList() {
         return playerList;
     }
 
-    public static String getGameChallenge() {
+    public String getGameChallenge() {
         return gameChallenge;
     }
 

@@ -1,7 +1,6 @@
 package Root.Pages;
 
 import Root.Managers.Board;
-import Root.Managers.ReversiManager;
 import Root.Players.RandomAI;
 import Root.Players.playertype;
 
@@ -20,10 +19,6 @@ public class ReversiTemp extends Board {
     private RandomAI randomAI;
     private Random random;
     private boolean finished = true;
-
-
-    ArrayList<String> moves;
-
 
     public ReversiTemp() {
         super(8, 8);
@@ -52,13 +47,18 @@ public class ReversiTemp extends Board {
             String[] fullSet = fullWord[1].split("-");
             int x = Integer.parseInt(fullSet[0]);
             int y = Integer.parseInt(fullSet[1]);
-            boardChange(doMove(getBoard(), currentPlayer, x,y));
+            int[] result = new int[fullSet.length];
+            for (int i = 0; i < fullSet.length; i++) {
+                result[i] = Integer.parseInt(fullSet[i]);
+            }
+            boardChange(doMove(getBoard(), currentPlayer, result));
             //drawBoard();
             if(currentPlayer== 1){
                 currentPlayer = 2;
             }
             if(currentPlayer == 2) {
-                boardChange(randomAI.calculateRandomMove(legalMoves(getBoard(), currentPlayer), getBoard(), currentPlayer));
+                boardChange(doMove(getBoard(), currentPlayer, randomAI.setRandomMove(legalMoves(getBoard(), currentPlayer), getBoard(), currentPlayer)));
+                //boardChange(randomAI.calculateRandomMove(legalMoves(getBoard(), currentPlayer), getBoard(), currentPlayer));
                 //bord.boardChange(ai.calculateRandomMove(legal.legalMoves(bord.getBord(), currentPlayer), bord.getBord(), currentPlayer));
                 currentPlayer = 1;
             //    currentPlayer = !currentPlayer;
@@ -294,8 +294,10 @@ public class ReversiTemp extends Board {
         }
         return (ArrayList<String>) allMoves;
     }
-    public int[][] doMove(int[][] curBoard, int cp, int x, int y) {
+    public int[][] doMove(int[][] curBoard, int cp, int[] move) {
         //System.out.println("Dit is een test in doMove!!!");
+        int x = move[0];
+        int y = move [1];
         int[][] bard = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
         int[][] bard2 = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
         boolean change = false;

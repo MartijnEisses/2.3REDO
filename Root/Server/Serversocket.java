@@ -42,7 +42,7 @@ public class Serversocket implements Runnable{
                     writer.println(command);
                     writer.flush();
                     if (command.equals("logout")) {
-                        //System.out.println("Logging off");
+                        System.out.println("User has logged off");
                         runner = false;
                     }
                     // e.printStackTrace();
@@ -56,9 +56,7 @@ public class Serversocket implements Runnable{
                     if(firstServerResponse.contains(inputLine)){
                         continue;
                     }
-                    //System.out.println("test voor serversocket bufferedReader");
-                    System.out.println("Server response: " + inputLine);
-                    //Hier moet de interpreter nog worden aangeroepen
+                    //System.out.println("Server response: " + inputLine);
                     interpreter.inputInterpreter(inputLine);
                 }
             }catch (NullPointerException | IOException e){

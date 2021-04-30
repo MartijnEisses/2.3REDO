@@ -15,6 +15,8 @@ public class Game {
 
         Player playerOne = new Player("AI", playertype.AI);
         Player playerTwo = new Player("Tegenstander", playertype.ONLINE);
+        
+
 
     }
 

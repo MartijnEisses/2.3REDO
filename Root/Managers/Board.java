@@ -69,6 +69,36 @@ public class Board {
         numberOfStones.add(player2);
         return numberOfStones;
     }
+    /*
+    Convert integer send from server to two dimensional Array
+     */
+    public int[] convertToBoardPosition(int p) {
+        int[] position = new int[2];
+        int counter = 0;
+        for (int x = 0; x < board[0].length; x++) {
+            for (int y = 0; y < board[1].length; y++) {
+                if (p == counter) {
+                    position[0] = x;
+                    position[1] = y;
+                }
+                counter++;
+            }
+        }
+        return position;
+    }
+
+    /*
+    Convert two dimensional array to integer to send to server
+     */
+    public int LocationToInt(int[] set){
+        int x = set[0];
+        int y = set[1];
+        x++;
+        x*=8;
+        x--;
+        return x+y;
+    }
+
 
     public void drawBoard() {
         System.out.println("------------Dit is de methode drawBoard() in Board------------");

@@ -189,13 +189,13 @@ public class ReversiController extends Board {
     public void doMove(int cp, int[] move) {
         curBoard = getBoard();
         int x = move[0];
-        int y = move[1];
-        //System.out.println("Dit is een test in doMove!!!");
-        int[][] bard = Arrays.stream(getBoard()).map(int[]::clone).toArray(int[][]::new);
-        int[][] bard2 = Arrays.stream(getBoard()).map(int[]::clone).toArray(int[][]::new);
+        int y = move [1];
+        int[][] tempBoard = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
+        int[][] newBoard = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
+        int[][] newBoard2 = new int[8][8];
         boolean change = false;
-        int checker1;
-        int checker2;
+        int xC;
+        int yC;
         int curp = 2;
         int nCurp = 1;
         if (cp == 1) {
@@ -205,161 +205,156 @@ public class ReversiController extends Board {
         if (curBoard[x][y] == 0) {
             try {
                 if (curBoard[x + 1][y] == nCurp) {
-                    checker1 = x + 1;
-                    while (curBoard[checker1][y] == nCurp) {
-                        bard[checker1][y] = curp;
-                        checker1++;
+                    xC = x + 1;
+                    while (curBoard[xC][y] == nCurp) {
+                        tempBoard[xC][y] = curp;
+                        xC++;
                     }
-                    if (curBoard[checker1][y] == curp) {
-                        bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
+                    if (curBoard[xC][y] == curp) {
+                        newBoard = Arrays.stream(tempBoard).map(int[]::clone).toArray(int[][]::new);
                         change = true;
                     }
-                    bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
                 }
-                bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
             } catch (ArrayIndexOutOfBoundsException e) {
-
             }
-              try {
+                tempBoard = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
+            try {
                 if (curBoard[x - 1][y] == nCurp) {
-                    checker1 = x - 1;
-                    while (curBoard[checker1][y] == nCurp) {
-                        bard[checker1][y] = curp;
-                        checker1--;
+                    xC = x - 1;
+                    while (curBoard[xC][y] == nCurp) {
+                        tempBoard[xC][y] = curp;
+                        xC--;
                     }
-                    if (curBoard[checker1][y] == curp) {
-                        bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
+                    if (curBoard[xC][y] == curp) {
+                        newBoard = Arrays.stream(tempBoard).map(int[]::clone).toArray(int[][]::new);
                         change = true;
                     }
-                    bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
                 }
-                  bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
             } catch (ArrayIndexOutOfBoundsException e) {
             }
-
+            tempBoard = Arrays.stream(newBoard).map(int[]::clone).toArray(int[][]::new);
             try {
                 if (curBoard[x][y + 1] == nCurp) {
-                    checker2 = y + 1;
-                    while (curBoard[x][checker2] == nCurp) {
-                        bard[x][checker2] = curp;
-                        checker2++;
+                    yC = y + 1;
+                    while (curBoard[x][yC] == nCurp) {
+                        tempBoard[x][yC] = curp;
+                        yC++;
                     }
-                    if (curBoard[x][checker2] == curp) {
-                        bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
+                    if (curBoard[x][yC] == curp) {
+                        newBoard = Arrays.stream(tempBoard).map(int[]::clone).toArray(int[][]::new);
                         change = true;
                     }
-                    bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
                 }
-                bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
+
             } catch (ArrayIndexOutOfBoundsException e) {
             }
-
+            tempBoard = Arrays.stream(newBoard).map(int[]::clone).toArray(int[][]::new);
             try {
                 if (curBoard[x][y - 1] == nCurp) {
-                    checker2 = y - 1;
-                    while (curBoard[x][checker2] == nCurp) {
-                        bard[x][checker2] = curp;
-                        checker2--;
+                    yC = y - 1;
+                    while (curBoard[x][yC] == nCurp) {
+                        tempBoard[x][yC] = curp;
+                        yC--;
                     }
-                    if (curBoard[x][checker2] == curp) {
-                        bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
-                    }
-                    bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
-                }
-                bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
-            } catch (ArrayIndexOutOfBoundsException e) {
-            }
-
-            try {
-                if (curBoard[x + 1][y + 1] == nCurp) {
-                    checker1 = x + 1;
-                    checker2 = y + 1;
-                    while (curBoard[checker1][checker2] == nCurp) {
-                        bard[checker1][checker2] = curp;
-                        checker1++;
-                        checker2++;
-                    }
-                    if (curBoard[checker1][checker2] == curp) {
-                        bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
+                    if (curBoard[x][yC] == curp) {
+                        newBoard = Arrays.stream(tempBoard).map(int[]::clone).toArray(int[][]::new);
                         change = true;
                     }
-                    bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
                 }
-                bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
             } catch (ArrayIndexOutOfBoundsException e) {
             }
+            tempBoard = Arrays.stream(newBoard).map(int[]::clone).toArray(int[][]::new);
+            try {
 
+                if (curBoard[x + 1][y + 1] == nCurp) {
+                    xC = x + 1;
+                    yC = y + 1;
+                    while (curBoard[xC][yC] == nCurp) {
+                        tempBoard[xC][yC] = curp;
+                        xC++;
+                        yC++;
+                    }
+                    if (curBoard[xC][yC] == curp) {
+                        newBoard = Arrays.stream(tempBoard).map(int[]::clone).toArray(int[][]::new);
+                        change = true;
+                    }
+                }
+
+            } catch (ArrayIndexOutOfBoundsException e) {
+            }
+            tempBoard = Arrays.stream(newBoard).map(int[]::clone).toArray(int[][]::new);
             try {
                 if (curBoard[x - 1][y - 1] == nCurp) {
-                    checker1 = x - 1;
-                    checker2 = y - 1;
-                    while (curBoard[checker1][checker2] == nCurp) {
-                        bard[checker1][checker2] = curp;
-                        checker1--;
-                        checker2--;
+                    xC = x - 1;
+                    yC = y - 1;
+                    while (curBoard[xC][yC] == nCurp) {
+                        tempBoard[xC][yC] = curp;
+                        xC--;
+                        yC--;
                     }
-                    if (curBoard[checker1][checker2] == curp) {
-                        bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
+                    if (curBoard[xC][yC] == curp) {
+                        newBoard = Arrays.stream(tempBoard).map(int[]::clone).toArray(int[][]::new);
                         change = true;
                     }
-                    bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
                 }
-                bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
+
             } catch (ArrayIndexOutOfBoundsException e) {
             }
+            tempBoard = Arrays.stream(newBoard).map(int[]::clone).toArray(int[][]::new);
             try {
                 if (curBoard[x + 1][y - 1] == nCurp) {
-                    checker1 = x + 1;
-                    checker2 = y - 1;
-                    while (curBoard[checker1][checker2] == nCurp) {
-                        bard[checker1][checker2] = curp;
-                        checker1++;
-                        checker2--;
+                    xC = x + 1;
+                    yC = y - 1;
+                    while (curBoard[xC][yC] == nCurp) {
+                        tempBoard[xC][yC] = curp;
+                        xC++;
+                        yC--;
                     }
-                    if (curBoard[checker1][checker2] == curp) {
-                        bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
+                    if (curBoard[xC][yC] == curp) {
+                        newBoard = Arrays.stream(tempBoard).map(int[]::clone).toArray(int[][]::new);
                         change = true;
                     }
-                    bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
                 }
-                bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
+
+            } catch (ArrayIndexOutOfBoundsException e) {
+            }
+            tempBoard = Arrays.stream(newBoard).map(int[]::clone).toArray(int[][]::new);
+            try {
+
+                if (curBoard[x - 1][y + 1] == nCurp) {
+                    xC = x - 1;
+                    yC = y + 1;
+                    while (curBoard[xC][yC] == nCurp) {
+                        tempBoard[xC][yC] = curp;
+                        xC--;
+                        yC++;
+                    }
+                    if (curBoard[xC][yC] == curp) {
+                        newBoard = Arrays.stream(tempBoard).map(int[]::clone).toArray(int[][]::new);
+                        change = true;
+                    }
+                }
             } catch (ArrayIndexOutOfBoundsException e) {
             }
 
-            try {
-                if (curBoard[x - 1][y + 1] == nCurp) {
-                    checker1 = x - 1;
-                    checker2 = y + 1;
-                    while (curBoard[checker1][checker2] == nCurp) {
-                        bard[checker1][checker2] = curp;
-                        checker1--;
-                        checker2++;
-                    }
-                    if (curBoard[checker1][checker2] == curp) {
-                        bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
-                        change = true;
-                    }
-                    bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
-                }
-            } catch (ArrayIndexOutOfBoundsException e) {
-            }
-            bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
             if (change == true) {
-                bard2[x][y] = curp;
-                if(currentPlayer == 1){currentPlayer++;}
-                else{currentPlayer--;}
+                newBoard[x][y] = curp;
+                if (currentPlayer == 1) {
+                    currentPlayer++;
+                } else {
+                    currentPlayer--;
+                }
                 System.out.println("     0 1 2 3 4 5 6 7");
-                for(int i = 0; i< board.length; i++){
+                for (int i = 0; i < board.length; i++) {
                     System.out.print("  " + (i) + " ");
-                    for(int p = 0; p< board[i].length; p++){
-                        System.out.print(" " + bard2[i][p]);
+                    for (int p = 0; p < board[i].length; p++) {
+                        System.out.print(" " + newBoard[i][p]);
                     }
                     System.out.println();
                 }
-                curBoard = bard2;
+                curBoard = newBoard;
                 boardChange(curBoard);
             }
         }
-        boardChange(curBoard);
     }
 }

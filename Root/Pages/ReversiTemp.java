@@ -35,12 +35,14 @@ public class ReversiTemp extends Board {
         System.out.println("Het is jou beurt!!!!!");
         drawBoard();
 
-         while(finished){
-           String action = term.parce();
-           doSome(action);
+        while(finished){
+            String action = term.parce();
+            doSome(action);
         }
     }
+    public void doSome2(String doSo) throws InterruptedException {
 
+    }
     public void doSome(String doSo) throws InterruptedException {
         String[] fullWord = doSo.split(" ");
         if(fullWord[0].equals("set")){
@@ -61,7 +63,7 @@ public class ReversiTemp extends Board {
                 //boardChange(randomAI.calculateRandomMove(legalMoves(getBoard(), currentPlayer), getBoard(), currentPlayer));
                 //bord.boardChange(ai.calculateRandomMove(legal.legalMoves(bord.getBord(), currentPlayer), bord.getBord(), currentPlayer));
                 currentPlayer = 1;
-            //    currentPlayer = !currentPlayer;
+                //    currentPlayer = !currentPlayer;
             }
             if(currentPlayer == 1){
                 System.out.println("\nHet is jou beurt!!");
@@ -96,13 +98,13 @@ public class ReversiTemp extends Board {
     public ArrayList<String> legalMoves(int[][] curBoard, int cp) {
         int totChanges = 0;
         int tempChanges = 0;
-        int[][] bard = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
-        int[][] bard2 = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
+        int[][] tempBoard = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
+        int[][] newBoard = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
         List<String> allMoves = new ArrayList<String>();
         boolean change = false;
 
-        int checker1;
-        int checker2;
+        int xC;
+        int yC;
         int curp = 1;
         int nCurp = 2;
         if (cp == 2) {
@@ -117,14 +119,14 @@ public class ReversiTemp extends Board {
                 if (curBoard[x][y] == 0) {
                     try {
                         if (curBoard[x + 1][y] == nCurp) {
-                            checker1 = x + 1;
-                            while (curBoard[checker1][y] == nCurp) {
-                                checker1++;
+                            xC = x + 1;
+                            while (curBoard[xC][y] == nCurp) {
+                                xC++;
                                 // tempChanges++;
 
                             }
 
-                            if (curBoard[checker1][y] == curp) {
+                            if (curBoard[xC][y] == curp) {
                                 allMoves.add(x + "-" + y);
                                 change = true;
                             }
@@ -136,16 +138,16 @@ public class ReversiTemp extends Board {
                     //tempChanges = 0;
                     try {
                         if (curBoard[x - 1][y] == nCurp) {
-                            checker1 = x - 1;
+                            xC = x - 1;
 
-                            while (curBoard[checker1][y] == nCurp) {
+                            while (curBoard[xC][y] == nCurp) {
 
                                 //tempChanges++;
-                                checker1--;
+                                xC--;
                             }
 
 
-                            if (curBoard[checker1][y] == curp) {
+                            if (curBoard[xC][y] == curp) {
                                 allMoves.add(x + "-" + y);
                                 change = true;
                             }
@@ -158,14 +160,14 @@ public class ReversiTemp extends Board {
                     tempChanges = 0;
                     try {
                         if (curBoard[x][y + 1] == nCurp) {
-                            checker2 = y + 1;
+                            yC = y + 1;
 
-                            while (curBoard[x][checker2] == nCurp) {
+                            while (curBoard[x][yC] == nCurp) {
                                 //tempChanges++;
-                                checker2++;
+                                yC++;
 
                             }
-                            if (curBoard[x][checker2] == curp) {
+                            if (curBoard[x][yC] == curp) {
                                 allMoves.add(x + "-" + y);
                                 change = true;
                             }
@@ -176,16 +178,16 @@ public class ReversiTemp extends Board {
                     //tempChanges = 0;
                     try {
                         if (curBoard[x][y - 1] == nCurp) {
-                            checker2 = y - 1;
+                            yC = y - 1;
 
-                            while (curBoard[x][checker2] == nCurp) {
+                            while (curBoard[x][yC] == nCurp) {
                                 //tempChanges++;
 
-                                checker2--;
+                                yC--;
                             }
 
 
-                            if (curBoard[x][checker2] == curp) {
+                            if (curBoard[x][yC] == curp) {
                                 allMoves.add(x + "-" + y);
                                 change = true;
 
@@ -197,22 +199,22 @@ public class ReversiTemp extends Board {
                     //tempChanges = 0;
                     try {
                         if (curBoard[x + 1][y + 1] == nCurp) {
-                            checker1 = x + 1;
-                            checker2 = y + 1;
+                            xC = x + 1;
+                            yC = y + 1;
 
-                            while (curBoard[checker1][checker2] == nCurp) {
+                            while (curBoard[xC][yC] == nCurp) {
 
-                                checker1++;
+                                xC++;
 
                                 //tempChanges++;
 
-                                checker2++;
+                                yC++;
 
 
                             }
 
 
-                            if (curBoard[checker1][checker2] == curp) {
+                            if (curBoard[xC][yC] == curp) {
                                 allMoves.add(x + "-" + y);
                                 change = true;
 
@@ -225,16 +227,16 @@ public class ReversiTemp extends Board {
                     //tempChanges = 0;
                     try {
                         if (curBoard[x - 1][y - 1] == nCurp) {
-                            checker1 = x - 1;
-                            checker2 = y - 1;
+                            xC = x - 1;
+                            yC = y - 1;
 
-                            while (curBoard[checker1][checker2] == nCurp) {
+                            while (curBoard[xC][yC] == nCurp) {
                                 tempChanges++;
-                                checker1--;
-                                checker2--;
+                                xC--;
+                                yC--;
 
                             }
-                            if (curBoard[checker1][checker2] == curp) {
+                            if (curBoard[xC][yC] == curp) {
                                 allMoves.add(x + "-" + y);
                                 change = true;
                             }
@@ -246,20 +248,20 @@ public class ReversiTemp extends Board {
                     //tempChanges = 0;
                     try {
                         if (curBoard[x + 1][y - 1] == nCurp) {
-                            checker1 = x + 1;
-                            checker2 = y - 1;
+                            xC = x + 1;
+                            yC = y - 1;
 
-                            while (curBoard[checker1][checker2] == nCurp) {
+                            while (curBoard[xC][yC] == nCurp) {
 
-                                checker1++;
+                                xC++;
 
                                 //tempChanges ++;
 
-                                checker2--;
+                                yC--;
 
 
                             }
-                            if (curBoard[checker1][checker2] == curp) {
+                            if (curBoard[xC][yC] == curp) {
                                 allMoves.add(x + "-" + y);
                                 change = true;
                             }
@@ -270,18 +272,18 @@ public class ReversiTemp extends Board {
                     //tempChanges = 0;
                     try {
                         if (curBoard[x - 1][y + 1] == nCurp) {
-                            checker1 = x - 1;
-                            checker2 = y + 1;
+                            xC = x - 1;
+                            yC = y + 1;
 
-                            while (curBoard[checker1][checker2] == nCurp) {
+                            while (curBoard[xC][yC] == nCurp) {
                                 //tempChanges++;
 
-                                checker1--;
-                                checker2++;
+                                xC--;
+                                yC++;
                             }
 
 
-                            if (curBoard[checker1][checker2] == curp) {
+                            if (curBoard[xC][yC] == curp) {
                                 allMoves.add(x + "-" + y);
                                 change = true;
                             }
@@ -295,14 +297,13 @@ public class ReversiTemp extends Board {
         return (ArrayList<String>) allMoves;
     }
     public int[][] doMove(int[][] curBoard, int cp, int[] move) {
-        //System.out.println("Dit is een test in doMove!!!");
         int x = move[0];
         int y = move [1];
-        int[][] bard = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
-        int[][] bard2 = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
+        int[][] tempBoard = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
+        int[][] newBoard = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
         boolean change = false;
-        int checker1;
-        int checker2;
+        int xC;
+        int yC;
         int curp = 2;
         int nCurp = 1;
         if (cp == 1) {
@@ -312,147 +313,147 @@ public class ReversiTemp extends Board {
         if (curBoard[x][y] == 0) {
             try {
                 if (curBoard[x + 1][y] == nCurp) {
-                    checker1 = x + 1;
+                    xC = x + 1;
 
-                    while (curBoard[checker1][y] == nCurp) {
-                        bard[checker1][y] = curp;
-                        checker1++;
+                    while (curBoard[xC][y] == nCurp) {
+                        tempBoard[xC][y] = curp;
+                        xC++;
                     }
 
-                    if (curBoard[checker1][y] == curp) {
-                        bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
+                    if (curBoard[xC][y] == curp) {
+                        newBoard = Arrays.stream(tempBoard).map(int[]::clone).toArray(int[][]::new);
                         change = true;
                     }
-                    bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
+                    tempBoard = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
             }
             try {
                 if (curBoard[x - 1][y] == nCurp) {
-                    checker1 = x - 1;
-                    while (curBoard[checker1][y] == nCurp) {
-                        bard[checker1][y] = curp;
-                        checker1--;
+                    xC = x - 1;
+                    while (curBoard[xC][y] == nCurp) {
+                        tempBoard[xC][y] = curp;
+                        xC--;
                     }
 
-                    if (curBoard[checker1][y] == curp) {
-                        bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
+                    if (curBoard[xC][y] == curp) {
+                        newBoard = Arrays.stream(tempBoard).map(int[]::clone).toArray(int[][]::new);
                         change = true;
                     }
 
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
             }
-            bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
+            tempBoard = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
             try {
                 if (curBoard[x][y + 1] == nCurp) {
-                    checker2 = y + 1;
+                    yC = y + 1;
 
-                    while (curBoard[x][checker2] == nCurp) {
-                        bard[x][checker2] = curp;
-                        checker2++;
+                    while (curBoard[x][yC] == nCurp) {
+                        tempBoard[x][yC] = curp;
+                        yC++;
                     }
 
                     // }
-                    if (curBoard[x][checker2] == curp) {
-                        bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
+                    if (curBoard[x][yC] == curp) {
+                        newBoard = Arrays.stream(tempBoard).map(int[]::clone).toArray(int[][]::new);
                         change = true;
                     }
                 }
-                bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
+                tempBoard = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
             } catch (ArrayIndexOutOfBoundsException e) {
             }
             try {
                 if (curBoard[x][y - 1] == nCurp) {
-                    checker2 = y - 1;
-                    while (curBoard[x][checker2] == nCurp) {
-                        // if (checker2 != 8 && checker2 != -1) {
-                        bard[x][checker2] = curp;
-                        checker2--;
+                    yC = y - 1;
+                    while (curBoard[x][yC] == nCurp) {
+                        // if (yC != 8 && yC != -1) {
+                        tempBoard[x][yC] = curp;
+                        yC--;
                     }
                     // }
-                    if (curBoard[x][checker2] == curp) {
-                        bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
+                    if (curBoard[x][yC] == curp) {
+                        newBoard = Arrays.stream(tempBoard).map(int[]::clone).toArray(int[][]::new);
                         change = true;
                     }
                 }
-                bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
+                tempBoard = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
             } catch (ArrayIndexOutOfBoundsException e) {
             }
             try {
 
                 if (curBoard[x + 1][y + 1] == nCurp) {
-                    checker1 = x + 1;
-                    checker2 = y + 1;
-                    while (curBoard[checker1][checker2] == nCurp) {
-                        bard[checker1][checker2] = curp;
-                        checker1++;
-                        checker2++;
+                    xC = x + 1;
+                    yC = y + 1;
+                    while (curBoard[xC][yC] == nCurp) {
+                        tempBoard[xC][yC] = curp;
+                        xC++;
+                        yC++;
                     }
-                    if (curBoard[checker1][checker2] == curp) {
-                        bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
+                    if (curBoard[xC][yC] == curp) {
+                        newBoard = Arrays.stream(tempBoard).map(int[]::clone).toArray(int[][]::new);
                         change = true;
                     }
                 }
-                bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
+                tempBoard = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
             } catch (ArrayIndexOutOfBoundsException e) {
             }
             try {
                 if (curBoard[x - 1][y - 1] == nCurp) {
-                    checker1 = x - 1;
-                    checker2 = y - 1;
-                    while (curBoard[checker1][checker2] == nCurp) {
-                        bard[checker1][checker2] = curp;
-                        checker1--;
-                        checker2--;
+                    xC = x - 1;
+                    yC = y - 1;
+                    while (curBoard[xC][yC] == nCurp) {
+                        tempBoard[xC][yC] = curp;
+                        xC--;
+                        yC--;
                     }
-                    if (curBoard[checker1][checker2] == curp) {
-                        bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
+                    if (curBoard[xC][yC] == curp) {
+                        newBoard = Arrays.stream(tempBoard).map(int[]::clone).toArray(int[][]::new);
                         change = true;
                     }
                 }
-                bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
+                tempBoard = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
             } catch (ArrayIndexOutOfBoundsException e) {
             }
             try {
                 if (curBoard[x + 1][y - 1] == nCurp) {
-                    checker1 = x + 1;
-                    checker2 = y - 1;
-                    while (curBoard[checker1][checker2] == nCurp) {
-                        bard[checker1][checker2] = curp;
-                        checker1++;
-                        checker2--;
+                    xC = x + 1;
+                    yC = y - 1;
+                    while (curBoard[xC][yC] == nCurp) {
+                        tempBoard[xC][yC] = curp;
+                        xC++;
+                        yC--;
                     }
-                    if (curBoard[checker1][checker2] == curp) {
-                        bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
+                    if (curBoard[xC][yC] == curp) {
+                        newBoard = Arrays.stream(tempBoard).map(int[]::clone).toArray(int[][]::new);
                         change = true;
                     }
                 }
-                bard = Arrays.stream(bard2).map(int[]::clone).toArray(int[][]::new);
+                tempBoard = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
             } catch (ArrayIndexOutOfBoundsException e) {
             }
             try {
 
                 if (curBoard[x - 1][y + 1] == nCurp) {
-                    checker1 = x - 1;
-                    checker2 = y + 1;
-                    while (curBoard[checker1][checker2] == nCurp) {
-                        bard[checker1][checker2] = curp;
-                        checker1--;
-                        checker2++;
+                    xC = x - 1;
+                    yC = y + 1;
+                    while (curBoard[xC][yC] == nCurp) {
+                        tempBoard[xC][yC] = curp;
+                        xC--;
+                        yC++;
                     }
-                    if (curBoard[checker1][checker2] == curp) {
-                        bard2 = Arrays.stream(bard).map(int[]::clone).toArray(int[][]::new);
+                    if (curBoard[xC][yC] == curp) {
+                        newBoard = Arrays.stream(tempBoard).map(int[]::clone).toArray(int[][]::new);
                         change = true;
                     }
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
             }
             if (change == true) {
-                bard2[x][y] = curp;
+                newBoard[x][y] = curp;
                 if(currentPlayer == 1){currentPlayer++;}
                 else{currentPlayer--;}
-                return bard2;
+                return newBoard;
             }
         }
         return curBoard;

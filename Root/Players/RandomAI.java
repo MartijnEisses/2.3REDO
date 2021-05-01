@@ -1,7 +1,5 @@
 package Root.Players;
 
-import Root.Pages.ReversiTemp;
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;

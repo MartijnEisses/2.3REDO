@@ -4,19 +4,31 @@ import Root.Managers.Board;
 import Root.Players.RandomAI;
 import Root.Server.Interpreter;
 import Root.Server.Serversocket;
+import javafx.application.Platform;
+import javafx.fxml.Initializable;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class ReversiController extends Board {
-    private boolean reversiGamerunner = true;
+public class ReversiController extends Board implements Initializable,Runnable {
+
     private int currentPlayer;
     private int playerBlack;
     private int playerWhite;
-    private int AIplayer;
     private RandomAI randomAI;
     private int[][] curBoard;
+    private ReversiBoard reversiBoard;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        randomAI = new RandomAI();
+        curBoard = getBoard();
+        reversiBoard = new ReversiBoard();
+        //syncReversiBoard.setBoard(curBoard);
+    }
 
     public ReversiController() {
         super(8, 8);
@@ -24,20 +36,17 @@ public class ReversiController extends Board {
         setStone(4,4,2);
         setStone(3,4,1);
         setStone(4,3,1);
-        randomAI = new RandomAI();
-        //curBoard = getBoard();
     }
 
     public void gameController(int player1, int player2){
         this.playerBlack = player1;
         this.playerWhite = player2;
-
     }
 
     public ArrayList<String> legalMoves(int cp) {
         curBoard = getBoard();
         List<String> allMoves = new ArrayList<String>();
-        boolean change = false;
+
         int checker1;
         int checker2;
         int curp = 2;
@@ -46,21 +55,17 @@ public class ReversiController extends Board {
             curp = 1;
             nCurp = 2;
         }
-
         for (int x = 0; x < board.length; x++) {
             for (int y = 0; y < board[x].length; y++) {
-                change = false;
                 if (curBoard[x][y] == 0) {
                     try {
                         if (curBoard[x + 1][y] == nCurp) {
                             checker1 = x + 1;
                             while (curBoard[checker1][y] == nCurp) {
                                 checker1++;
-                                // tempChanges++;
                             }
                             if (curBoard[checker1][y] == curp) {
-                                allMoves.add(x + "-" + y);
-                                change = true;
+                                allMoves.add(y + "-" + x);
                             }
                         }
                     } catch (ArrayIndexOutOfBoundsException e) {
@@ -70,28 +75,23 @@ public class ReversiController extends Board {
                         if (curBoard[x - 1][y] == nCurp) {
                             checker1 = x - 1;
                             while (curBoard[checker1][y] == nCurp) {
-                                //tempChanges++;
                                 checker1--;
                             }
                             if (curBoard[checker1][y] == curp) {
-                                allMoves.add(x + "-" + y);
-                                change = true;
+                                allMoves.add(y + "-" + x);
                             }
                         }
                     } catch (ArrayIndexOutOfBoundsException e) {
                         //e.printStackTrace();
                     }
-
                     try {
                         if (curBoard[x][y + 1] == nCurp) {
                             checker2 = y + 1;
                             while (curBoard[x][checker2] == nCurp) {
-                                //tempChanges++;
                                 checker2++;
                             }
                             if (curBoard[x][checker2] == curp) {
-                                allMoves.add(x + "-" + y);
-                                change = true;
+                                allMoves.add(y + "-" + x);
                             }
                         }
                     } catch (ArrayIndexOutOfBoundsException e) {
@@ -104,8 +104,7 @@ public class ReversiController extends Board {
                                 checker2--;
                             }
                             if (curBoard[x][checker2] == curp) {
-                                allMoves.add(x + "-" + y);
-                                change = true;
+                                allMoves.add(y + "-" + x);
                             }
                         }
                     } catch (ArrayIndexOutOfBoundsException e) {
@@ -119,12 +118,9 @@ public class ReversiController extends Board {
                                 checker1++;
                                 checker2++;
                             }
-
                             if (curBoard[checker1][checker2] == curp) {
-                                allMoves.add(x + "-" + y);
-                                change = true;
+                                allMoves.add(y + "-" + x);
                             }
-
                         }
                     } catch (ArrayIndexOutOfBoundsException e) {
                         // e.printStackTrace();
@@ -134,15 +130,12 @@ public class ReversiController extends Board {
                         if (curBoard[x - 1][y - 1] == nCurp) {
                             checker1 = x - 1;
                             checker2 = y - 1;
-
                             while (curBoard[checker1][checker2] == nCurp) {
                                 checker1--;
                                 checker2--;
-
                             }
                             if (curBoard[checker1][checker2] == curp) {
-                                allMoves.add(x + "-" + y);
-                                change = true;
+                                allMoves.add(y + "-" + x);
                             }
                         }
                     } catch (ArrayIndexOutOfBoundsException e) {
@@ -157,8 +150,7 @@ public class ReversiController extends Board {
                                 checker2--;
                             }
                             if (curBoard[checker1][checker2] == curp) {
-                                allMoves.add(x + "-" + y);
-                                change = true;
+                                allMoves.add(y + "-" + x);
                             }
                         }
                     } catch (ArrayIndexOutOfBoundsException e) {
@@ -174,8 +166,7 @@ public class ReversiController extends Board {
                                 checker2++;
                             }
                             if (curBoard[checker1][checker2] == curp) {
-                                allMoves.add(x + "-" + y);
-                                change = true;
+                                allMoves.add(y + "-" + x);
                             }
                         }
                     } catch (ArrayIndexOutOfBoundsException e) {
@@ -188,8 +179,8 @@ public class ReversiController extends Board {
     }
     public void doMove(int cp, int[] move) {
         curBoard = getBoard();
-        int x = move[0];
-        int y = move [1];
+        int x = move[1];
+        int y = move [0];
         int[][] tempBoard = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
         int[][] newBoard = Arrays.stream(curBoard).map(int[]::clone).toArray(int[][]::new);
         int[][] newBoard2 = new int[8][8];
@@ -354,7 +345,41 @@ public class ReversiController extends Board {
                 }
                 curBoard = newBoard;
                 boardChange(curBoard);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            syncBoards(curBoard);
+                        }catch(NullPointerException e){
+                            //e.printStackTrace();
+                        }
+                    }
+                });
+                //syncBoards(curBoard);
             }
         }
+    }
+
+    public int[][] getCurBoard(){
+        return curBoard;
+    }
+
+    public void syncBoards(int[][] newBoard){
+        int[][] tempBoard = newBoard;
+        for(int i =0; i< tempBoard.length; i++){
+            for(int j=0; j< tempBoard[i].length; j++){
+                if(tempBoard[i][j] == 1) {
+                    reversiBoard.setStoneOnBoard(i,j, 1);
+                }
+                else if(tempBoard[i][j] == 2){
+                    reversiBoard.setStoneOnBoard(i,j,2);
+                }
+            }
+        }
+    }
+
+
+    public void run() {
+
     }
 }

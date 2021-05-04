@@ -33,29 +33,28 @@ public class Onlinelogin implements Initializable {
         ignField.setText("B2");
         ipField.setText("127.0.0.1");
         portField.setText("7789");
-
     }
 
     @FXML
     protected void handleSubmitButton(ActionEvent event) throws IOException {
         Window ErrorMessage = submitButton.getScene().getWindow();
         //Check if the textfields are empty
-        if(ignField.getText().isEmpty()){
+        if (ignField.getText().isEmpty()) {
             AlertHelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid ign");
             return;
         }
 
-        if(ipField.getText().isEmpty()){
+        if (ipField.getText().isEmpty()) {
             AlertHelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid IP");
             return;
         }
 
-        if(!portField.getText().matches("^[0-9]*$")){
+        if (!portField.getText().matches("^[0-9]*$")) {
             AlertHelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid port");
             return;
         }
 
-        if(portField.getText().isEmpty()){
+        if (portField.getText().isEmpty()) {
             AlertHelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid Port");
             return;
         }
@@ -73,8 +72,8 @@ public class Onlinelogin implements Initializable {
     }
     //public Connection getConnection(){return connection;}
 
-}
 
+}
 class AlertHelper {
 
     public static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {

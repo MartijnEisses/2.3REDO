@@ -1,28 +1,70 @@
 package Root.Players;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class RandomAI {
-
+    private String[] badToGoodMoves = new String[] {"1-1","1-2","1-3","1-4","1-5","1-6","2-1","2-6","3-1","3-6","4-1","4-6","5-1","5-6","6-1","6-6","2-2","2-3","2-4","2-5","3-2","3-3","3-4","3-5","4-2","4-3","4-4","4-5","5-2","5-3","5-4","5-5","6-2","6-3","6-4","6-5","0-1","0-2","0-3","0-4","0-5","0-6","1-0","2-0","3-0","4-0","5-0","6-0","1-7","2-7","3-7","4-7","5-7","6-7","0-0","0-7","7-0","7-7"};
+    private String[] badMoves = new String[] {"1-1","1-2","1-3","1-4","1-5","1-6","2-1","2-6","3-1","3-6","4-1","4-6","5-1","5-6","6-1","6-2","6-3","6-4","6-5","6-6"};
+    private String[] okMoves = new String[] {"2-2","2-3","2-4","2-5","3-2","3-3","3-4","3-5","4-2","4-3","4-4","4-5","5-2","5-3","5-4","5-5"};
+    private String[] goodMoves = new String[] {"0-1","0-2","0-3","0-4","0-5","0-6","1-0","2-0","3-0","4-0","5-0","6-0","1-7","2-7","3-7","4-7","5-7","6-7"};
+    private String[] bestMoves = new String[] {"0-0","0-7","7-0","7-7"};
+    private String bestMove ="";
     private Random random = new Random();
     private int[] result;
 
+
     public int[] setRandomMove (ArrayList<String> legalMoves, int[][] board, int cp) throws InterruptedException {
+
+        List<String> moveList = new ArrayList(Arrays.asList(legalMoves));
+
+        for (String pos: badMoves){
+            for(String test : legalMoves){
+                if(pos.equals(test)) {
+                    bestMove = pos;
+                 }
+            }
+        }
+
+        for (String pos: okMoves){
+            for(String test : legalMoves){
+                if(pos.equals(test)) { ;
+                    bestMove = pos;
+                }
+            }
+        }
+
+        for (String pos: goodMoves){
+            for(String test: legalMoves){
+                if(pos.equals(test)) {
+                    bestMove = pos;
+                }
+            }
+        }
+
+        for (String pos: bestMoves){
+            for(String test: legalMoves){
+                if(pos.equals(test)) {
+                    bestMove = pos;
+                }
+            }
+        }
         try {
+            System.out.println("The best move of the ai is: " + bestMove);
             TimeUnit.SECONDS.sleep(1);
-            int randomZet = random.nextInt(legalMoves.size());
-            String coordinates = legalMoves.get(randomZet);
-            String[] move = coordinates.split("-");
+            String[] move = bestMove.split("-");
             result = new int[move.length];
             for (int i = 0; i < move.length; i++) {
                 result[i] = Integer.parseInt(move[i]);
             }
             return result;
-        }catch (IllegalArgumentException e){
+        }catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
         return result;
     }
 }
+

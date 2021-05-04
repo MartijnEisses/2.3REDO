@@ -49,8 +49,6 @@ public class Homepage implements Initializable {
                 UIManager.createScene("Reversi.fxml");
                 reversiTemp = new ReversiTemp();
                 reversiTemp.startReversi(1,2);
-                //UIManager.createScene("Reversi.fxml");
-                //HIER REVERSITEMP AANROEPEN
 
                 break;
         }
@@ -58,7 +56,6 @@ public class Homepage implements Initializable {
 
     @FXML
     protected void handleOnlineButtonAction(ActionEvent event) throws IOException {
-        //setPlayerType(playerType.REMOTE);
         UIManager.createScene("Onlinelogin.fxml");
     }
 

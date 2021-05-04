@@ -60,7 +60,9 @@ public class Onlinelobby implements Initializable {
            AlertHelp.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "No challenge has been Send!");
             return;
         }
+        UIManager.createScene("Reversi.fxml");
         Main.connection.acceptGameChallenge(interpreter.getGameID());
+
     }
 
     public void youLost(){
@@ -84,12 +86,11 @@ public class Onlinelobby implements Initializable {
         }
 
         System.out.println("Sending challenge to: " + opponent.getText());
+        UIManager.createScene("Reversi.fxml");
         Main.connection.challengePlayer(opponent.getText() , "Reversi");
 
-        System.out.println("Gamestart whosTUrn ai");
-
+        //System.out.println("Gamestart whosTUrn ai");
     }
-
 }
 
 class AlertHelp {

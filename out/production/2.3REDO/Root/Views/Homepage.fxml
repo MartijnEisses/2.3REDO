@@ -1,20 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import java.net.URL?>
 
-<GridPane fx:id="gp_1" fx:controller="Root.Pages.Homepage" xmlns:fx="http://javafx.com/fxml" styleClass="background" alignment="center" GridPane.columnSpan="3" hgap="10" vgap="10">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280" style="-fx-background-color: #D3D3D3;"
+      xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml" fx:controller="Root.Pages.Homepage">
 
-    <Label styleClass="selectLabel" text="Select Game:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+    <HBox fx:id="offline" alignment="TOP_LEFT" layoutY="300.0" layoutX="100.0" prefWidth="150">
+        <Label styleClass="selectLabel" text="Select Game:" prefWidth="200" prefHeight="40" minHeight="40"/>
+        <ComboBox fx:id="selectGame" styleClass="selectGame" prefWidth="200" prefHeight="40" minHeight="40" />
+    </HBox>
 
-    <ComboBox fx:id="selectGame" styleClass="selectGame" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+   <HBox fx:id="online" alignment="TOP_CENTER" layoutX="300.0" layoutY="700.0" prefWidth="850.0" spacing="300">
+       <Button fx:id="selectButton" styleClass="selectButton" text="Start Game" onAction="#handleSubmitButtonAction" prefWidth="200" prefHeight="40" minHeight="40"/>
+       <Button fx:id="onlineButton" styleClass="onlineButton" text="Online" onAction="#handleOnlineButtonAction"  prefWidth="200" prefHeight="40" minHeight="40"/>
+   </HBox>
 
-    <Button fx:id="selectButton" styleClass="selectButton" text="Offline" onAction="#handleSubmitButtonAction" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-
-    <Button fx:id="onlineButton" styleClass="onlineButton" text="Online" onAction="#handleOnlineButtonAction"  GridPane.columnIndex="2" GridPane.rowIndex="1"/>
-
-</GridPane>
+</VBox>

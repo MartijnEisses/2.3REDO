@@ -8,7 +8,8 @@
 
 <?import java.net.URL?>
 
-<GridPane fx:id="gridBoard" fx:controller="Root.Pages.ReversiTemp" xmlns:fx="http://javafx.com/fxml" styleClass="boardBackground" alignment="center" gridLinesVisible="true">
+<GridPane fx:id="gridBoard" fx:controller="Root.Pages.ReversiBoard" xmlns:fx="http://javafx.com/fxml" styleClass="boardBackground" alignment="center" gridLinesVisible="true"
+            style="-fx-background-color: #00FF00;">
 
 
 

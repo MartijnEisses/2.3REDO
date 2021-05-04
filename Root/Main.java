@@ -19,7 +19,6 @@ public class Main extends Application{
     public static Stage primaryStage;
     public static FXMLLoader loader;
     public static Connection connection;
-
     @FXML
     public static Parent root;
 

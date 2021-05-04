@@ -1,10 +1,13 @@
 package Root.Server;
 
 import Root.Main;
+import Root.Managers.UIManager;
+import Root.Pages.ReversiBoard;
 import Root.Pages.ReversiController;
 import Root.Pages.ReversiTemp;
 import Root.Players.RandomAI;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,25 +22,25 @@ public class Interpreter {
     private static String gameChallenge;
     private int playerAI;
     private int playerOpponent;
-    private ReversiTemp reversiTemp;
     private ReversiController reversiController;
     private RandomAI randomAI;
+    private ReversiBoard reversiBoard;
 
     /*
         Note: zie protocol.txt op blackboard om de input te zien van de server
      */
+
     public Interpreter() {
         playerList = new ArrayList<>();
         legalmovesAI = new ArrayList<>();
-        reversiTemp = new ReversiTemp();
         reversiController = new ReversiController();
         randomAI = new RandomAI();
     }
 
-    public void inputInterpreter(String inputCommand) throws InterruptedException {
+    public void inputInterpreter(String inputCommand) throws InterruptedException, IOException {
         inputCommand = inputCommand.replaceAll("[^A-Za-z0-9 ]", "");
         String[] commands = inputCommand.split(" ");
-        System.out.println("Volgende line is van inputInterpreter:");
+        //System.out.println("Volgende line is van inputInterpreter:");
         System.out.println(Arrays.toString(commands));
         switch (commands[0]) {
             case "OK":
@@ -96,9 +99,10 @@ public class Interpreter {
                                         System.out.println("Opponent made move on: " + zet);
                                         position = reversiController.convertToBoardPosition(zet);
                                         //Verwerk de move van de opponent.
-                                        System.out.println("position is:  " + position[1] + " " + position[0]);
+                                        System.out.println("position is:  " + position[0] + " " + position[1]);
                                         reversiController.doMove(getPlayerOpponent(), position);
                                     } else {
+                                        //position = reversiController.convertToBoardPosition(zet);
                                         //System.out.println("Received move from ai");
                                         //System.out.println("ai made move on: " + zet);
                                     }
@@ -116,7 +120,7 @@ public class Interpreter {
                                 aiSET = randomAI.setRandomMove(reversiController.legalMoves(getPlayerAI()), reversiController.getBoard(), getPlayerAI());
                                 //reversiController.doMove(getPlayerAI(),aiSET);
                                 System.out.println("AI has these legal moves: " + reversiController.legalMoves(getPlayerAI()));
-                                System.out.println("X: " + aiSET[1] + " and y: " + aiSET[0]);
+                                System.out.println("X: " + aiSET[0] + " and y: " + aiSET[1]);
                                 int sendINT = reversiController.LocationToInt(aiSET);
                                 System.out.println("Sending to opponent: " + sendINT + " for player: " + getPlayerAI());
                                 reversiController.doMove(getPlayerAI(),aiSET);
@@ -141,12 +145,18 @@ public class Interpreter {
                                 //alle stenen moeten worden gereset.
                                 //Display that user has won.Terug naar online screen en display user has won.
                                 System.out.println("You have won nice job!");
+                                //UIManager.createScene("Onlinelobby.fxml");
+                                reversiController.emptyBoard();
+                                reversiController.drawBoard();
                                 break;
                             case "LOSS":
                                 //info over loss.
                                 //alle stenen moeten worden gereset.
                                 //Display that user has lost. Terug naar online screen en display user has lost
                                 System.out.println("You have lost you suck!");
+                                //UIManager.createScene("Onlinelobby.fxml");
+                                reversiController.emptyBoard();
+                                reversiController.drawBoard();
                                 break;
                             default:
                                 throw new IllegalStateException("Unexpected value: " + commands[2]);
@@ -189,8 +199,6 @@ public class Interpreter {
     public void setPlayerOpponent(int playerOpponent) {
         this.playerOpponent = playerOpponent;
     }
-
-
 }
 /*
 class AlertHelpers {

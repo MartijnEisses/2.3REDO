@@ -1,5 +1,7 @@
 package Root.Managers;
 
+import Root.Pages.ReversiBoard;
+
 import java.util.ArrayList;
 
 public class Board {
@@ -26,6 +28,7 @@ public class Board {
      */
 
     protected int[][] board;
+    private ReversiBoard reversiBoard;
 
     public Board(int x, int y) {
         this.board = new int[x][y];
@@ -102,7 +105,7 @@ public class Board {
         for (int i = 0; i < board.length; i++) {
             System.out.print((i) + " ");
             for (int j = 0; j < board[i].length; j++) {
-                System.out.print(board[j][i] + " ");
+                System.out.print(board[i][j] + " ");
             }
             System.out.print("\n");
         }
@@ -117,5 +120,9 @@ public class Board {
             }
         }
         return true;
+    }
+
+    public void emptyBoard(){
+        this.board = new int[8][8];
     }
 }

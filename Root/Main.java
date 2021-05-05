@@ -10,6 +10,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import Root.Managers.*;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 public class Main extends Application{
@@ -54,4 +57,9 @@ public class Main extends Application{
         UIManager.createScene("Homepage.fxml");
 
     }
+
+    public Stage getPrimaryStage() {
+        return this.primaryStage;
+    }
+
 }

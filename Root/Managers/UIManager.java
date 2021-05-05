@@ -31,10 +31,14 @@ public class UIManager implements Manager {
 
     public static void createScene(String path) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
+
         FileInputStream fileInputStream = new FileInputStream(new File("Root/Views/" + path));
         Parent root = fxmlLoader.load(fileInputStream);
         Main.primaryStage.getScene().setRoot(root);
+        Main.primaryStage.getScene().getStylesheets().add("Root/Views/Style.css");
         Main.primaryStage.show();
+
+
     }
 
 }

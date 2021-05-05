@@ -1,7 +1,11 @@
 package Root.Managers;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
-public class TicTacToeManager implements Manager {
+
+public class TicTacToeManager extends Board implements Manager {
 
     @Override
     public void Start() {
@@ -17,7 +21,7 @@ public class TicTacToeManager implements Manager {
 
 
 
-/*
+
     
     Scanner in = new Scanner(System.in);
 
@@ -187,8 +191,7 @@ public class TicTacToeManager implements Manager {
             break;
         }
 
-         for (int i = 0; i < board.length; i++) { System.out.println(board[0][i] + ""
-         * + board[1][i] + "" + board[2][i]); }
+         for (int i = 0; i < board.length; i++) { System.out.println(board[0][i] + "" + board[1][i] + "" + board[2][i]); }
 
     }
 
@@ -334,5 +337,4 @@ public class TicTacToeManager implements Manager {
 
     }
 }
-*/
-}
+

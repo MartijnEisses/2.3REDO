@@ -4,6 +4,7 @@ import Root.Main;
 import Root.Players.playertype;
 import Root.Managers.GameType;
 import Root.Managers.UIManager;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +19,7 @@ import java.util.ResourceBundle;
 public class Homepage implements Initializable {
     private playertype playerType;
     private GameType gameType;
-    private ReversiTemp reversiTemp;
+    private ReversiController reversiController;
 
     @FXML
     ComboBox<String> selectGame;
@@ -26,7 +27,7 @@ public class Homepage implements Initializable {
     public static GameType selectedGame;
 
     public Homepage()  {
-
+        reversiController = new ReversiController();
     }
 
     @Override
@@ -44,10 +45,7 @@ public class Homepage implements Initializable {
                 UIManager.createScene("TicTacToeBoard.fxml");
                 break;
             case Reversi:
-                UIManager.createScene("Reversi.fxml");
-                reversiTemp = new ReversiTemp();
-                reversiTemp.startReversi(1,2);
-
+                UIManager.createScene("OfflineReversi.fxml");
                 break;
         }
     }

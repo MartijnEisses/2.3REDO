@@ -28,11 +28,7 @@ public class UIManager implements Manager {
         // TODO Auto-generated method stub
 
     }
-/*
-    public static void createScene(String path) throws IOException{
-        createScene(path, new FXMLLoader());
-    }
-*/
+
     public static void createScene(String path) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         FileInputStream fileInputStream = new FileInputStream(new File("Root/Views/" + path));

@@ -1,7 +1,7 @@
 package Root.Managers;
 
 
-public class TicTacToeManager extends Board implements Manager{
+public class TicTacToeManager implements Manager {
 
     @Override
     public void Start() {
@@ -17,7 +17,7 @@ public class TicTacToeManager extends Board implements Manager{
 
 
 
-
+/*
     
     Scanner in = new Scanner(System.in);
 
@@ -186,10 +186,10 @@ public class TicTacToeManager extends Board implements Manager{
         default:
             break;
         }
-        /*
-         * for (int i = 0; i < board.length; i++) { System.out.println(board[0][i] + ""
+
+         for (int i = 0; i < board.length; i++) { System.out.println(board[0][i] + ""
          * + board[1][i] + "" + board[2][i]); }
-         */
+
     }
 
     public Boolean ValidMove(int x, int y) {
@@ -334,5 +334,5 @@ public class TicTacToeManager extends Board implements Manager{
 
     }
 }
-
+*/
 }

@@ -1,11 +1,14 @@
 package Root.Server;
 
 import Root.Main;
+import Root.Managers.GameType;
 import Root.Managers.UIManager;
 import Root.Pages.ReversiBoard;
 import Root.Pages.ReversiController;
 import Root.Pages.ReversiTemp;
-import Root.Players.RandomAI;
+
+import Root.Players.ReversiAI;
+import Root.Players.playertype;
 import com.sun.glass.ui.PlatformFactory;
 import javafx.application.Platform;
 
@@ -25,7 +28,7 @@ public class Interpreter {
     private int playerAI;
     private int playerOpponent;
     private ReversiController reversiController;
-    private RandomAI randomAI;
+    private ReversiAI reversiAI;
     private ReversiBoard reversiBoard;
 
     /*
@@ -36,7 +39,7 @@ public class Interpreter {
         playerList = new ArrayList<>();
         legalmovesAI = new ArrayList<>();
         reversiController = new ReversiController();
-        randomAI = new RandomAI();
+        reversiAI = new ReversiAI();
     }
 
     public void inputInterpreter(String inputCommand) throws InterruptedException, IOException {
@@ -58,12 +61,6 @@ public class Interpreter {
                         break;
                     case "PLAYERLIST":
                         System.out.println("Playerlist of all players");
-
-                        //for (int i = 2; i < commands.length; i++) {
-                          //  String temp = commands[i];
-                         //   playerList.add(temp);
-                            //System.out.println(commands[i]);
-                       // }
                         break;
                     case "HELP":
                         break;
@@ -80,12 +77,12 @@ public class Interpreter {
                                             System.out.println("Opponent is color black");
                                             setPlayerAI(2);
                                             setPlayerOpponent(1);
-                                            reversiController.gameController(getPlayerOpponent(), getPlayerAI());
+                                            reversiController.gameController(playertype.ONLINE,playertype.AI, GameType.ONLINE);
                                         } else {
                                             System.out.println("ai has color black");
                                             setPlayerAI(1);
                                             setPlayerOpponent(2);
-                                            reversiController.gameController(getPlayerAI(),getPlayerOpponent());
+                                            reversiController.gameController(playertype.AI, playertype.ONLINE, GameType.ONLINE);
                                         }
                                         System.out.println("Player to move: " + PLAYERTOMOVE);
                                         Platform.runLater(new Runnable() {
@@ -126,7 +123,7 @@ public class Interpreter {
                                 //ai moet weten dat het zijn beurt is.
                                 System.out.println("Its your turn ai make a good move...");
                                 int[] aiSET;
-                                aiSET = randomAI.setRandomMove(reversiController.legalMoves(getPlayerAI()), reversiController.getBoard(), getPlayerAI());
+                                aiSET = reversiAI.getBestMove(reversiController.legalMoves(getPlayerAI()), reversiController.getBoard(), getPlayerAI());
                                 System.out.println("AI has these legal moves: " + reversiController.legalMoves(getPlayerAI()));
                                 System.out.println("X: " + aiSET[0] + " and y: " + aiSET[1]);
                                 int sendINT = reversiController.LocationToInt(aiSET);

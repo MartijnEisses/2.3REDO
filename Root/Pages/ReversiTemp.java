@@ -1,17 +1,21 @@
 package Root.Pages;
 
 import Root.Managers.Board;
-import Root.Players.RandomAI;
+import Root.Managers.UIManager;
+;
+import Root.Players.ReversiAI;
 import Root.Players.playertype;
+import javafx.application.Platform;
 import javafx.fxml.Initializable;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
 public class ReversiTemp extends Board implements Initializable {
     Terminal term = new Terminal();
     private int currentPlayer; // wit is 2 - zwart is 1.
-    private RandomAI randomAI;
+    private ReversiAI reversiAI;
     private Random random;
     private boolean finished = true;
     private ReversiController reversiController;
@@ -29,14 +33,23 @@ public class ReversiTemp extends Board implements Initializable {
         setStone(3,4,1);
         setStone(4,3,1);
         currentPlayer = 1;
-        randomAI = new RandomAI();
+        reversiAI = new ReversiAI();
         reversiBoard = new ReversiBoard();
     }
 
-    public void startReversi(int player1, int player2) throws InterruptedException {
+    public void startReversi() throws InterruptedException, IOException{
         reversiController = new ReversiController();
         System.out.println("Reversi begint!!!");
         System.out.println("Het is jou beurt!!!!!");
+        Platform.runLater(new Runnable() {
+            public void run() {
+                try {
+                    UIManager.createScene("Reversi.fxml");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         drawBoard();
 
         while(finished){
@@ -53,9 +66,7 @@ public class ReversiTemp extends Board implements Initializable {
             for (int i = 0; i < move.length; i++) {
                 result[i] = Integer.parseInt(move[i]);
             }
-            //int temp = result[0];
-           // result[0] = result[1];
-           // result[1] = temp;
+
             reversiController.doMove(currentPlayer, result);
             if(currentPlayer== 1){
                 currentPlayer = 2;
@@ -63,8 +74,7 @@ public class ReversiTemp extends Board implements Initializable {
 
             if(currentPlayer == 2) {
                 int[] aiSET;
-                aiSET = randomAI.setRandomMove(reversiController.legalMoves(currentPlayer), reversiController.getBoard(), currentPlayer);
-                //System.out.println(aiSET[1] + "   " + aiSET[0]);
+                aiSET = reversiAI.getBestMove(reversiController.legalMoves(currentPlayer), reversiController.getBoard(), currentPlayer);
                 System.out.println(aiSET);
                 reversiController.doMove(currentPlayer,aiSET);
                 currentPlayer = 1;

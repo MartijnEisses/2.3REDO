@@ -6,6 +6,8 @@ import Root.Pages.ReversiBoard;
 import Root.Pages.ReversiController;
 import Root.Pages.ReversiTemp;
 import Root.Players.RandomAI;
+import com.sun.glass.ui.PlatformFactory;
+import javafx.application.Platform;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -86,6 +88,15 @@ public class Interpreter {
                                             reversiController.gameController(getPlayerAI(),getPlayerOpponent());
                                         }
                                         System.out.println("Player to move: " + PLAYERTOMOVE);
+                                        Platform.runLater(new Runnable() {
+                                            public void run() {
+                                                try {
+                                                    UIManager.createScene("Reversi.fxml");
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        });
                                         break;
                                 }
                                 break;
@@ -109,16 +120,13 @@ public class Interpreter {
                                 }catch (Exception e){
                                     System.out.println("Move is illegal");
                                     e.printStackTrace();
-
                                 }
                                 break;
-
                             case "YOURTURN":
                                 //ai moet weten dat het zijn beurt is.
                                 System.out.println("Its your turn ai make a good move...");
                                 int[] aiSET;
                                 aiSET = randomAI.setRandomMove(reversiController.legalMoves(getPlayerAI()), reversiController.getBoard(), getPlayerAI());
-                                //reversiController.doMove(getPlayerAI(),aiSET);
                                 System.out.println("AI has these legal moves: " + reversiController.legalMoves(getPlayerAI()));
                                 System.out.println("X: " + aiSET[0] + " and y: " + aiSET[1]);
                                 int sendINT = reversiController.LocationToInt(aiSET);
@@ -145,8 +153,17 @@ public class Interpreter {
                                 //alle stenen moeten worden gereset.
                                 //Display that user has won.Terug naar online screen en display user has won.
                                 System.out.println("You have won nice job!");
-                                //UIManager.createScene("Onlinelobby.fxml");
-                                reversiController.emptyBoard();
+                                Platform.runLater(new Runnable() {
+
+                                    public void run() {
+                                        try {
+                                            UIManager.createScene("Onlinelobby.fxml");
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                                reversiController = new ReversiController();
                                 reversiController.drawBoard();
                                 break;
                             case "LOSS":
@@ -154,8 +171,16 @@ public class Interpreter {
                                 //alle stenen moeten worden gereset.
                                 //Display that user has lost. Terug naar online screen en display user has lost
                                 System.out.println("You have lost you suck!");
-                                //UIManager.createScene("Onlinelobby.fxml");
-                                reversiController.emptyBoard();
+                                Platform.runLater(new Runnable() {
+                                    public void run() {
+                                        try {
+                                            UIManager.createScene("Onlinelobby.fxml");
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                                reversiController = new ReversiController();
                                 reversiController.drawBoard();
                                 break;
                             default:

@@ -2,9 +2,6 @@ package Root.Pages;
 
 import Root.Managers.Board;
 import Root.Players.RandomAI;
-import Root.Server.Interpreter;
-import Root.Server.Serversocket;
-import javafx.application.Platform;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
@@ -13,21 +10,21 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ReversiController extends Board implements Initializable,Runnable {
+public class ReversiController extends Board implements Initializable {
 
-    private int currentPlayer;
+    private int currentPlayer =1;
     private int playerBlack;
     private int playerWhite;
     private RandomAI randomAI;
-    private int[][] curBoard;
+    public int[][] curBoard;
     private ReversiBoard reversiBoard;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         randomAI = new RandomAI();
-        curBoard = getBoard();
-        reversiBoard = new ReversiBoard();
-        //syncReversiBoard.setBoard(curBoard);
+        emptyBoard();
+        //curBoard = getBoard();
+       // reversiBoard = new ReversiBoard();
     }
 
     public ReversiController() {
@@ -41,6 +38,7 @@ public class ReversiController extends Board implements Initializable,Runnable {
     public void gameController(int player1, int player2){
         this.playerBlack = player1;
         this.playerWhite = player2;
+        reversiBoard = new ReversiBoard();
     }
 
     public ArrayList<String> legalMoves(int cp) {
@@ -55,8 +53,8 @@ public class ReversiController extends Board implements Initializable,Runnable {
             curp = 1;
             nCurp = 2;
         }
-        for (int x = 0; x < board.length; x++) {
-            for (int y = 0; y < board[x].length; y++) {
+        for (int x = 0; x < curBoard.length; x++) {
+            for (int y = 0; y < curBoard[x].length; y++) {
                 if (curBoard[x][y] == 0) {
                     try {
                         if (curBoard[x + 1][y] == nCurp) {
@@ -270,7 +268,6 @@ public class ReversiController extends Board implements Initializable,Runnable {
                         change = true;
                     }
                 }
-
             } catch (ArrayIndexOutOfBoundsException e) {
             }
             tempBoard = Arrays.stream(newBoard).map(int[]::clone).toArray(int[][]::new);
@@ -288,7 +285,6 @@ public class ReversiController extends Board implements Initializable,Runnable {
                         change = true;
                     }
                 }
-
             } catch (ArrayIndexOutOfBoundsException e) {
             }
             tempBoard = Arrays.stream(newBoard).map(int[]::clone).toArray(int[][]::new);
@@ -327,7 +323,6 @@ public class ReversiController extends Board implements Initializable,Runnable {
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
             }
-
             if (change == true) {
                 newBoard[x][y] = curp;
                 if (currentPlayer == 1) {
@@ -339,23 +334,33 @@ public class ReversiController extends Board implements Initializable,Runnable {
                 for (int i = 0; i < board.length; i++) {
                     System.out.print("  " + (i) + " ");
                     for (int p = 0; p < board[i].length; p++) {
-                        System.out.print(" " + newBoard[i][p]);
+                        System.out.print(" " + newBoard[p][i]);
+                        //if(newBoard[p][i] == 1) {
+                           //reversiBoard.setStoneOnBoard(p, i, 1);
+                       // } else if(newBoard[p][i] == 2){
+                            //reversiBoard.setStoneOnBoard(p, i, 2);
+                       // }
                     }
                     System.out.println();
                 }
+
+               // for (int i = 0; i < board.length; i++) {
+               //    for (int p = 0; p < board[i].length; p++) {
+                //        if(newBoard[p][i] == 1) {
+               // //            reversiBoard.setStoneOnBoard(p, i, 1);
+                //        } else if(newBoard[p][i] == 2){
+                 //           reversiBoard.setStoneOnBoard(p, i, 2);
+                //        }
+                //    }
+               // }
+
                 curBoard = newBoard;
                 boardChange(curBoard);
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            syncBoards(curBoard);
-                        }catch(NullPointerException e){
-                            //e.printStackTrace();
-                        }
-                    }
-                });
-                //syncBoards(curBoard);
+                //reversiBoard.setStoneOnBoard();
+                //reversiBoard.updateBoard();
+                //reversiBoard.setStoneOnBoard(curBoard);
+                //reversiBoard.setStoneOnBoardStart(2,3,1);
+
             }
         }
     }
@@ -369,17 +374,13 @@ public class ReversiController extends Board implements Initializable,Runnable {
         for(int i =0; i< tempBoard.length; i++){
             for(int j=0; j< tempBoard[i].length; j++){
                 if(tempBoard[i][j] == 1) {
-                    reversiBoard.setStoneOnBoard(i,j, 1);
+                   // reversiBoard.setStoneOnBoard(i,j, 1);
                 }
                 else if(tempBoard[i][j] == 2){
-                    reversiBoard.setStoneOnBoard(i,j,2);
+                   // reversiBoard.setStoneOnBoard(i,j,2);
                 }
             }
         }
     }
 
-
-    public void run() {
-
-    }
 }

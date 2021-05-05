@@ -25,9 +25,7 @@ public class Homepage implements Initializable {
 
     public static GameType selectedGame;
 
-
     public Homepage()  {
-
 
     }
 
@@ -71,6 +69,4 @@ public class Homepage implements Initializable {
     public void setPlayerType(playertype playerType) {
         this.playerType = playerType;
     }
-
-
 }

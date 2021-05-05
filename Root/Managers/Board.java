@@ -27,8 +27,8 @@ public class Board {
      *
      */
 
-    protected int[][] board;
-    private ReversiBoard reversiBoard;
+    public int[][] board;
+    private boolean runner = true;
 
     public Board(int x, int y) {
         this.board = new int[x][y];
@@ -123,6 +123,13 @@ public class Board {
     }
 
     public void emptyBoard(){
-        this.board = new int[8][8];
+        new Board(8,8);
+    }
+
+    public boolean isRunner() {
+        return runner;
+    }
+    public void setRunner(Boolean b){
+        runner=b;
     }
 }

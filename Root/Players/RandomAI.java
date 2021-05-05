@@ -18,9 +18,8 @@ public class RandomAI {
 
 
     public int[] setRandomMove (ArrayList<String> legalMoves, int[][] board, int cp) throws InterruptedException {
-
+        
         List<String> moveList = new ArrayList(Arrays.asList(legalMoves));
-
         for (String pos: badMoves){
             for(String test : legalMoves){
                 if(pos.equals(test)) {

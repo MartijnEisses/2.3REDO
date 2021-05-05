@@ -1,32 +1,49 @@
 package Root.Pages;
 
+import Root.Managers.UIManager;
+import Root.Players.ReversiAI;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.Node;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ReversiBoard extends ReversiController implements Initializable {
 
-    @FXML
-    GridPane gridBoard;
-    public static int turn = 1;
+    @FXML GridPane gridBoard;
+    @FXML protected Label turnLabel;
+    private ReversiAI ai;
+    private int turn = 1;
+    private int currentplayer =1;
     int[][] oldBoard = getBoard();
 
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        createGridBoard(getBoard(), 75, 75);
-        setStoneOnBoardStart(3, 4, 1);
-        setStoneOnBoardStart(4, 3, 1);
-        setStoneOnBoardStart(4, 4, 2);
-        setStoneOnBoardStart(3, 3, 2);
+    public ReversiBoard(){
+        ai = new ReversiAI();
     }
 
-    public void createGridBoard(int[][] b, int i1, int i2) {
+
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            createGridBoard(getBoard(), 75, 75);
+            setStoneOnBoardStart(3, 4, 1);
+            setStoneOnBoardStart(4, 3, 1);
+            setStoneOnBoardStart(4, 4, 2);
+            setStoneOnBoardStart(3, 3, 2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createGridBoard(int[][] b, int i1, int i2) throws InterruptedException {
         for (int i = 0; i < b[0].length; i++) {
             for (int j = 0; j < b[1].length; j++) {
                 Pane p = new Pane();
@@ -35,24 +52,24 @@ public class ReversiBoard extends ReversiController implements Initializable {
                 p.setLayoutY(j);
                 final int x = i;
                 final int y = j;
-
                 setStone(x, y, 0);
-                //p.setOnMouseClicked(e -> setStoneOnBoard(x, y, turn));
+                p.setOnMouseClicked(e -> setStoneOnBoard(x, y, turn));
                 gridBoard.add(p, i, j);
             }
         }
     }
 
-    public void setStoneOnBoardStart(int x, int y, int turn) {
-        setStone(x, y, turn);
-        switch (turn) {
+    public void setStoneOnBoardStart(int x, int y, int whosTurn) {
+        setStone(x, y, whosTurn);
+
+        switch (whosTurn) {
             case 1:
                 Circle stone_1 = new Circle();
                 stone_1.setCenterX(100.0f);
                 stone_1.setCenterY(100.0f);
                 stone_1.setRadius(30.0f);
                 gridBoard.add(stone_1, x, y);
-                this.turn = 2;
+                currentplayer = 2;
                 break;
             case 2:
                 Circle stone_2 = new Circle();
@@ -61,33 +78,36 @@ public class ReversiBoard extends ReversiController implements Initializable {
                 stone_2.setRadius(30.0f);
                 stone_2.setFill(Color.WHITE);
                 gridBoard.add(stone_2, x, y);
-                this.turn = 1;
+                currentplayer = 1;
                 break;
         }
     }
 
     public void setStoneOnBoard(int x, int y, int turn) {
-        //boardChange(doMove(turn, getBoard()));
+        int[] test = new int[2];
+        test[0] = y;
+        test[1] = x;
+        //System.out.println("x: " + test[0] + " y: " + test[1]);
         updateBoard();
+        try {
+            if(turn ==1) {
+                turnPlayerLabel();
+                currentplayer =1;
+                doMove(1,test);
 
+                //aiSet(turn);
+            } else if(turn==2){
+                turnPlayerLabel();
+                currentplayer=2;
+                aiSet(turn);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void updateBoard() {
-        int[][] newBoard = curBoard;
-        System.out.println("Methode updateBoard()");
-        System.out.println("     0 1 2 3 4 5 6 7");
-        for (int i = 0; i < curBoard.length; i++) {
-            System.out.print("  " + (i) + " ");
-            for (int p = 0; p < curBoard[i].length; p++) {
-                System.out.print(" " + curBoard[p][i]);
-                //if(newBoard[p][i] == 1) {
-                //reversiBoard.setStoneOnBoard(p, i, 1);
-                // } else if(newBoard[p][i] == 2){
-                //reversiBoard.setStoneOnBoard(p, i, 2);
-                // }
-            }
-            System.out.println();
-        }
+    public void updateBoard(){
+        int[][] newBoard = getBoard();
         switch (turn) {
             case 1:
                 for (int i = 0; i < newBoard.length; i++) {
@@ -98,8 +118,8 @@ public class ReversiBoard extends ReversiController implements Initializable {
                             stone_1.setCenterX(100.0f);
                             stone_1.setCenterY(100.0f);
                             stone_1.setRadius(30.0f);
-                            gridBoard.add(stone_1, j, i);
-                            this.turn = 2;
+                            gridBoard.add(stone_1, i, j);
+                            turn = 2;
                         }
                     }
                 }
@@ -107,27 +127,44 @@ public class ReversiBoard extends ReversiController implements Initializable {
             case 2:
                 for (int i = 0; i < newBoard.length; i++) {
                     for (int j = 0; j < newBoard[1].length; j++) {
-
                         if (newBoard[i][j] != oldBoard[i][j]) {
                             Circle stone_2 = new Circle();
                             stone_2.setCenterX(100.0f);
                             stone_2.setCenterY(100.0f);
                             stone_2.setRadius(30.0f);
                             stone_2.setFill(Color.WHITE);
-                            gridBoard.add(stone_2, j, i);
-                            this.turn = 1;
+                            gridBoard.add(stone_2, i, j);
+                            turn = 1;
                         }
                     }
                 }
                 break;
         }
-        oldBoard = newBoard;
-
+        oldBoard = getBoard();
     }
 
+    @FXML
+    protected void forfeitGameButton(ActionEvent event) throws IOException {
+        emptyBoard();
+        UIManager.createScene("Homepage.fxml");
+    }
+
+    public void turnPlayerLabel(){
+        if(currentplayer==2){
+            turnLabel.setText("Opponent his turn!");
+        }else if(currentplayer ==1){
+            turnLabel.setText("Your turn!");
+        }
+    }
+
+    public void aiSet(int t) throws InterruptedException {
+        int[] aiSET;
+        aiSET = ai.getBestMove(legalMoves(t), getBoard(), t);
+        doMove(t, aiSET);
+        System.out.println("AI did move on: " + aiSET[1] + " and: " + aiSET[0] + " for: " + t);
+        updateBoard();
+    }
 }
-
-
 
 /*
 public class ReversiBoard extends ReversiController implements Initializable {

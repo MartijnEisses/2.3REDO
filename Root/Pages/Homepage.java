@@ -10,24 +10,25 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Homepage voor het hoofdmenu.
+ */
+
 public class Homepage implements Initializable {
     private playertype playerType;
     private GameType gameType;
-    private ReversiController reversiController;
 
-    @FXML
-    ComboBox<String> selectGame;
-
+    @FXML ComboBox<String> selectGame;
     public static GameType selectedGame;
 
     public Homepage()  {
-        reversiController = new ReversiController();
     }
 
     @Override

@@ -3,6 +3,7 @@ package Root;
 import Root.Managers.GameManager;
 import Root.Server.Connection;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,18 +35,21 @@ public class Main extends Application{
         while (running) {
             gameManager.Update();
         }
-
-        // Start every Manager
-
     }
 
-    @Override
-    public void start(Stage stage) throws Exception {
+    /**
+     * Start van de JavaFX applicatie.
+     * @param primaryStage gemaakte primaryStage.
+     * @throws IOException Als er een fout is bestanden ophalen.
+     */
 
-        stage.setMinHeight(720);
-        stage.setMinWidth(1240);
-        stage.setTitle("Project 2.3");
-        Main.primaryStage = stage;
+    @Override
+    public void start(Stage primaryStage) throws IOException {
+
+        primaryStage.setMinHeight(720);
+        primaryStage.setMinWidth(1240);
+        primaryStage.setTitle("Project 2.3");
+        Main.primaryStage = primaryStage;
 
         Main.primaryStage.setMinWidth(1240);
         Main.primaryStage.setMinHeight(720);
@@ -55,6 +59,10 @@ public class Main extends Application{
         Scene scene = new Scene(new Pane());
         Main.primaryStage.setScene(scene);
         UIManager.createScene("Homepage.fxml");
+        primaryStage.setOnCloseRequest(t -> {
+            Platform.exit();
+            System.exit(0);
+        });
 
     }
 

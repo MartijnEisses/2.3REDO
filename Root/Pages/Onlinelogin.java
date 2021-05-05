@@ -35,6 +35,11 @@ public class Onlinelogin implements Initializable {
         portField.setText("7789");
     }
 
+    /**
+     * Input velden om in te loggen op de server. Errors als er een fout is.
+     * @param event mouse-click event
+     * @throws IOException Als er een fout is bij het laden van een pagina.
+     */
     @FXML
     protected void handleSubmitButton(ActionEvent event) throws IOException {
         Window ErrorMessage = submitButton.getScene().getWindow();
@@ -58,22 +63,19 @@ public class Onlinelogin implements Initializable {
             AlertHelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid Port");
             return;
         }
-
-        //System.out.println("Connected to: " + ipField.getText() + " on port : " + portField.getText());
-
         Main.connection.connectToServer(ipField.getText(), Integer.parseInt(portField.getText()));
         Main.connection.login(ignField.getText());
         UIManager.createScene("Onlinelobby.fxml");
-
     }
 
     public TextField getIgnField() {
         return ignField;
     }
-    //public Connection getConnection(){return connection;}
-
-
 }
+
+/**
+ * AlertHelper voor een pop-up als er een foutmelding is.
+ */
 class AlertHelper {
 
     public static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {

@@ -34,11 +34,6 @@ public class Onlinelobby implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         interpreter = new Interpreter();
         playerTimer = new Timer();
-    /*
-        playerTimer.scheduleAtFixedRate(new TimerTask() {
-            public void run() {
-               connection.getPlayerlist();
-            }   }, 5000, 5000);*/
     }
 
     @FXML
@@ -46,12 +41,21 @@ public class Onlinelobby implements Initializable {
        // setScene("view/main.fxml");
     }
 
+    /**
+     * Subscriben op reversi.
+     * @param event
+     */
     @FXML
     protected void subscribeMenuButton(ActionEvent event){
         System.out.println("Subscribe to Reversi is pressed!");
         Main.connection.subscribe("Reversi");
     }
 
+    /**
+     * Accepteren van een challenge.
+     * @param event mouse-click event.
+     * @throws IOException lLs er een fout is bij het laden van het bestand.
+     */
     @FXML
     protected void acceptChallengeButton(ActionEvent event) throws IOException {
         Window ErrorMessage = challengeButton.getScene().getWindow();
@@ -72,6 +76,11 @@ public class Onlinelobby implements Initializable {
 
     }
 
+    /**
+     * Het versturen van een uitdaging naar een opponent.
+     * @param event mouse-click event.
+     * @throws IOException Als er een fout is bij het laden van het bestand.
+     */
     @FXML
     protected void handleChallengeButton(ActionEvent event) throws IOException {
         Window ErrorMessage = challengeButton.getScene().getWindow();
@@ -84,15 +93,14 @@ public class Onlinelobby implements Initializable {
             AlertHelp.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Player is not online");
             return;
         }
-
-        System.out.println("Sending challenge to: " + opponent.getText());
         UIManager.createScene("Reversi.fxml");
         Main.connection.challengePlayer(opponent.getText() , "Reversi");
-
-        //System.out.println("Gamestart whosTUrn ai");
     }
 }
 
+/**
+ * Alerthelper voor het verschijnen van een pop-up.
+ */
 class AlertHelp {
 
     public static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {

@@ -1,5 +1,6 @@
 package Root.Pages;
 
+import Root.Managers.UIManager;
 import Root.Pages.ReversiController;
 
 import Root.Players.ReversiAI;
@@ -9,17 +10,25 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
-
+import javafx.scene.control.Label;
 
 import javafx.event.ActionEvent;
+
+import java.io.IOException;
 import java.net.URL;
 import Root.Main;
 import java.util.ResourceBundle;
 
+/**
+ * Offline reversi board voor player vs AI.
+ * Extends ReversiContrller
+ */
 public class OfflineReversiTest extends ReversiController implements Initializable {
 
-    @FXML
-    GridPane gridBoard;
+    @FXML GridPane gridBoard;
+    @FXML protected Label turnLabel;
+    @FXML protected Label playerStones;
+    @FXML protected Label aiStones;
     private ReversiAI ai;
     private int turn = 1;
     private int currentplayer =1;
@@ -51,24 +60,25 @@ public class OfflineReversiTest extends ReversiController implements Initializab
                 p.setLayoutY(j);
                 final int x = i;
                 final int y = j;
-
                 setStone(x, y, 0);
                 p.setOnMouseClicked(e -> setStoneOnBoard(x, y, turn));
                 gridBoard.add(p, i, j);
+                updateViews();
             }
         }
     }
 
-    public void setStoneOnBoardStart(int x, int y, int turn) {
-        setStone(x, y, turn);
-        switch (turn) {
+    public void setStoneOnBoardStart(int x, int y, int whosTurn) {
+        setStone(x, y, whosTurn);
+
+        switch (whosTurn) {
             case 1:
                 Circle stone_1 = new Circle();
                 stone_1.setCenterX(100.0f);
                 stone_1.setCenterY(100.0f);
                 stone_1.setRadius(30.0f);
                 gridBoard.add(stone_1, x, y);
-                this.turn = 2;
+                currentplayer = 2;
                 break;
             case 2:
                 Circle stone_2 = new Circle();
@@ -77,23 +87,24 @@ public class OfflineReversiTest extends ReversiController implements Initializab
                 stone_2.setRadius(30.0f);
                 stone_2.setFill(Color.WHITE);
                 gridBoard.add(stone_2, x, y);
-                this.turn = 1;
+                currentplayer = 1;
                 break;
         }
     }
 
     public void setStoneOnBoard(int x, int y, int turn) {
-        //boardChange(doMove(getBoard(), turn, y, x));
         int[] test = new int[2];
         test[0] = y;
         test[1] = x;
-        System.out.println("x: " + test[0] + " y: " + test[1]);
+        updateViews();
         updateBoard();
         try {
             if(turn ==1) {
+                currentplayer =1;
                 doMove(1,test);
             } else if(turn==2){
-                aiSet();
+                currentplayer=2;
+                aiSet(turn);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -113,7 +124,7 @@ public class OfflineReversiTest extends ReversiController implements Initializab
                             stone_1.setCenterY(100.0f);
                             stone_1.setRadius(30.0f);
                             gridBoard.add(stone_1, i, j);
-                            this.turn = 2;
+                            turn = 2;
                         }
                     }
                 }
@@ -128,7 +139,7 @@ public class OfflineReversiTest extends ReversiController implements Initializab
                             stone_2.setRadius(30.0f);
                             stone_2.setFill(Color.WHITE);
                             gridBoard.add(stone_2, i, j);
-                            this.turn = 1;
+                            turn = 1;
                         }
                     }
                 }
@@ -137,11 +148,50 @@ public class OfflineReversiTest extends ReversiController implements Initializab
         oldBoard = getBoard();
     }
 
-    public void aiSet() throws InterruptedException {
+    public void updateViews(){
+        turnPlayerLabel();
+        updateAIStonesLabel();
+        updatePlayerStonesLabel();
+    }
+
+
+    @FXML
+    protected void forfeitGameButton(ActionEvent event) throws IOException {
+        emptyBoard();
+        UIManager.createScene("Homepage.fxml");
+    }
+
+    @FXML
+    protected void homePageButton(ActionEvent event) throws IOException {
+        emptyBoard();
+        UIManager.createScene("Homepage.fxml");
+    }
+    public void turnPlayerLabel(){
+        if(currentplayer==2){
+            turnLabel.setText("Opponent his turn!");
+        }else if(currentplayer ==1){
+            turnLabel.setText("Your turn!");
+        }
+    }
+
+    public void updatePlayerStonesLabel(){
+        playerStones.setText("You have: " + countStones().get(0) + " stones");
+    }
+
+    public void updateAIStonesLabel(){
+        aiStones.setText("AI has: " + countStones().get(1) + " stones");
+    }
+
+
+    public void aiSet(int t) throws InterruptedException {
         int[] aiSET;
-        aiSET = ai.getBestMove(legalMoves(2), getBoard(), 2);
-        doMove(2, aiSET);
-        System.out.println("AI did move on: " + aiSET[1] + " and: " + aiSET[0] + " for: " + 2);
-        updateBoard();
+        aiSET =  new int[0];
+        aiSET = ai.getBestMove(legalMoves(t), getBoard(), t);
+        if(aiSET.length != 0){
+            doMove(t, aiSET);
+            System.out.println("AI did move on: " + aiSET[1] + " and: " + aiSET[0] + " for: " + t);
+            updateBoard();
+
+        }
     }
 }

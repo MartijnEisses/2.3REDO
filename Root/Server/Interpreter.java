@@ -29,7 +29,6 @@ public class Interpreter {
     private int playerOpponent;
     private ReversiController reversiController;
     private ReversiAI reversiAI;
-    private ReversiBoard reversiBoard;
 
     /*
         Note: zie protocol.txt op blackboard om de input te zien van de server

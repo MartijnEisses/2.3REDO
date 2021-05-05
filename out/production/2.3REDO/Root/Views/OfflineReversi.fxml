@@ -32,9 +32,14 @@
                 style="-fx-background-color: #3d5e8c; -fx-background-radius: 15;" text="Forfeit"
                 textFill="WHITE">
             <font>
-                <Font name="Open Sans Regular" size="16.0"/>
+                <Font name="Open Sans Regular" size="16.0" />
             </font>
         </Button>
+        <Label fx:id="clickPositionLabel" layoutX="450.0" layoutY="10"   prefWidth="400" prefHeight="40" minHeight="40">
+            <font>
+                <Font name="Open Sans Regular" size="20.0"/>
+            </font>
+        </Label>
         <Label fx:id="turnLabel" layoutY="90.0" layoutX="10"   prefWidth="200" prefHeight="40" minHeight="40">
             <font>
                 <Font name="Open Sans Regular" size="20.0"/>

@@ -29,6 +29,7 @@ public class OfflineReversiTest extends ReversiController implements Initializab
     @FXML protected Label turnLabel;
     @FXML protected Label playerStones;
     @FXML protected Label aiStones;
+    @FXML protected Label clickPositionLabel;
     private ReversiAI ai;
     private int turn = 1;
     private int currentplayer =1;
@@ -149,6 +150,7 @@ public class OfflineReversiTest extends ReversiController implements Initializab
     }
 
     public void updateViews(){
+        setClickPositionLabel();
         turnPlayerLabel();
         updateAIStonesLabel();
         updatePlayerStonesLabel();
@@ -180,6 +182,11 @@ public class OfflineReversiTest extends ReversiController implements Initializab
 
     public void updateAIStonesLabel(){
         aiStones.setText("AI has: " + countStones().get(1) + " stones");
+    }
+
+    public void setClickPositionLabel(){
+        clickPositionLabel.setText("Note: Click dubble to register stone!");
+        clickPositionLabel.setStyle("-fx-font-weight: bold;");
     }
 
 

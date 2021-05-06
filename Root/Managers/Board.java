@@ -9,30 +9,47 @@ public class Board {
     public int[][] board;
     private boolean runner = true;
 
+    /**
+     * @param x horisontal size of the board
+     * @param y vertical size of the board
+     */
     public Board(int x, int y) {
         this.board = new int[x][y];
     }
 
+    /**
+     * @return the current game board
+     */
     public int[][] getBoard() {
         return this.board;
     }
 
+    /**
+     * @param x horisontal coördinate
+     * @param y vertical coöridinate
+     * @param value player setting the stone
+     * 1 = black
+     * 2 = white
+     */
     public void setStone(int x, int y, int value) {
         this.board[x][y] = value;
     }
 
+    /**
+     * @param newBord gives a new game board
+     */
     public void boardChange(int[][] newBord) {
         this.board = newBord;
     }
 
-    public int getStone(int x, int y) {
-        return this.board[x][y];
-    }
 
     public boolean isEmpty(int x, int y) {
         return this.board[x][y] == 0;
     }
 
+    /**
+     * @return shows the number of stones for both players
+     */
     public ArrayList<Integer> countStones(){
         ArrayList<Integer> numberOfStones = new ArrayList<Integer>();
         int player1 = 0;

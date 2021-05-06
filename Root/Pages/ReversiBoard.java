@@ -52,6 +52,12 @@ public class ReversiBoard extends ReversiManager implements Initializable {
         }
     }
 
+    /**
+     * @param b gives a reversie board to create the right amount of squares
+     * @param i1 sets the size of the squares
+     * @param i2 sets the size of the squares
+     * @throws InterruptedException
+     */
     public void createGridBoard(int[][] b, int i1, int i2) throws InterruptedException {
         for (int i = 0; i < b[0].length; i++) {
             for (int j = 0; j < b[1].length; j++) {
@@ -75,6 +81,12 @@ public class ReversiBoard extends ReversiManager implements Initializable {
         updateViews();
     }
 
+    /**
+     * @param x gives the horisontal coördinate
+     * @param y gives the vertical coördinate
+     * @param whosTurn gives the player who sets the stone
+     * this method can be called without the ai responding so this one is used at the start of the game
+     */
     public void setStoneOnBoardStart(int x, int y, int whosTurn) {
         setStone(x, y, whosTurn);
         switch (whosTurn) {
@@ -97,7 +109,12 @@ public class ReversiBoard extends ReversiManager implements Initializable {
                 break;
         }
     }
-
+    /**
+     * @param x gives the horisontal coördinate
+     * @param y gives the vertical coördinate
+     * @param whosTurn gives the player who sets the stone
+     * after a user move the method makes the ai respond with a move
+     */
     public void setStoneOnBoard(int x, int y, int whosTurn) throws InterruptedException {
 
         System.out.println(turn);

@@ -13,7 +13,7 @@ public class ReversiAI {
     private String[] goodMoves = new String[] {"0-2","0-3","0-4","0-5","2-0","3-0","4-0","5-0","6-0","2-7","3-7","4-7","5-7","7-3"};
     private String[] bestMoves = new String[] {"0-0","0-7","7-0","7-7"};
     private String bestMove ="";
-    private Random random = new Random();
+    //private Random random = new Random();
     private int[] result;
 
 

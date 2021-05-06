@@ -14,15 +14,13 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 
-public class ReversiManager extends Board implements Manager, Initializable {
+public class ReversiManager extends ReversiBoard implements Manager, Initializable {
 
-    private int currentPlayer =1;
+    private int currentPlayer = 1;
     private int playerOne;
     private int playerTwo;
     private GameType gameType;
-    private ReversiAI randomAI;
-    //public int[][] board;
-    private ReversiBoard reversiBoard;
+
     private ReversiTemp reversiTemp;
 
     @Override
@@ -43,7 +41,6 @@ public class ReversiManager extends Board implements Manager, Initializable {
     }
 
     public ReversiManager() {
-        super(8, 8);
         setStone(3,3,2);
         setStone(4,4,2);
         setStone(3,4,1);
@@ -66,11 +63,9 @@ public class ReversiManager extends Board implements Manager, Initializable {
             this.gameType = GameType.OFFLINE;
             reversiTemp = new ReversiTemp();
             reversiTemp.startReversi();
-            reversiBoard = new ReversiBoard();
         }
         else if(gametype.equals(GameType.ONLINE)){
             this.gameType = GameType.ONLINE;
-            reversiBoard = new ReversiBoard();
             if(player1.equals(playertype.AI)){
                 this.playerOne =1;
                 this.playerTwo =2;

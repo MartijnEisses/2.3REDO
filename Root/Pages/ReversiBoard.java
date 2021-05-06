@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ReversiBoard extends ReversiManager implements Initializable {
+public class ReversiBoard extends Board implements Initializable {
 
     @FXML GridPane gridBoard;
     @FXML protected Label turnLabel;
@@ -35,14 +35,17 @@ public class ReversiBoard extends ReversiManager implements Initializable {
     private int[][] oldBoard = getBoard();
     private boolean versusAI = true;
     private List<String> playerBoardClick = new ArrayList<>();
+    private ReversiManager reversiManager;
 
     public ReversiBoard() {
+        super(8, 8);
         ai = new ReversiAI();
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            createGridBoard(getBoard(), 75, 75);
+            reversiManager = new ReversiManager();
+            createGridBoard(reversiManager.getBoard(), 75, 75);
             setStoneOnBoardStart(3, 4, 1);
             setStoneOnBoardStart(4, 3, 1);
             setStoneOnBoardStart(4, 4, 2);
@@ -59,6 +62,7 @@ public class ReversiBoard extends ReversiManager implements Initializable {
      * @throws InterruptedException
      */
     public void createGridBoard(int[][] b, int i1, int i2) throws InterruptedException {
+
         for (int i = 0; i < b[0].length; i++) {
             for (int j = 0; j < b[1].length; j++) {
                 Pane p = new Pane();
@@ -71,7 +75,7 @@ public class ReversiBoard extends ReversiManager implements Initializable {
                 p.setOnMouseClicked(e -> {
                     try {
                         setStoneOnBoard(x, y, turn);
-                    } catch (InterruptedException interruptedException) {
+                    } catch (InterruptedException|NullPointerException interruptedException) {
                         interruptedException.printStackTrace();
                     }
                 });
@@ -116,7 +120,6 @@ public class ReversiBoard extends ReversiManager implements Initializable {
      * after a user move the method makes the ai respond with a move
      */
     public void setStoneOnBoard(int x, int y, int whosTurn) throws InterruptedException {
-
         System.out.println(turn);
         int[] playerMove = new int[2];
         playerMove[0] = y;
@@ -126,7 +129,7 @@ public class ReversiBoard extends ReversiManager implements Initializable {
         switch (whosTurn) {
             case 1:
                 if (isMoveValid(playerMove[0], playerMove[1])) {
-                    doMove(this.turn, playerMove);
+                    reversiManager.doMove(this.turn, playerMove);
                     updateBoard();
                     this.turn = 2;
                     turnLabel.setText("Opponent his turn!");
@@ -136,9 +139,9 @@ public class ReversiBoard extends ReversiManager implements Initializable {
             case 2:
                 int[] aiSET;
                 aiSET = new int[0];
-                aiSET = ai.getBestMove(legalMoves(turn), getBoard(), turn);
+                aiSET = ai.getBestMove(reversiManager.legalMoves(turn), getBoard(), turn);
                 if (aiSET.length != 0) {
-                    doMove(turn, aiSET);
+                    reversiManager.doMove(turn, aiSET);
                 }
                 updateBoard();
                 this.turn = 1;
@@ -146,16 +149,17 @@ public class ReversiBoard extends ReversiManager implements Initializable {
                 break;
         }
         updateViews();
-        if(fullBoard()) {
+        if(reversiManager.fullBoard()) {
+            System.out.println("TEST");
             try {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Match Information");
                 alert.setHeaderText(null);
-                if(countStones().get(0) > countStones().get(1)){
+                if(reversiManager.countStones().get(0) > reversiManager.countStones().get(1)){
                     alert.setContentText("You have won!");
-                } else if(countStones().get(1) > countStones().get(0)){
+                } else if(reversiManager.countStones().get(1) > reversiManager.countStones().get(0)){
                     alert.setContentText("You lost.. Try again!");
-                } else if(countStones().get(1) > countStones().get(0)) {
+                } else if(reversiManager.countStones().get(1) > reversiManager.countStones().get(0)) {
                     alert.setContentText("It is a draw, try again!");
                 }
                 alert.showAndWait();
@@ -168,7 +172,7 @@ public class ReversiBoard extends ReversiManager implements Initializable {
 
     public void updateBoard() {
             updateViews();
-            int[][] newBoard = getBoard();
+            int[][] newBoard = reversiManager.getBoard();
             switch (turn) {
                 case 1:
                     for (int i = 0; i < newBoard.length; i++) {
@@ -199,12 +203,12 @@ public class ReversiBoard extends ReversiManager implements Initializable {
                     }
                     break;
             }
-            oldBoard = getBoard();
+            oldBoard = reversiManager.getBoard();
 
     }
 
     public boolean isMoveValid(int x, int y) {
-        playerBoardClick = legalMoves(1);
+        playerBoardClick = reversiManager.legalMoves(1);
         List<String> subList = new ArrayList<String>();
         List<String> allMoves = new ArrayList<String>();
         allMoves.add(x + "-" + y);
@@ -251,11 +255,11 @@ public class ReversiBoard extends ReversiManager implements Initializable {
 */
 
     public void updatePlayerStonesLabel() {
-        playerStones.setText("You have: " + countStones().get(0) + " black stones");
+        playerStones.setText("You have: " + reversiManager.countStones().get(0) + " black stones");
     }
 
     public void updateAIStonesLabel() {
-        aiStones.setText("AI has: " + countStones().get(1) + " white stones");
+        aiStones.setText("AI has: " + reversiManager.countStones().get(1) + " white stones");
     }
 
 

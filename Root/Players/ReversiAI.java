@@ -79,7 +79,7 @@ public class ReversiAI {
 
         try {
             System.out.println("The best move of the ai is: " + bestMove);
-            TimeUnit.SECONDS.sleep(1);
+            Thread.sleep(500);
             String[] move = bestMove.split("-");
             result = new int[move.length];
             for (int i = 0; i < move.length; i++) {

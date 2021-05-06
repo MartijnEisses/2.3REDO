@@ -128,9 +128,7 @@ public class ReversiBoard extends ReversiManager implements Initializable {
                 if (isMoveValid(playerMove[0], playerMove[1])) {
                     doMove(this.turn, playerMove);
                     updateBoard();
-
                     this.turn = 2;
-                    Thread.sleep(500);
                     turnLabel.setText("Opponent his turn!");
                     setStoneOnBoard(0, 0, this.turn);//Random x and y value it doesn't set any stone or register, it's for changing the turn to the ai.
                 }
@@ -139,9 +137,7 @@ public class ReversiBoard extends ReversiManager implements Initializable {
                 int[] aiSET;
                 aiSET = new int[0];
                 aiSET = ai.getBestMove(legalMoves(turn), getBoard(), turn);
-
                 if (aiSET.length != 0) {
-                    //Thread.sleep(500);
                     doMove(turn, aiSET);
                 }
                 updateBoard();
@@ -150,48 +146,7 @@ public class ReversiBoard extends ReversiManager implements Initializable {
                 break;
         }
         updateViews();
-    }
-
-
-    public void updateBoard() {
-        if(!fullBoard()) {
-            updateViews();
-            int[][] newBoard = getBoard();
-            switch (turn) {
-                case 1:
-                    for (int i = 0; i < newBoard.length; i++) {
-                        for (int j = 0; j < newBoard[1].length; j++) {
-                            if (newBoard[i][j] != oldBoard[i][j]) {
-                                Circle stone_1 = new Circle();
-                                stone_1.setCenterX(100.0f);
-                                stone_1.setCenterY(100.0f);
-                                stone_1.setRadius(30.0f);
-                                gridBoard.add(stone_1, i, j);
-                                //tempturn = 2;
-                                //turn=2;
-                            }
-                        }
-                    }
-                    break;
-                case 2:
-                    for (int i = 0; i < newBoard.length; i++) {
-                        for (int j = 0; j < newBoard[1].length; j++) {
-                            if (newBoard[i][j] != oldBoard[i][j]) {
-                                Circle stone_2 = new Circle();
-                                stone_2.setCenterX(100.0f);
-                                stone_2.setCenterY(100.0f);
-                                stone_2.setRadius(30.0f);
-                                stone_2.setFill(Color.WHITE);
-                                gridBoard.add(stone_2, i, j);
-                                //tempturn = 1;
-                                //turn=1;
-                            }
-                        }
-                    }
-                    break;
-            }
-            oldBoard = getBoard();
-        } else{
+        if(fullBoard()) {
             try {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Match Information");
@@ -208,6 +163,44 @@ public class ReversiBoard extends ReversiManager implements Initializable {
                 UIManager.createScene("Homepage.fxml");
             } catch(IOException e){}
         }
+    }
+
+
+    public void updateBoard() {
+            updateViews();
+            int[][] newBoard = getBoard();
+            switch (turn) {
+                case 1:
+                    for (int i = 0; i < newBoard.length; i++) {
+                        for (int j = 0; j < newBoard[1].length; j++) {
+                            if (newBoard[i][j] != oldBoard[i][j]) {
+                                Circle stone_1 = new Circle();
+                                stone_1.setCenterX(100.0f);
+                                stone_1.setCenterY(100.0f);
+                                stone_1.setRadius(30.0f);
+                                gridBoard.add(stone_1, i, j);
+                            }
+                        }
+                    }
+                    break;
+                case 2:
+                    for (int i = 0; i < newBoard.length; i++) {
+                        for (int j = 0; j < newBoard[1].length; j++) {
+                            if (newBoard[i][j] != oldBoard[i][j]) {
+                                Circle stone_2 = new Circle();
+                                stone_2.setCenterX(100.0f);
+                                stone_2.setCenterY(100.0f);
+                                stone_2.setRadius(30.0f);
+                                stone_2.setFill(Color.WHITE);
+                                gridBoard.add(stone_2, i, j);
+
+                            }
+                        }
+                    }
+                    break;
+            }
+            oldBoard = getBoard();
+
     }
 
     public boolean isMoveValid(int x, int y) {

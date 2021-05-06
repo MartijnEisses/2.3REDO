@@ -78,8 +78,6 @@ public class TicTacToeController extends TicTacToeManager implements Initializab
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Game Information");
                 alert.setHeaderText(null);
-                // TODO: Check who won either white or black or it was a tie to display in the
-                // pop-up.
                 if (winner == Color.WHITE) {
                     alert.setContentText("Congrats you have won!");
                 } else if (winner == Color.BLACK) {
@@ -87,7 +85,6 @@ public class TicTacToeController extends TicTacToeManager implements Initializab
                 } else if (winner == Color.EMPTY) {
                     alert.setContentText("TIE!");
                 }
-                //alert.show();
                 alert.showAndWait();
                 UIManager.createScene("Homepage.fxml");
             }
@@ -112,5 +109,4 @@ public class TicTacToeController extends TicTacToeManager implements Initializab
         emptyBoard(3, 3);
         UIManager.createScene("Homepage.fxml");
     }
-
 }

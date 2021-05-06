@@ -80,7 +80,6 @@ public class ReversiManager extends Board implements Manager, Initializable {
                 this.playerTwo =1;
             }
         }
-
     }
 
     /**
@@ -88,7 +87,6 @@ public class ReversiManager extends Board implements Manager, Initializable {
      * @return returns an arraylist with all possible moves to make with an indicator for how many stones will be turned this move
      */
     public ArrayList<String> legalMoves(int cp) {
-        // board = getBoard();
         List<String> allMoves = new ArrayList<String>();
         int tot = 0;
         int checker1;
@@ -404,14 +402,6 @@ public class ReversiManager extends Board implements Manager, Initializable {
                     System.out.print("  " + (i) + " ");
                     for (int p = 0; p < board[i].length; p++) {
                         System.out.print(" " + newBoard[p][i]);
-                        if(newBoard[p][i] == 1) {
-                            //reversiBoard.setStoneOnBoard(p,i,currentPlayer);
-                            //setStone(p,i,1);
-                        }
-                        else if(newBoard[p][i] == 2){
-                            //reversiBoard.setStoneOnBoard(p,i,currentPlayer);
-                            //setStone(p,i,2);
-                        }
                     }
                     System.out.println();
                 }
@@ -419,28 +409,8 @@ public class ReversiManager extends Board implements Manager, Initializable {
                 boardChange(board);
                 System.out.println("Black has:  " + countStones().get(0) + " stones");
                 System.out.println("White has: " + countStones().get(1) + " stones");
-                //syncBoards(board);
-                //reversiBoard.updateBoard();
             }
         }
     }
-
-    public int[][] getCurBoard(){
-        return board;
-    }
-
-    public void syncBoards(int[][] newBoard) throws InterruptedException {
-        int[][] tempBoard = newBoard;
-        for (int i = 0; i < tempBoard.length; i++) {
-            for (int j = 0; j < tempBoard[i].length; j++) {
-                if (tempBoard[i][j] == 1) {
-                    // reversiBoard.setStoneOnBoard(i,j, 1);
-                } else if (tempBoard[i][j] == 2) {
-                    //reversiBoard.setStoneOnBoard(i,j,2);
-                }
-            }
-        }
-    }
-
 }
 

@@ -46,7 +46,7 @@ public class Homepage implements Initializable {
                 UIManager.createScene("TicTacToeBoard.fxml");
                 break;
             case Reversi:
-                UIManager.createScene("OfflineReversi.fxml");
+                UIManager.createScene("Reversi.fxml");
                 break;
         }
     }

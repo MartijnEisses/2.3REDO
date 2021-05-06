@@ -1,12 +1,17 @@
 package Root.Pages;
 
 import Root.Managers.TicTacToeManager;
+import Root.Managers.UIManager;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -36,13 +41,19 @@ public class TicTacToeController extends TicTacToeManager implements Initializab
                 final int y = j;
 
                 setStone(x, y, 0);
-                p.setOnMouseClicked(e -> setStoneOnBoard(x, y, turn));
+                p.setOnMouseClicked(e -> {
+                    try {
+                        setStoneOnBoard(x, y, turn);
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
+                });
                 gridBoard.add(p, i, j);
             }
         }
     }
 
-    public void setStoneOnBoard(int x, int y, int turn) {
+    public void setStoneOnBoard(int x, int y, int turn) throws IOException {
         System.out.println(turn);
         if (isEmpty(x, y)) {
             setStone(x, y, turn);
@@ -65,8 +76,15 @@ public class TicTacToeController extends TicTacToeManager implements Initializab
             }
             if (CheckForWin() != null) {
                 Win(CheckForWin());
+                emptyBoard(3,3);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Game Information");
+                alert.setHeaderText(null);
+                // TODO: Check who won either white or black or it was a tie to display in the pop-up.
+                alert.setContentText("Congrats you have won!");
+                alert.show();
+                UIManager.createScene("Homepage.fxml");
             }
-
         }
     }
 
@@ -76,4 +94,19 @@ public class TicTacToeController extends TicTacToeManager implements Initializab
         img_x.setFitWidth(140);
         gridBoard.add(img_x, x, y);
     }
+
+    @FXML
+    protected void forfeitGameButton(ActionEvent event) throws IOException {
+        emptyBoard(3, 3);
+        UIManager.createScene("Homepage.fxml");
+    }
+
+    @FXML
+    protected void homePageButton(ActionEvent event) throws IOException {
+        emptyBoard(3, 3);
+        UIManager.createScene("Homepage.fxml");
+    }
+
+
+
 }

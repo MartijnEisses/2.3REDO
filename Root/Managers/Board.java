@@ -100,8 +100,8 @@ public class Board {
         return true;
     }
 
-    public void emptyBoard(){
-        new Board(8,8);
+    public void emptyBoard(int x, int y){
+        new Board(x,y);
     }
 
     public boolean isRunner() {

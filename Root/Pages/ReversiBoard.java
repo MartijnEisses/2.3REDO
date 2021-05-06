@@ -1,6 +1,7 @@
 package Root.Pages;
 
 import Root.Managers.Board;
+import Root.Managers.ReversiManager;
 import Root.Managers.UIManager;
 import Root.Players.ReversiAI;
 import javafx.application.Platform;
@@ -16,21 +17,30 @@ import javafx.scene.Node;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class ReversiBoard extends ReversiController implements Initializable {
+public class ReversiBoard extends ReversiManager implements Initializable {
 
-    @FXML GridPane gridBoard;
-    @FXML protected Label turnLabel;
+    @FXML
+    GridPane gridBoard;
+    @FXML
+    protected Label turnLabel;
+    @FXML
+    protected Label playerStones;
+    @FXML
+    protected Label aiStones;
+
     private ReversiAI ai;
     private int turn = 1;
-    private int currentplayer =1;
-    int[][] oldBoard = getBoard();
+    private int[][] oldBoard = getBoard();
+    private boolean versusAI = true;
+    private List<String> playerBoardClick = new ArrayList<>();
 
-    public ReversiBoard(){
+    public ReversiBoard() {
         ai = new ReversiAI();
     }
-
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -54,10 +64,17 @@ public class ReversiBoard extends ReversiController implements Initializable {
                 final int x = i;
                 final int y = j;
                 setStone(x, y, 0);
-                p.setOnMouseClicked(e -> setStoneOnBoard(x, y, turn));
+                p.setOnMouseClicked(e -> {
+                    try {
+                        setStoneOnBoard(x, y, turn);
+                    } catch (InterruptedException interruptedException) {
+                        interruptedException.printStackTrace();
+                    }
+                });
                 gridBoard.add(p, i, j);
             }
         }
+        updateViews();
     }
 
     public void setStoneOnBoardStart(int x, int y, int whosTurn) {
@@ -69,7 +86,7 @@ public class ReversiBoard extends ReversiController implements Initializable {
                 stone_1.setCenterY(100.0f);
                 stone_1.setRadius(30.0f);
                 gridBoard.add(stone_1, x, y);
-                currentplayer = 2;
+                this.turn = 2;
                 break;
             case 2:
                 Circle stone_2 = new Circle();
@@ -78,35 +95,58 @@ public class ReversiBoard extends ReversiController implements Initializable {
                 stone_2.setRadius(30.0f);
                 stone_2.setFill(Color.WHITE);
                 gridBoard.add(stone_2, x, y);
-                currentplayer = 1;
+                this.turn = 1;
                 break;
         }
     }
 
-    public void setStoneOnBoard(int x, int y, int turn) {
-        int[] test = new int[2];
-        test[0] = y;
-        test[1] = x;
-
-        //System.out.println("x: " + test[0] + " y: " + test[1]);
-        updateBoard();
-
+    public void setStoneOnBoard(int x, int y, int whosTurn) throws InterruptedException {
+        System.out.println(turn);
+        int[] playerMove = new int[2];
+        playerMove[0] = y;
+        playerMove[1] = x;
+        updateViews();
+        //updateBoard();
+        switch (whosTurn) {
+            case 1:
+                if (isMoveValid(playerMove[0], playerMove[1])) {
+                    doMove(this.turn, playerMove);
+                    updateBoard();
+                    this.turn = 2;
+                    setStoneOnBoard(0, 0, this.turn);//Random x and y value it doesn't set any stone or register, it's for changing the turn to the ai.
+                }
+                break;
+            case 2:
+                int[] aiSET;
+                aiSET = new int[0];
+                aiSET = ai.getBestMove(legalMoves(turn), getBoard(), turn);
+                if (aiSET.length != 0) {
+                    Thread.sleep(500);
+                    doMove(turn, aiSET);
+                }
+                updateBoard();
+                this.turn = 1;
+                break;
+        }
+        updateViews();
     }
 
-    public void updateBoard(){
+
+    public void updateBoard() {
+        updateViews();
         int[][] newBoard = getBoard();
         switch (turn) {
             case 1:
                 for (int i = 0; i < newBoard.length; i++) {
                     for (int j = 0; j < newBoard[1].length; j++) {
-
                         if (newBoard[i][j] != oldBoard[i][j]) {
                             Circle stone_1 = new Circle();
                             stone_1.setCenterX(100.0f);
                             stone_1.setCenterY(100.0f);
                             stone_1.setRadius(30.0f);
                             gridBoard.add(stone_1, i, j);
-                            turn = 2;
+                            //tempturn = 2;
+                            //turn=2;
                         }
                     }
                 }
@@ -121,7 +161,8 @@ public class ReversiBoard extends ReversiController implements Initializable {
                             stone_2.setRadius(30.0f);
                             stone_2.setFill(Color.WHITE);
                             gridBoard.add(stone_2, i, j);
-                            turn = 1;
+                            //tempturn = 1;
+                            //turn=1;
                         }
                     }
                 }
@@ -130,166 +171,59 @@ public class ReversiBoard extends ReversiController implements Initializable {
         oldBoard = getBoard();
     }
 
+    public boolean isMoveValid(int x, int y) {
+        playerBoardClick = legalMoves(1);
+        List<String> subList = new ArrayList<String>();
+        List<String> allMoves = new ArrayList<String>();
+        allMoves.add(x + "-" + y);
+        for (int i = 0; i < playerBoardClick.size(); i++) {
+            for (int j = 0; j < playerBoardClick.size(); j++) {
+                String removeLast = playerBoardClick.get(j).substring(0, playerBoardClick.get(j).length() - 2);
+                subList.add(removeLast);
+                if (allMoves.get(i).contains(subList.get(j))) {
+                    playerBoardClick.clear();
+                    subList.clear();
+                    return true;
+                }
+            }
+            return false;
+        }
+        return false;
+    }
+
+    public void updateViews() {
+        turnPlayerLabel();
+        updateAIStonesLabel();
+        updatePlayerStonesLabel();
+    }
+
     @FXML
     protected void forfeitGameButton(ActionEvent event) throws IOException {
-        emptyBoard();
+        emptyBoard(8, 8);
         UIManager.createScene("Homepage.fxml");
     }
 
-    public void turnPlayerLabel(){
-        if(currentplayer==2){
-            turnLabel.setText("Opponent his turn!");
-        }else if(currentplayer ==1){
-            turnLabel.setText("Your turn!");
-        }
-    }
-
-    public void aiSet(int t) throws InterruptedException {
-        int[] aiSET;
-        aiSET = ai.getBestMove(legalMoves(t), getBoard(), t);
-        doMove(t, aiSET);
-        System.out.println("AI did move on: " + aiSET[1] + " and: " + aiSET[0] + " for: " + t);
-        updateBoard();
-    }
-}
-
-/*
-public class ReversiBoard extends ReversiController implements Initializable {
-
     @FXML
-    private GridPane gridBoard = new GridPane();
-    public int turn = 1;
-    private int[][] GUIboard;
-    private boolean testrunner = true;
-    //private Thread reversiBoardThread;
-    //private ReversiController reversiController;
+    protected void homePageButton(ActionEvent event) throws IOException {
+        emptyBoard(8, 8);
+        UIManager.createScene("Homepage.fxml");
+    }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            createGridBoard(board, 75, 75);
-            setStoneOnBoardStart(3, 3, 2);
-            setStoneOnBoardStart(4, 4, 2);
-            setStoneOnBoardStart(3, 4, 1);
-            setStoneOnBoardStart(4, 3, 1);
-        }catch (NullPointerException e){
-            e.printStackTrace();
+    public void turnPlayerLabel() {
+        if (this.turn == 1) {
+            turnLabel.setText("Your turn!");
+        } else {
+            turnLabel.setText("Opponent his turn!");
         }
     }
 
-    public void createGridBoard(int[][] testboard, int i1, int i2) {
-        try{
-             for (int i = 0; i < testboard[0].length; i++) {
-                for (int j = 0; j < testboard[1].length; j++) {
-                    Pane p = new Pane();
-                    p.setMinSize(i1, i2);
-                    p.setLayoutX(i);
-                    p.setLayoutY(j);
-                    //final int x = i;
-                   // final int y = j;
-                   // setStone(x, y, 0);
-                    gridBoard.add(p, i, j);
-                }
-            }
-        }catch (NullPointerException e){
-            e.printStackTrace();
-        }
+    public void updatePlayerStonesLabel() {
+        playerStones.setText("You have: " + countStones().get(0) + " stones");
     }
 
-    public void setStoneOnBoardStart(int x, int y, int turn) {
-        //setStone(x, y, turn);
-        switch (turn) {
-            case 1:
-                Circle stone_1 = new Circle();
-                stone_1.setCenterX(100.0f);
-                stone_1.setCenterY(100.0f);
-                stone_1.setRadius(30.0f);
-                gridBoard.add(stone_1, x, y);
-                this.turn = 2;
-                break;
-            case 2:
-                Circle stone_2 = new Circle();
-                stone_2.setCenterX(100.0f);
-                stone_2.setCenterY(100.0f);
-                stone_2.setRadius(30.0f);
-                stone_2.setFill(Color.WHITE);
-                gridBoard.add(stone_2, x, y);
-                this.turn = 1;
-                break;
-        }
+    public void updateAIStonesLabel() {
+        aiStones.setText("AI has: " + countStones().get(1) + " stones");
     }
 
 
-    public void setStoneOnBoard(int x, int y, int turn) {
-
-        setStone(x, y, turn);
-        this.turn = turn;
-        switch (turn) {
-            case 1:
-                Circle stone_1 = new Circle();
-                stone_1.setCenterX(100.0f);
-                stone_1.setCenterY(100.0f);
-                stone_1.setRadius(30.0f);
-                gridBoard.add(stone_1, x, y);
-                System.out.println("Setting stone on: " + x + " and: " + y + " for player: " + turn);
-                this.turn = 2;
-
-                break;
-            case 2:
-                Circle stone_2 = new Circle();
-                stone_2.setCenterX(100.0f);
-                stone_2.setCenterY(100.0f);
-                stone_2.setRadius(30.0f);
-                stone_2.setFill(Color.WHITE);
-                gridBoard.add(stone_2, x, y);
-                System.out.println("Setting stone on: " + x + " and: " + y + " for player: " + turn);
-                this.turn = 1;
-                break;
-        }
-        updateBoard();
-
-
-    }
-
-    public void updateBoard(int[][] b) {
-        int[][] newBoard = b;
-        switch (turn) {
-            case 1:
-                for (int i = 0; i < newBoard.length; i++) {
-                    for (int j = 0; j < newBoard[i].length; j++) {
-
-                        if (newBoard[i][j] ==1) {
-                            Circle stone_1 = new Circle();
-                            stone_1.setCenterX(100.0f);
-                            stone_1.setCenterY(100.0f);
-                            stone_1.setRadius(30.0f);
-                            gridBoard.add(stone_1, i, j);
-                            System.out.println("added Stone on: " + i + " and: " + j + " for player: " + turn);
-                            this.turn = 2;
-                        }
-                    }
-                }
-                break;
-            case 2:
-                for (int i = 0; i < newBoard.length; i++) {
-                    for (int j = 0; j < newBoard[i].length; j++) {
-
-                        if (newBoard[i][j] ==2) {
-                            Circle stone_2 = new Circle();
-                            stone_2.setCenterX(100.0f);
-                            stone_2.setCenterY(100.0f);
-                            stone_2.setRadius(30.0f);
-                            stone_2.setFill(Color.WHITE);
-                            gridBoard.add(stone_2, i, j);
-                            System.out.println("added Stone on: " + i + " and: " + j + " for player: " + turn);
-                            this.turn = 1;
-                        }
-                    }
-                }
-                break;
-        }
-        GUIboard = getBoard();
-
-    }
 }
-*/

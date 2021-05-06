@@ -330,7 +330,6 @@ public class TicTacToeManager extends Board implements Manager {
     public void Win(Color winner) {
         if (winner != Color.EMPTY) {
             System.out.println(winner + " HAS WON!!");
-            // TODO: Call win function in the main class?!?!
         } else {
             System.out.println("It's a TIE");
         }

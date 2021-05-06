@@ -1,6 +1,7 @@
 package Root.Pages;
 
 import Root.Managers.Board;
+import Root.Managers.ReversiManager;
 import Root.Managers.UIManager;
 ;
 import Root.Players.ReversiAI;
@@ -18,7 +19,8 @@ public class ReversiTemp extends Board implements Initializable {
     private ReversiAI reversiAI;
     private Random random;
     private boolean finished = true;
-    private ReversiController reversiController;
+
+    private ReversiManager reversiManager;
     private ReversiBoard reversiBoard;
 
     @Override
@@ -38,7 +40,8 @@ public class ReversiTemp extends Board implements Initializable {
     }
 
     public void startReversi() throws InterruptedException, IOException{
-        reversiController = new ReversiController();
+
+        reversiManager = new ReversiManager();
         System.out.println("Reversi begint!!!");
         System.out.println("Het is jou beurt!!!!!");
         Platform.runLater(new Runnable() {
@@ -67,16 +70,16 @@ public class ReversiTemp extends Board implements Initializable {
                 result[i] = Integer.parseInt(move[i]);
             }
 
-            reversiController.doMove(currentPlayer, result);
+            reversiManager.doMove(currentPlayer, result);
             if(currentPlayer== 1){
                 currentPlayer = 2;
             }
 
             if(currentPlayer == 2) {
                 int[] aiSET;
-                aiSET = reversiAI.getBestMove(reversiController.legalMoves(currentPlayer), reversiController.getBoard(), currentPlayer);
+                aiSET = reversiAI.getBestMove(reversiManager.legalMoves(currentPlayer), reversiManager.getBoard(), currentPlayer);
                 System.out.println(aiSET);
-                reversiController.doMove(currentPlayer,aiSET);
+                reversiManager.doMove(currentPlayer,aiSET);
                 currentPlayer = 1;
             }
 
@@ -85,13 +88,13 @@ public class ReversiTemp extends Board implements Initializable {
             }else {
                 System.out.println("\nHet is de beurt van de AI!!");
             }
-            reversiController.drawBoard();
-            System.out.println("You currently have: " + reversiController.countStones().get(0) + " stones");
-            System.out.println("The AI currently has: " + reversiController.countStones().get(1)+ " stones");
+            reversiManager.drawBoard();
+            System.out.println("You currently have: " + reversiManager.countStones().get(0) + " stones");
+            System.out.println("The AI currently has: " + reversiManager.countStones().get(1)+ " stones");
         }
         if(fullWord[0].equals("moves")){
-            reversiController.legalMoves(currentPlayer);
-            reversiController.legalMoves(currentPlayer).forEach((n) -> System.out.println(n));
+            reversiManager.legalMoves(currentPlayer);
+            reversiManager.legalMoves(currentPlayer).forEach((n) -> System.out.println(n));
         }
     }
 

@@ -65,7 +65,7 @@ public class Onlinelobby implements Initializable {
             Alerthelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "No challenge has been Send!");
             return;
         }
-        UIManager.createScene("Reversi.fxml");
+        UIManager.createScene("OfflineReversi.fxml");
         Main.connection.acceptGameChallenge(interpreter.getGameID());
 
     }

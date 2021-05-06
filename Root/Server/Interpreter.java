@@ -2,14 +2,11 @@ package Root.Server;
 
 import Root.Main;
 import Root.Managers.GameType;
+import Root.Managers.ReversiManager;
 import Root.Managers.UIManager;
-import Root.Pages.ReversiBoard;
-import Root.Pages.ReversiController;
-import Root.Pages.ReversiTemp;
 
 import Root.Players.ReversiAI;
 import Root.Players.playertype;
-import com.sun.glass.ui.PlatformFactory;
 import javafx.application.Platform;
 
 import java.io.IOException;
@@ -27,7 +24,8 @@ public class Interpreter {
     private static String gameChallenge;
     private int playerAI;
     private int playerOpponent;
-    private ReversiController reversiController;
+    //private ReversiController reversiController;
+    private ReversiManager reversiManager;
     private ReversiAI reversiAI;
 
     /*
@@ -37,7 +35,8 @@ public class Interpreter {
     public Interpreter() {
         playerList = new ArrayList<>();
         legalmovesAI = new ArrayList<>();
-        reversiController = new ReversiController();
+        //reversiController = new ReversiController();
+        reversiManager = new ReversiManager();
         reversiAI = new ReversiAI();
     }
 
@@ -76,12 +75,12 @@ public class Interpreter {
                                             System.out.println("Opponent is color black");
                                             setPlayerAI(2);
                                             setPlayerOpponent(1);
-                                            reversiController.gameController(playertype.ONLINE,playertype.AI, GameType.ONLINE);
+                                            reversiManager.gameController(playertype.ONLINE,playertype.AI, GameType.ONLINE);
                                         } else {
                                             System.out.println("ai has color black");
                                             setPlayerAI(1);
                                             setPlayerOpponent(2);
-                                            reversiController.gameController(playertype.AI, playertype.ONLINE, GameType.ONLINE);
+                                            reversiManager.gameController(playertype.AI, playertype.ONLINE, GameType.ONLINE);
                                         }
                                         System.out.println("Player to move: " + PLAYERTOMOVE);
                                         Platform.runLater(new Runnable() {
@@ -102,16 +101,10 @@ public class Interpreter {
                                     int[] position;
                                     System.out.println(commands[6]);
                                     if (commands[4].equals(OPPONENT)) {
-                                        System.out.println("Received move from opponent");
                                         System.out.println("Opponent made move on: " + zet);
-                                        position = reversiController.convertToBoardPosition(zet);
-                                        //Verwerk de move van de opponent.
-                                        System.out.println("position is:  " + position[0] + " " + position[1]);
-                                        reversiController.doMove(getPlayerOpponent(), position);
+                                        position = reversiManager.convertToBoardPosition(zet);
+                                        reversiManager.doMove(getPlayerOpponent(), position);
                                     } else {
-                                        //position = reversiController.convertToBoardPosition(zet);
-                                        //System.out.println("Received move from ai");
-                                        //System.out.println("ai made move on: " + zet);
                                     }
                                 }catch (Exception e){
                                     System.out.println("Move is illegal");
@@ -119,38 +112,31 @@ public class Interpreter {
                                 }
                                 break;
                             case "YOURTURN":
-                                //ai moet weten dat het zijn beurt is.
                                 System.out.println("Its your turn ai make a good move...");
                                 int[] aiSET;
-                                aiSET = reversiAI.getBestMove(reversiController.legalMoves(getPlayerAI()), reversiController.getBoard(), getPlayerAI());
-                                System.out.println("AI has these legal moves: " + reversiController.legalMoves(getPlayerAI()));
+                                aiSET = reversiAI.getBestMove(reversiManager.legalMoves(getPlayerAI()), reversiManager.getBoard(), getPlayerAI());
+                                System.out.println("AI has these legal moves: " + reversiManager.legalMoves(getPlayerAI()));
                                 System.out.println("X: " + aiSET[0] + " and y: " + aiSET[1]);
-                                int sendINT = reversiController.LocationToInt(aiSET);
+                                int sendINT = reversiManager.LocationToInt(aiSET);
                                 System.out.println("Sending to opponent: " + sendINT + " for player: " + getPlayerAI());
-                                reversiController.doMove(getPlayerAI(),aiSET);
+                                reversiManager.doMove(getPlayerAI(),aiSET);
                                 Main.connection.setMove(sendINT);
                                 break;
                             case "CHALLENGE":
                                 switch (commands[3]) {
                                     case "CHALLENGER":
-                                        //stuur challenge accept terug.
                                         gameID = Integer.parseInt(commands[6]);
                                         System.out.println("Challenged by " + commands[4] + " for game: " + commands[8] + " gameID :" + commands[6]);
                                         gameChallenge = commands[4];
                                         break;
                                     case "CANCELLED":
-                                        //challenge is door de uitdager gecanceld
                                         System.out.println("Match has been cancelled");
                                         break;
                                 }
                                 break;
                             case "WIN":
-                                //info over win
-                                //alle stenen moeten worden gereset.
-                                //Display that user has won.Terug naar online screen en display user has won.
                                 System.out.println("You have won nice job!");
                                 Platform.runLater(new Runnable() {
-
                                     public void run() {
                                         try {
                                             UIManager.createScene("Onlinelobby.fxml");
@@ -159,13 +145,10 @@ public class Interpreter {
                                         }
                                     }
                                 });
-                                reversiController = new ReversiController();
-                                reversiController.drawBoard();
+                                reversiManager = new ReversiManager();
+                                reversiManager.drawBoard();
                                 break;
                             case "LOSS":
-                                //info over loss.
-                                //alle stenen moeten worden gereset.
-                                //Display that user has lost. Terug naar online screen en display user has lost
                                 System.out.println("You have lost you suck!");
                                 Platform.runLater(new Runnable() {
                                     public void run() {
@@ -176,8 +159,8 @@ public class Interpreter {
                                         }
                                     }
                                 });
-                                reversiController = new ReversiController();
-                                reversiController.drawBoard();
+                                reversiManager = new ReversiManager();
+                                reversiManager.drawBoard();
                                 break;
                             default:
                                 throw new IllegalStateException("Unexpected value: " + commands[2]);
@@ -221,15 +204,3 @@ public class Interpreter {
         this.playerOpponent = playerOpponent;
     }
 }
-/*
-class AlertHelpers {
-
-    public static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.initOwner(owner);
-        alert.show();
-    }
-}*/

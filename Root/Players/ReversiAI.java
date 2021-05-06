@@ -29,6 +29,7 @@ public class ReversiAI {
        int mostTaken=0;
         List<String> moveList = new ArrayList(Arrays.asList(legalMoves));
         mostTaken = 0;
+
         for (String pos: badMoves){
             for(String test : legalMoves){
                 String[] parts = test.split(":");
@@ -39,6 +40,7 @@ public class ReversiAI {
                 }
             }
         }
+
         mostTaken = 0;
         for (String pos: okMoves){
             for(String test : legalMoves){
@@ -50,6 +52,7 @@ public class ReversiAI {
                 }
             }
         }
+
         mostTaken = 0;
         for (String pos: goodMoves){
             for(String test : legalMoves){
@@ -61,6 +64,7 @@ public class ReversiAI {
                 }
             }
         }
+
         mostTaken = 0;
         for (String pos: bestMoves){
             for(String test : legalMoves){
@@ -72,9 +76,10 @@ public class ReversiAI {
                 }
             }
         }
+
         try {
             System.out.println("The best move of the ai is: " + bestMove);
-            //TimeUnit.SECONDS.sleep(1);
+            TimeUnit.SECONDS.sleep(1);
             String[] move = bestMove.split("-");
             result = new int[move.length];
             for (int i = 0; i < move.length; i++) {

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-
 public class TicTacToeManager extends Board implements Manager {
 
     @Override
@@ -19,13 +18,9 @@ public class TicTacToeManager extends Board implements Manager {
 
     }
 
-
-
-
-    
     Scanner in = new Scanner(System.in);
 
-    private enum Color {
+    public enum Color {
         // AI is BLACK player is WHITE
         EMPTY, BLACK, WHITE
     }
@@ -125,73 +120,75 @@ public class TicTacToeManager extends Board implements Manager {
         // turn " + turn);
 
         switch (position) {
-        case 0:
-            if (ValidMove(0, 0)) {
-                board[0][0] = color.ordinal();
-                setStone(0, 0, turn);
-            }
+            case 0:
+                if (ValidMove(0, 0)) {
+                    board[0][0] = color.ordinal();
+                    setStone(0, 0, turn);
+                }
 
-            break;
-        case 1:
-            if (ValidMove(0, 1)) {
-                board[0][1] = color.ordinal();
-                setStone(0, 1, turn);
-            }
+                break;
+            case 1:
+                if (ValidMove(0, 1)) {
+                    board[0][1] = color.ordinal();
+                    setStone(0, 1, turn);
+                }
 
-            break;
-        case 2:
-            if (ValidMove(0, 2)) {
-                board[0][2] = color.ordinal();
-                setStone(0, 2, turn);
-            }
+                break;
+            case 2:
+                if (ValidMove(0, 2)) {
+                    board[0][2] = color.ordinal();
+                    setStone(0, 2, turn);
+                }
 
-            break;
-        case 3:
-            if (ValidMove(1, 0)) {
-                board[1][0] = color.ordinal();
-                setStone(1, 0, turn);
-            }
+                break;
+            case 3:
+                if (ValidMove(1, 0)) {
+                    board[1][0] = color.ordinal();
+                    setStone(1, 0, turn);
+                }
 
-            break;
-        case 4:
-            if (ValidMove(1, 1)) {
-                board[1][1] = color.ordinal();
-                setStone(1, 1, turn);
-            }
+                break;
+            case 4:
+                if (ValidMove(1, 1)) {
+                    board[1][1] = color.ordinal();
+                    setStone(1, 1, turn);
+                }
 
-            break;
-        case 5:
-            if (ValidMove(1, 2)) {
-                board[1][2] = color.ordinal();
-                setStone(1, 2, turn);
-            }
+                break;
+            case 5:
+                if (ValidMove(1, 2)) {
+                    board[1][2] = color.ordinal();
+                    setStone(1, 2, turn);
+                }
 
-            break;
-        case 6:
-            if (ValidMove(2, 0)) {
-                board[2][0] = color.ordinal();
-                setStone(2, 0, turn);
-            }
+                break;
+            case 6:
+                if (ValidMove(2, 0)) {
+                    board[2][0] = color.ordinal();
+                    setStone(2, 0, turn);
+                }
 
-            break;
-        case 7:
-            if (ValidMove(2, 1)) {
-                board[2][1] = color.ordinal();
-                setStone(2, 1, turn);
-            }
+                break;
+            case 7:
+                if (ValidMove(2, 1)) {
+                    board[2][1] = color.ordinal();
+                    setStone(2, 1, turn);
+                }
 
-            break;
-        case 8:
-            if (ValidMove(2, 2)) {
-                board[2][2] = color.ordinal();
-                setStone(2, 2, turn);
-            }
-            break;
-        default:
-            break;
+                break;
+            case 8:
+                if (ValidMove(2, 2)) {
+                    board[2][2] = color.ordinal();
+                    setStone(2, 2, turn);
+                }
+                break;
+            default:
+                break;
         }
 
-         for (int i = 0; i < board.length; i++) { System.out.println(board[0][i] + "" + board[1][i] + "" + board[2][i]); }
+        for (int i = 0; i < board.length; i++) {
+            System.out.println(board[0][i] + "" + board[1][i] + "" + board[2][i]);
+        }
 
     }
 
@@ -336,4 +333,3 @@ public class TicTacToeManager extends Board implements Manager {
 
     }
 }
-

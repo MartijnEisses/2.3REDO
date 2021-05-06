@@ -15,8 +15,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
-
 public class TicTacToeController extends TicTacToeManager implements Initializable {
 
     @FXML
@@ -75,13 +73,20 @@ public class TicTacToeController extends TicTacToeManager implements Initializab
                 setStoneOnBoard(oBoardPosition[bestmove][0], oBoardPosition[bestmove][1], this.turn);
             }
             if (CheckForWin() != null) {
-                Win(CheckForWin());
-                emptyBoard(3,3);
+                Color winner = CheckForWin();
+                emptyBoard(3, 3);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Game Information");
                 alert.setHeaderText(null);
-                // TODO: Check who won either white or black or it was a tie to display in the pop-up.
-                alert.setContentText("Congrats you have won!");
+                // TODO: Check who won either white or black or it was a tie to display in the
+                // pop-up.
+                if (winner == Color.WHITE) {
+                    alert.setContentText("Congrats you have won!");
+                } else if (winner == Color.BLACK) {
+                    alert.setContentText("The computer has won");
+                } else if (winner == Color.EMPTY) {
+                    alert.setContentText("TIE!");
+                }
                 alert.show();
                 UIManager.createScene("Homepage.fxml");
             }
@@ -106,7 +111,5 @@ public class TicTacToeController extends TicTacToeManager implements Initializab
         emptyBoard(3, 3);
         UIManager.createScene("Homepage.fxml");
     }
-
-
 
 }

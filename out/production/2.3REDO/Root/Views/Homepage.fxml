@@ -13,17 +13,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280" styleClass="background"
-      xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml" fx:controller="Root.Pages.Homepage">
+<GridPane fx:id="gp_1" fx:controller="Root.Pages.Homepage" xmlns:fx="http://javafx.com/fxml" styleClass="background" alignment="center" GridPane.columnSpan="3" hgap="10" vgap="10">
 
-    <HBox fx:id="offline" alignment="TOP_LEFT" layoutY="300.0" layoutX="100.0" prefWidth="150">
-        <Label styleClass="selectLabel" text="Select Game:" prefWidth="200" prefHeight="40" minHeight="40"/>
-        <ComboBox fx:id="selectGame" styleClass="selectGame" prefWidth="200" prefHeight="40" minHeight="40" />
-    </HBox>
+    <Label styleClass="selectLabel" text="Select Game:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
 
-   <HBox fx:id="online" alignment="TOP_CENTER" layoutX="300.0" layoutY="700.0" prefWidth="850.0" spacing="300">
-       <Button fx:id="selectButton" styleClass="selectButton" text="Start offline Game" onAction="#handleSubmitButtonAction" prefWidth="200" prefHeight="40" minHeight="40"/>
-       <Button fx:id="onlineButton" styleClass="onlineButton" text="Online" onAction="#handleOnlineButtonAction"  prefWidth="200" prefHeight="40" minHeight="40"/>
-   </HBox>
+    <ComboBox fx:id="selectGame" styleClass="selectGame" GridPane.columnIndex="0" GridPane.rowIndex="1" />
 
-</VBox>
+    <Button fx:id="selectButton" styleClass="selectButton" text="Start Game" onAction="#handleSubmitButtonAction" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+    <Button fx:id="onlineButton" styleClass="onlineButton" text="Online" onAction="#handleOnlineButtonAction"  GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+
+</GridPane>

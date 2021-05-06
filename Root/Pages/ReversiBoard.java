@@ -1,5 +1,6 @@
 package Root.Pages;
 
+import Root.Managers.Board;
 import Root.Managers.UIManager;
 import Root.Players.ReversiAI;
 import javafx.application.Platform;
@@ -61,7 +62,6 @@ public class ReversiBoard extends ReversiController implements Initializable {
 
     public void setStoneOnBoardStart(int x, int y, int whosTurn) {
         setStone(x, y, whosTurn);
-
         switch (whosTurn) {
             case 1:
                 Circle stone_1 = new Circle();
@@ -87,23 +87,10 @@ public class ReversiBoard extends ReversiController implements Initializable {
         int[] test = new int[2];
         test[0] = y;
         test[1] = x;
+
         //System.out.println("x: " + test[0] + " y: " + test[1]);
         updateBoard();
-        try {
-            if(turn ==1) {
-                turnPlayerLabel();
-                currentplayer =1;
-                doMove(1,test);
 
-                //aiSet(turn);
-            } else if(turn==2){
-                turnPlayerLabel();
-                currentplayer=2;
-                aiSet(turn);
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     public void updateBoard(){

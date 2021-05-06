@@ -13,7 +13,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280" style="-fx-background-color: #D3D3D3;"
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280" styleClass="background"
       xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml" fx:controller="Root.Pages.Homepage">
 
     <HBox fx:id="offline" alignment="TOP_LEFT" layoutY="300.0" layoutX="100.0" prefWidth="150">
@@ -22,7 +22,7 @@
     </HBox>
 
    <HBox fx:id="online" alignment="TOP_CENTER" layoutX="300.0" layoutY="700.0" prefWidth="850.0" spacing="300">
-       <Button fx:id="selectButton" styleClass="selectButton" text="Start Game" onAction="#handleSubmitButtonAction" prefWidth="200" prefHeight="40" minHeight="40"/>
+       <Button fx:id="selectButton" styleClass="selectButton" text="Start offline Game" onAction="#handleSubmitButtonAction" prefWidth="200" prefHeight="40" minHeight="40"/>
        <Button fx:id="onlineButton" styleClass="onlineButton" text="Online" onAction="#handleOnlineButtonAction"  prefWidth="200" prefHeight="40" minHeight="40"/>
    </HBox>
 

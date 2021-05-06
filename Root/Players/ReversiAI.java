@@ -15,8 +15,6 @@ public class ReversiAI {
     private String bestMove ="";
     private Random random = new Random();
     private int[] result;
-    //private int mostTaken =0;
-    //private int taken;
 
 
     /**

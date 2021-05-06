@@ -39,13 +39,11 @@ public class Homepage implements Initializable {
 
     @FXML
     protected void handleSubmitButtonAction(ActionEvent event) throws IOException, InterruptedException {
-        System.out.println("hallo");
         selectedGame = getGameType();
         setPlayerType(playerType.LOCAL);
         switch(getGameType()) {
             case TicTacToe:
                 UIManager.createScene("TicTacToeBoard.fxml");
-//                Main.setScene("Views/TicTacToeBoard.fxml");
                 break;
             case Reversi:
                 UIManager.createScene("OfflineReversi.fxml");

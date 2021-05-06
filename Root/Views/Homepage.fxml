@@ -13,11 +13,23 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<<<<<<< Updated upstream
 <GridPane fx:id="gp_1" fx:controller="Root.Pages.Homepage" xmlns:fx="http://javafx.com/fxml" styleClass="background" alignment="center" GridPane.columnSpan="3" hgap="10" vgap="10">
+=======
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280" styleClass="background"
+      xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml" fx:controller="Root.Pages.Homepage">
+>>>>>>> Stashed changes
 
     <Label styleClass="selectLabel" text="Select Game:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
 
+<<<<<<< Updated upstream
     <ComboBox fx:id="selectGame" styleClass="selectGame" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+=======
+   <HBox fx:id="online" alignment="TOP_CENTER" layoutX="300.0" layoutY="700.0" prefWidth="850.0" spacing="300">
+       <Button fx:id="selectButton" styleClass="selectButton" text="Start offline Game" onAction="#handleSubmitButtonAction" prefWidth="200" prefHeight="40" minHeight="40"/>
+       <Button fx:id="onlineButton" styleClass="onlineButton" text="Online" onAction="#handleOnlineButtonAction"  prefWidth="200" prefHeight="40" minHeight="40"/>
+   </HBox>
+>>>>>>> Stashed changes
 
     <Button fx:id="selectButton" styleClass="selectButton" text="Start Game" onAction="#handleSubmitButtonAction" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 

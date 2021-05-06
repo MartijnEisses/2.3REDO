@@ -396,12 +396,14 @@ public class ReversiController extends Board implements Initializable {
                     System.out.print("  " + (i) + " ");
                     for (int p = 0; p < board[i].length; p++) {
                         System.out.print(" " + newBoard[p][i]);
-                       // if(newBoard[p][i] == 1) {
+                        if(newBoard[p][i] == 1) {
                             //reversiBoard.setStoneOnBoard(p,i,currentPlayer);
-                     //   }
-                       // else if(newBoard[p][i] == 2){
+                            //setStone(p,i,1);
+                        }
+                        else if(newBoard[p][i] == 2){
                             //reversiBoard.setStoneOnBoard(p,i,currentPlayer);
-                      //  }
+                            //setStone(p,i,2);
+                        }
                     }
                     System.out.println();
                 }
@@ -418,12 +420,6 @@ public class ReversiController extends Board implements Initializable {
     public int[][] getCurBoard(){
         return board;
     }
-
-    public void setStoneOnBoard(){
-
-    }
-
-
 
     public void syncBoards(int[][] newBoard){
         int[][] tempBoard = newBoard;

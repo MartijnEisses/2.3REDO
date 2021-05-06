@@ -5,6 +5,7 @@ import Root.Managers.Board;
 import Root.Managers.UIManager;
 import Root.Server.Connection;
 import Root.Server.Interpreter;
+import Root.Views.Alerthelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -61,7 +62,7 @@ public class Onlinelobby implements Initializable {
         Window ErrorMessage = challengeButton.getScene().getWindow();
         //System.out.println("accept is pressed!");
         if(interpreter.getGameChallenge() == null){
-           AlertHelp.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "No challenge has been Send!");
+            Alerthelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "No challenge has been Send!");
             return;
         }
         UIManager.createScene("Reversi.fxml");
@@ -71,7 +72,7 @@ public class Onlinelobby implements Initializable {
 
     public void youLost(){
         Window ErrorMessage = challengeButton.getScene().getWindow();
-        AlertHelp.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Lost game", "Whoops, looks Like you lost!");
+        Alerthelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Lost game", "Whoops, looks Like you lost!");
         return;
 
     }
@@ -86,11 +87,11 @@ public class Onlinelobby implements Initializable {
         Window ErrorMessage = challengeButton.getScene().getWindow();
 
         if(opponent.getText().isEmpty()){
-            AlertHelp.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid ign");
+            Alerthelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid ign");
             return;
         }
         if(opponent.getText().equals(playerList)){
-            AlertHelp.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Player is not online");
+            Alerthelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Player is not online");
             return;
         }
         UIManager.createScene("Reversi.fxml");
@@ -98,17 +99,3 @@ public class Onlinelobby implements Initializable {
     }
 }
 
-/**
- * Alerthelper voor het verschijnen van een pop-up.
- */
-class AlertHelp {
-
-    public static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.initOwner(owner);
-        alert.show();
-    }
-}

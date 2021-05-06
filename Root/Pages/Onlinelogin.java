@@ -3,6 +3,7 @@ package Root.Pages;
 import Root.Main;
 import Root.Managers.UIManager;
 import Root.Server.Connection;
+import Root.Views.Alerthelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -45,22 +46,22 @@ public class Onlinelogin implements Initializable {
         Window ErrorMessage = submitButton.getScene().getWindow();
         //Check if the textfields are empty
         if (ignField.getText().isEmpty()) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid ign");
+            Alerthelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid ign");
             return;
         }
 
         if (ipField.getText().isEmpty()) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid IP");
+            Alerthelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid IP");
             return;
         }
 
         if (!portField.getText().matches("^[0-9]*$")) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid port");
+            Alerthelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid port");
             return;
         }
 
         if (portField.getText().isEmpty()) {
-            AlertHelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid Port");
+            Alerthelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid Port");
             return;
         }
         Main.connection.connectToServer(ipField.getText(), Integer.parseInt(portField.getText()));
@@ -70,20 +71,5 @@ public class Onlinelogin implements Initializable {
 
     public TextField getIgnField() {
         return ignField;
-    }
-}
-
-/**
- * AlertHelper voor een pop-up als er een foutmelding is.
- */
-class AlertHelper {
-
-    public static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.initOwner(owner);
-        alert.show();
     }
 }

@@ -87,7 +87,8 @@ public class TicTacToeController extends TicTacToeManager implements Initializab
                 } else if (winner == Color.EMPTY) {
                     alert.setContentText("TIE!");
                 }
-                alert.show();
+                //alert.show();
+                alert.showAndWait();
                 UIManager.createScene("Homepage.fxml");
             }
         }
@@ -103,7 +104,7 @@ public class TicTacToeController extends TicTacToeManager implements Initializab
     @FXML
     protected void forfeitGameButton(ActionEvent event) throws IOException {
         emptyBoard(3, 3);
-        UIManager.createScene("Homepage.fxml");
+        UIManager.createScene("TicTacToeBoard.fxml");
     }
 
     @FXML

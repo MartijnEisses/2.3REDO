@@ -69,6 +69,11 @@ public class Onlinelogin implements Initializable {
         UIManager.createScene("Onlinelobby.fxml");
     }
 
+
+    @FXML
+    protected void homePageButton(ActionEvent event) throws IOException {
+        UIManager.createScene("Homepage.fxml");
+    }
     public TextField getIgnField() {
         return ignField;
     }

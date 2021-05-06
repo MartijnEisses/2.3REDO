@@ -2,12 +2,14 @@ package Root.Pages;
 
 import Root.Managers.Board;
 import Root.Managers.ReversiManager;
+import Root.Managers.TicTacToeManager;
 import Root.Managers.UIManager;
 import Root.Players.ReversiAI;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -23,14 +25,10 @@ import java.util.ResourceBundle;
 
 public class ReversiBoard extends ReversiManager implements Initializable {
 
-    @FXML
-    GridPane gridBoard;
-    @FXML
-    protected Label turnLabel;
-    @FXML
-    protected Label playerStones;
-    @FXML
-    protected Label aiStones;
+    @FXML GridPane gridBoard;
+    @FXML protected Label turnLabel;
+    @FXML protected Label playerStones;
+    @FXML protected Label aiStones;
 
     private ReversiAI ai;
     private int turn = 1;
@@ -101,6 +99,7 @@ public class ReversiBoard extends ReversiManager implements Initializable {
     }
 
     public void setStoneOnBoard(int x, int y, int whosTurn) throws InterruptedException {
+
         System.out.println(turn);
         int[] playerMove = new int[2];
         playerMove[0] = y;
@@ -112,7 +111,10 @@ public class ReversiBoard extends ReversiManager implements Initializable {
                 if (isMoveValid(playerMove[0], playerMove[1])) {
                     doMove(this.turn, playerMove);
                     updateBoard();
+
                     this.turn = 2;
+                    Thread.sleep(500);
+                    turnLabel.setText("Opponent his turn!");
                     setStoneOnBoard(0, 0, this.turn);//Random x and y value it doesn't set any stone or register, it's for changing the turn to the ai.
                 }
                 break;
@@ -120,12 +122,14 @@ public class ReversiBoard extends ReversiManager implements Initializable {
                 int[] aiSET;
                 aiSET = new int[0];
                 aiSET = ai.getBestMove(legalMoves(turn), getBoard(), turn);
+
                 if (aiSET.length != 0) {
-                    Thread.sleep(500);
+                    //Thread.sleep(500);
                     doMove(turn, aiSET);
                 }
                 updateBoard();
                 this.turn = 1;
+                turnLabel.setText("Your turn!");
                 break;
         }
         updateViews();
@@ -133,42 +137,60 @@ public class ReversiBoard extends ReversiManager implements Initializable {
 
 
     public void updateBoard() {
-        updateViews();
-        int[][] newBoard = getBoard();
-        switch (turn) {
-            case 1:
-                for (int i = 0; i < newBoard.length; i++) {
-                    for (int j = 0; j < newBoard[1].length; j++) {
-                        if (newBoard[i][j] != oldBoard[i][j]) {
-                            Circle stone_1 = new Circle();
-                            stone_1.setCenterX(100.0f);
-                            stone_1.setCenterY(100.0f);
-                            stone_1.setRadius(30.0f);
-                            gridBoard.add(stone_1, i, j);
-                            //tempturn = 2;
-                            //turn=2;
+        if(!fullBoard()) {
+            updateViews();
+            int[][] newBoard = getBoard();
+            switch (turn) {
+                case 1:
+                    for (int i = 0; i < newBoard.length; i++) {
+                        for (int j = 0; j < newBoard[1].length; j++) {
+                            if (newBoard[i][j] != oldBoard[i][j]) {
+                                Circle stone_1 = new Circle();
+                                stone_1.setCenterX(100.0f);
+                                stone_1.setCenterY(100.0f);
+                                stone_1.setRadius(30.0f);
+                                gridBoard.add(stone_1, i, j);
+                                //tempturn = 2;
+                                //turn=2;
+                            }
                         }
                     }
-                }
-                break;
-            case 2:
-                for (int i = 0; i < newBoard.length; i++) {
-                    for (int j = 0; j < newBoard[1].length; j++) {
-                        if (newBoard[i][j] != oldBoard[i][j]) {
-                            Circle stone_2 = new Circle();
-                            stone_2.setCenterX(100.0f);
-                            stone_2.setCenterY(100.0f);
-                            stone_2.setRadius(30.0f);
-                            stone_2.setFill(Color.WHITE);
-                            gridBoard.add(stone_2, i, j);
-                            //tempturn = 1;
-                            //turn=1;
+                    break;
+                case 2:
+                    for (int i = 0; i < newBoard.length; i++) {
+                        for (int j = 0; j < newBoard[1].length; j++) {
+                            if (newBoard[i][j] != oldBoard[i][j]) {
+                                Circle stone_2 = new Circle();
+                                stone_2.setCenterX(100.0f);
+                                stone_2.setCenterY(100.0f);
+                                stone_2.setRadius(30.0f);
+                                stone_2.setFill(Color.WHITE);
+                                gridBoard.add(stone_2, i, j);
+                                //tempturn = 1;
+                                //turn=1;
+                            }
                         }
                     }
+                    break;
+            }
+            oldBoard = getBoard();
+        } else{
+            try {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Match Information");
+                alert.setHeaderText(null);
+                if(countStones().get(0) > countStones().get(1)){
+                    alert.setContentText("You have won!");
+                } else if(countStones().get(1) > countStones().get(0)){
+                    alert.setContentText("You lost.. Try again!");
+                } else if(countStones().get(1) > countStones().get(0)) {
+                    alert.setContentText("It is a draw, try again!");
                 }
-                break;
+                alert.showAndWait();
+                emptyBoard(8,8);
+                UIManager.createScene("Homepage.fxml");
+            } catch(IOException e){}
         }
-        oldBoard = getBoard();
     }
 
     public boolean isMoveValid(int x, int y) {
@@ -192,7 +214,7 @@ public class ReversiBoard extends ReversiManager implements Initializable {
     }
 
     public void updateViews() {
-        turnPlayerLabel();
+        //turnPlayerLabel();
         updateAIStonesLabel();
         updatePlayerStonesLabel();
     }
@@ -200,7 +222,7 @@ public class ReversiBoard extends ReversiManager implements Initializable {
     @FXML
     protected void forfeitGameButton(ActionEvent event) throws IOException {
         emptyBoard(8, 8);
-        UIManager.createScene("Homepage.fxml");
+        UIManager.createScene("Reversi.fxml");
     }
 
     @FXML
@@ -208,7 +230,7 @@ public class ReversiBoard extends ReversiManager implements Initializable {
         emptyBoard(8, 8);
         UIManager.createScene("Homepage.fxml");
     }
-
+/*
     public void turnPlayerLabel() {
         if (this.turn == 1) {
             turnLabel.setText("Your turn!");
@@ -216,13 +238,14 @@ public class ReversiBoard extends ReversiManager implements Initializable {
             turnLabel.setText("Opponent his turn!");
         }
     }
+*/
 
     public void updatePlayerStonesLabel() {
-        playerStones.setText("You have: " + countStones().get(0) + " stones");
+        playerStones.setText("You have: " + countStones().get(0) + " black stones");
     }
 
     public void updateAIStonesLabel() {
-        aiStones.setText("AI has: " + countStones().get(1) + " stones");
+        aiStones.setText("AI has: " + countStones().get(1) + " white stones");
     }
 
 

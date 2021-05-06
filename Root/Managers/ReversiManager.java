@@ -431,12 +431,11 @@ public class ReversiManager extends Board implements Manager, Initializable {
 
     public void syncBoards(int[][] newBoard) throws InterruptedException {
         int[][] tempBoard = newBoard;
-        for(int i =0; i< tempBoard.length; i++){
-            for(int j=0; j< tempBoard[i].length; j++){
-                if(tempBoard[i][j] == 1) {
-                   // reversiBoard.setStoneOnBoard(i,j, 1);
-                }
-                else if(tempBoard[i][j] == 2){
+        for (int i = 0; i < tempBoard.length; i++) {
+            for (int j = 0; j < tempBoard[i].length; j++) {
+                if (tempBoard[i][j] == 1) {
+                    // reversiBoard.setStoneOnBoard(i,j, 1);
+                } else if (tempBoard[i][j] == 2) {
                     //reversiBoard.setStoneOnBoard(i,j,2);
                 }
             }

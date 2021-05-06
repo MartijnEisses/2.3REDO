@@ -1,46 +1,38 @@
 package Root.Pages;
 
 import Root.Main;
-import Root.Managers.Board;
 import Root.Managers.UIManager;
-import Root.Server.Connection;
 import Root.Server.Interpreter;
 import Root.Views.Alerthelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Window;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class Onlinelobby implements Initializable {
     private Interpreter interpreter;
     private static Timer playerTimer;
     private List<String> playerList;
+    private boolean viewRunner = true;
 
-    @FXML
-    private TextField opponent;
-
-    @FXML
-    private Button challengeButton;
+    @FXML private TextField opponent;
+    @FXML private Button challengeButton;
+    @FXML protected Label incomingChallenge;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         interpreter = new Interpreter();
         playerTimer = new Timer();
+        gameChallenges();
+
     }
 
-    @FXML
-    protected void handleMainMenuButton(ActionEvent event){
-       // setScene("view/main.fxml");
-    }
+
+
 
     /**
      * Subscriben op reversi.
@@ -65,17 +57,20 @@ public class Onlinelobby implements Initializable {
             Alerthelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "No challenge has been Send!");
             return;
         }
-        UIManager.createScene("OfflineReversi.fxml");
+        UIManager.createScene("Reversi.fxml");
         Main.connection.acceptGameChallenge(interpreter.getGameID());
-
     }
 
     public void youLost(){
         Window ErrorMessage = challengeButton.getScene().getWindow();
         Alerthelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Lost game", "Whoops, looks Like you lost!");
         return;
-
     }
+
+    public void gameChallenges(){
+        incomingChallenge.setText("Accept challenges");
+    }
+
 
     /**
      * Het versturen van een uitdaging naar een opponent.
@@ -94,8 +89,17 @@ public class Onlinelobby implements Initializable {
             Alerthelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Player is not online");
             return;
         }
+        Alerthelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "The Online reversi board is currently not working");
         UIManager.createScene("Reversi.fxml");
         Main.connection.challengePlayer(opponent.getText() , "Reversi");
     }
+
+    @FXML
+    protected void logoutButton(ActionEvent event) throws IOException {
+        UIManager.createScene("Onlinelogin.fxml");
+        Main.connection.logout();
+    }
+
+
 }
 

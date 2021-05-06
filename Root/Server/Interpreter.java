@@ -18,9 +18,8 @@ public class Interpreter {
     private String GAMETYPE;
     private String PLAYERTOMOVE;
     private String OPPONENT;
-    private static List<String> playerList;
+    private static List<String> challengeList;
     private static int gameID;
-    private static List<String> legalmovesAI;
     private static String gameChallenge;
     private int playerAI;
     private int playerOpponent;
@@ -33,9 +32,7 @@ public class Interpreter {
      */
 
     public Interpreter() {
-        playerList = new ArrayList<>();
-        legalmovesAI = new ArrayList<>();
-        //reversiController = new ReversiController();
+        challengeList = new ArrayList<>();
         reversiManager = new ReversiManager();
         reversiAI = new ReversiAI();
     }
@@ -127,7 +124,10 @@ public class Interpreter {
                                     case "CHALLENGER":
                                         gameID = Integer.parseInt(commands[6]);
                                         System.out.println("Challenged by " + commands[4] + " for game: " + commands[8] + " gameID :" + commands[6]);
+                                        String addToChallengeList = commands[4] + " " + commands[6];
                                         gameChallenge = commands[4];
+                                        challengeList.add(addToChallengeList);
+                                        System.out.println(challengeList);
                                         break;
                                     case "CANCELLED":
                                         System.out.println("Match has been cancelled");
@@ -176,8 +176,8 @@ public class Interpreter {
         return gameID;
     }
 
-    public List<String> getPlayerList() {
-        return playerList;
+    public List<String> getChallengeList() {
+        return challengeList;
     }
 
     public String getGameChallenge() {

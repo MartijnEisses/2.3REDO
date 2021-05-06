@@ -75,6 +75,10 @@ public class ReversiController extends Board implements Initializable {
 
     }
 
+    /**
+     * @param cp give current player so method know which moves to look for
+     * @return returns an arraylist with all possible moves to make with an indicator for how many stones will be turned this move
+     */
     public ArrayList<String> legalMoves(int cp) {
        // board = getBoard();
         List<String> allMoves = new ArrayList<String>();
@@ -227,8 +231,9 @@ public class ReversiController extends Board implements Initializable {
 
     /**
      *
-     * @param cp De huidige speler die een set doet
-     * @param move De positie waar de speler een steen op zet.
+     * @param cp give current player so method knows who to set for
+     * @param move give coordinates for the move
+     *             this method changes the play board
      * @throws InterruptedException
      */
     public void doMove(int cp, int[] move) throws InterruptedException {

@@ -19,6 +19,13 @@ public class ReversiAI {
     //private int taken;
 
 
+    /**
+     * @param legalMoves give an array list with all legal moves
+     * @param board give the current play board
+     * @param cp give current player
+     * @return the coordinates for the best move acording to our program
+     * @throws InterruptedException
+     */
     public int[] getBestMove (ArrayList<String> legalMoves, int[][] board, int cp) throws InterruptedException {
        int taken=0;
        int mostTaken=0;

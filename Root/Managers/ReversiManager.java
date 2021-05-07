@@ -1,9 +1,9 @@
-package Root.Managers;
+package Managers;
 
-import Root.Pages.ReversiBoard;
-import Root.Pages.ReversiTemp;
-import Root.Players.ReversiAI;
-import Root.Players.playertype;
+import Pages.ReversiBoard;
+import Pages.ReversiTemp;
+import Players.ReversiAI;
+import Players.playertype;
 import javafx.fxml.Initializable;
 
 import java.io.IOException;

@@ -1,11 +1,11 @@
-package Root.Pages;
+package Pages;
 
-import Root.Managers.Board;
-import Root.Managers.ReversiManager;
-import Root.Managers.UIManager;
+import Managers.Board;
+import Managers.ReversiManager;
+import Managers.UIManager;
 ;
-import Root.Players.ReversiAI;
-import Root.Players.playertype;
+import Players.ReversiAI;
+import Players.playertype;
 import javafx.application.Platform;
 import javafx.fxml.Initializable;
 
@@ -47,7 +47,7 @@ public class ReversiTemp extends Board implements Initializable {
         Platform.runLater(new Runnable() {
             public void run() {
                 try {
-                    UIManager.createScene("Reversi.fxml");
+                    UIManager.createScene("/Reversi.fxml");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

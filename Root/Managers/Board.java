@@ -1,6 +1,6 @@
-package Root.Managers;
+package Managers;
 
-import Root.Pages.ReversiBoard;
+import Pages.ReversiBoard;
 
 import java.util.ArrayList;
 

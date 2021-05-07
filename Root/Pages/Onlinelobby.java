@@ -1,9 +1,8 @@
-package Root.Pages;
-
-import Root.Main;
-import Root.Managers.UIManager;
-import Root.Server.Interpreter;
-import Root.Views.Alerthelper;
+package Pages;
+import Managers.Main;
+import Managers.UIManager;
+import Server.Interpreter;
+import Pages.Alerthelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,7 +29,6 @@ public class Onlinelobby implements Initializable {
         gameChallenges();
 
     }
-
 
 
 

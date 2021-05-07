@@ -1,4 +1,4 @@
-package Root.Managers;
+package Managers;
 
 public enum GameType {
     TicTacToe,

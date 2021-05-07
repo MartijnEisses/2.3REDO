@@ -1,4 +1,4 @@
-package Root.Managers;
+package Managers;
 
 import java.util.HashMap;
 import java.util.Map;

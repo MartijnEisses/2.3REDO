@@ -1,10 +1,10 @@
-package Root.Managers;
+package Managers;
 
-import Root.Managers.ReversiManager;
-import Root.Managers.TicTacToeManager;
-import Root.Managers.UIManager;
-import Root.Server.Connection;
-
+import Managers.ReversiManager;
+import Managers.TicTacToeManager;
+import Managers.UIManager;
+import Server.Connection;
+import Managers.Main;
 import java.io.IOException;
 
 public class GameManager {

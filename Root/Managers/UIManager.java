@@ -1,18 +1,13 @@
-package Root.Managers;
+package Managers;
 
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
+
 import java.io.FileInputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import Root.Main;
+import java.io.InputStream;
+import java.net.URL;
 
 public class UIManager implements Manager {
     private static UIManager uiManager;
@@ -26,19 +21,17 @@ public class UIManager implements Manager {
     @Override
     public void Update() {
         // TODO Auto-generated method stub
-
     }
 
     public static void createScene(String path) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-
-        FileInputStream fileInputStream = new FileInputStream(new File("Root/Views/" + path));
-        Parent root = fxmlLoader.load(fileInputStream);
+        //File file = new File()
+        //URL url =
+        //FileInputStream fileInputStream = new FileInputStream(new File("Views\\" +path));
+        InputStream is = UIManager.class.getClassLoader().getResourceAsStream(path);
+        Parent root = fxmlLoader.load(is);
         Main.primaryStage.getScene().setRoot(root);
-        Main.primaryStage.getScene().getStylesheets().add("Root/Views/Style.css");
+        Main.primaryStage.getScene().getStylesheets().add("/Style.css");
         Main.primaryStage.show();
-
-
     }
-
 }

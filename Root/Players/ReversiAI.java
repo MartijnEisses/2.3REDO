@@ -1,4 +1,4 @@
-package Root.Players;
+package Players;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,14 +1,14 @@
-package Root.Server;
+package Server;
 
-import Root.Main;
-import Root.Managers.GameType;
-import Root.Managers.ReversiManager;
-import Root.Managers.UIManager;
 
-import Root.Players.ReversiAI;
-import Root.Players.playertype;
+import Managers.GameType;
+import Managers.ReversiManager;
+import Managers.UIManager;
+
+import Players.ReversiAI;
+import Players.playertype;
 import javafx.application.Platform;
-
+import Managers.Main;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;

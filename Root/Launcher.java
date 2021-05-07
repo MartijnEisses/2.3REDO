@@ -1,5 +1,5 @@
-package Root;
 
+import Managers.Main;
 import java.io.IOException;
 
 public class Launcher {

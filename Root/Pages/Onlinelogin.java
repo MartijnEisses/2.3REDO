@@ -1,10 +1,9 @@
-package Root.Pages;
+package Pages;
 
-import Root.Main;
-import Root.Managers.TicTacToeManager;
-import Root.Managers.UIManager;
-import Root.Server.Connection;
-import Root.Views.Alerthelper;
+import Managers.Main;
+import Managers.UIManager;
+import Server.Connection;
+import Pages.Alerthelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

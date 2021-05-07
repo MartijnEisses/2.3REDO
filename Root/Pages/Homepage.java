@@ -1,9 +1,9 @@
-package Root.Pages;
+package Pages;
 
-import Root.Main;
-import Root.Players.playertype;
-import Root.Managers.GameType;
-import Root.Managers.UIManager;
+
+import Players.playertype;
+import Managers.GameType;
+import Managers.UIManager;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

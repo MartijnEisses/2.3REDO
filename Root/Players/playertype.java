@@ -1,4 +1,4 @@
-package Root.Players;
+package Players;
 
 public enum playertype {
     LOCAL,

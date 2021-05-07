@@ -1,10 +1,10 @@
-package Root.Pages;
+package Pages;
 
-import Root.Managers.Board;
-import Root.Managers.ReversiManager;
-import Root.Managers.TicTacToeManager;
-import Root.Managers.UIManager;
-import Root.Players.ReversiAI;
+import Managers.Board;
+import Managers.ReversiManager;
+import Managers.TicTacToeManager;
+import Managers.UIManager;
+import Players.ReversiAI;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -60,12 +60,12 @@ public class TicTacToeController extends TicTacToeManager implements Initializab
             setStone(x, y, turn);
             switch (turn % 2) {
                 case 0: // AI
-                    AddImages(new Image("/Root/Views/X.png"), 140, x, y);
+                    AddImages(new Image("X.png"), 140, x, y);
                     Move(boardPosition[x][y], turn);
                     this.turn++;
                     break;
                 case 1: // HUMAN
-                    AddImages(new Image("/Root/Views/O.png"), 140, x, y);
+                    AddImages(new Image("O.png"), 140, x, y);
                     Move(boardPosition[x][y], turn);
                     this.turn++;
                     break;

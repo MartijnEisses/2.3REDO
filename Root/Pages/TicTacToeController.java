@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -17,9 +18,10 @@ import java.util.ResourceBundle;
 
 public class TicTacToeController extends TicTacToeManager implements Initializable {
 
-    @FXML
-    GridPane gridBoard;
-
+    @FXML GridPane gridBoard;
+    @FXML protected Label turnLabel;
+    @FXML protected Label playerLabel;
+    @FXML protected Label AILabel;
     public int turn = 1;
     public boolean versusAI = true;
 
@@ -28,6 +30,7 @@ public class TicTacToeController extends TicTacToeManager implements Initializab
     }
 
     public void createGridBoard(int[][] b, int i1, int i2) {
+        updateAllViews();
         for (int i = 0; i < b[0].length; i++) {
             for (int j = 0; j < b[1].length; j++) {
                 Pane p = new Pane();
@@ -109,4 +112,25 @@ public class TicTacToeController extends TicTacToeManager implements Initializab
         emptyBoard(3, 3);
         UIManager.createScene("Homepage.fxml");
     }
+
+    public void updateAllViews(){
+        turnPlayerLabel();
+        playerLetterLabel();
+        AILetterLabel();
+    }
+
+    public void turnPlayerLabel() {
+       turnLabel.setText("It is your turn!");
+    }
+
+    public void playerLetterLabel() {
+        playerLabel.setText("You are O.");
+    }
+
+    public void AILetterLabel() {
+        AILabel.setText("The opponent is X.");
+    }
+
+
+
 }

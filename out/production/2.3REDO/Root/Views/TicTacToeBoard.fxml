@@ -44,6 +44,21 @@
                 <Font name="Open Sans Regular" size="16.0" />
             </font>
         </Button>
+        <Label fx:id="turnLabel" layoutY="90.0" layoutX="10"   prefWidth="200" prefHeight="40" minHeight="40">
+            <font>
+                <Font name="Open Sans Regular" size="20.0"/>
+            </font>
+        </Label>
+        <Label fx:id="playerLabel" layoutY="120.0" layoutX="10"   prefWidth="250" prefHeight="40" minHeight="40">
+            <font>
+                <Font name="Open Sans Regular" size="20.0"/>
+            </font>
+        </Label>
+        <Label fx:id="AILabel" layoutY="150.0" layoutX="10"   prefWidth="250" prefHeight="40" minHeight="40">
+            <font>
+                <Font name="Open Sans Regular" size="20.0"/>
+            </font>
+        </Label>
     </children>
 </Pane>
 </BorderPane>

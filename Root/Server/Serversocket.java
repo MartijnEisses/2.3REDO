@@ -39,6 +39,7 @@ public class Serversocket implements Runnable{
                 while ((command = commandQueue.poll()) != null) {
                     //System.out.println("TEST VOOR COMMANDQUEUE SENDER WRITER DING");
                     System.out.println("Sending a command");
+                    System.out.println(command);
                     writer.println(command);
                     writer.flush();
                     if (command.equals("logout")) {

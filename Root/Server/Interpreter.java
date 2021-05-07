@@ -23,7 +23,6 @@ public class Interpreter {
     private static String gameChallenge;
     private int playerAI;
     private int playerOpponent;
-    //private ReversiController reversiController;
     private ReversiManager reversiManager;
     private ReversiAI reversiAI;
 

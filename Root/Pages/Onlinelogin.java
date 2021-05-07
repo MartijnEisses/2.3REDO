@@ -1,6 +1,7 @@
 package Root.Pages;
 
 import Root.Main;
+import Root.Managers.TicTacToeManager;
 import Root.Managers.UIManager;
 import Root.Server.Connection;
 import Root.Views.Alerthelper;
@@ -18,17 +19,12 @@ import java.util.ResourceBundle;
 
 public class Onlinelogin implements Initializable {
 
-    @FXML
-    private TextField ignField;
+    @FXML private TextField ignField;
+    @FXML private TextField ipField;
+    @FXML private TextField portField;
+    @FXML private Button submitButton;
 
-    @FXML
-    private TextField ipField;
-
-    @FXML
-    private TextField portField;
-
-    @FXML
-    private Button submitButton;
+    private boolean connectionError;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ignField.setText("B2");
@@ -44,25 +40,40 @@ public class Onlinelogin implements Initializable {
     @FXML
     protected void handleSubmitButton(ActionEvent event) throws IOException {
         Window ErrorMessage = submitButton.getScene().getWindow();
+        connectionError = false;
         //Check if the textfields are empty
         if (ignField.getText().isEmpty()) {
             Alerthelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid ign");
+            connectionError = true;
             return;
         }
 
         if (ipField.getText().isEmpty()) {
             Alerthelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid IP");
+            connectionError = true;
             return;
         }
 
         if (!portField.getText().matches("^[0-9]*$")) {
             Alerthelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid port");
+            connectionError = true;
             return;
         }
 
         if (portField.getText().isEmpty()) {
             Alerthelper.showAlert(Alert.AlertType.ERROR, ErrorMessage, "Wait! Error!", "Please enter a valid Port");
+            connectionError = true;
             return;
+        }
+        if(!connectionError) {
+            if (!Main.connection.connectToServer(ipField.getText(), Integer.parseInt(portField.getText()))) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Game Information");
+                alert.setHeaderText(null);
+                alert.setContentText("Connection is refused, please check if everything is correct");
+                alert.show();
+                return;
+            }
         }
         Main.connection.connectToServer(ipField.getText(), Integer.parseInt(portField.getText()));
         Main.connection.login(ignField.getText());

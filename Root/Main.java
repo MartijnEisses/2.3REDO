@@ -49,6 +49,7 @@ public class Main extends Application{
         primaryStage.setMinHeight(720);
         primaryStage.setMinWidth(1240);
         primaryStage.setTitle("Project 2.3");
+        primaryStage.setResizable(false);
         Main.primaryStage = primaryStage;
 
         Main.primaryStage.setMinWidth(1240);
